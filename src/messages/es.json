@@ -218,7 +218,11 @@
         "BACKEND": "Servidor",
         "DATABASE": "Base de datos",
         "EXTERNAL": "Servicio externo"
-      }
+      },
+      "roadmap": "Hoja de ruta",
+      "roadmapIntro": "Los diagramas del propio proyecto: quién lo usa, cómo se conectan las páginas y qué pasa detrás de cada paso.",
+      "leadsTo": "Lleva a",
+      "self": "a sí mismo"
     }
   },
   "pricing": {

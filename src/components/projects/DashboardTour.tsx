@@ -14,7 +14,7 @@ export type TourScreen = {
   height: number;
   alt: string;
   title: string;
-  hotspots: { id: string; x: number; y: number; icon: string; label: string; body: string }[];
+  hotspots: { id: string; x: number; y: number; icon: string; label: string; body: string; image?: { src: string; width: number; height: number } | null }[];
 };
 
 /**

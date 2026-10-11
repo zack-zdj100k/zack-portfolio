@@ -16,7 +16,7 @@ import { PrismaClient, type ImageKind, type Prisma } from "../src/server/generat
 import { fallbackChain, locales, type Locale } from "../src/lib/i18n/locales";
 import { translations } from "./seed-i18n";
 import manifest from "../public/hero/manifest.json";
-import { DASHBOARD_TOURS } from "./data/dashboard-tours";
+import { DASHBOARD_TOURS, FEATURE_SHOTS } from "./data/dashboard-tours";
 import { defaultAddOns } from "./data/package-add-ons";
 import { AI_SERVICES, ARCHITECTURE, EARLIER_SKILL_GROUPS, PROCESS_STEPS, REFERRAL_TEXT, SKILL_GROUPS } from "./data/round6";
 
@@ -570,6 +570,28 @@ async function seedDashboardTours() {
           },
         },
       });
+    }
+  }
+  await seedFeatureShots();
+}
+
+/**
+ * Gives each dashboard feature its own screenshot, matched by its English label. Only features
+ * without a screenshot get one, so uploads made in the admin are kept (a screenshot removed in the
+ * admin comes back on the next seed). Features the owner renamed are skipped.
+ */
+async function seedFeatureShots() {
+  for (const [slug, shots] of Object.entries(FEATURE_SHOTS)) {
+    const hotspots = await prisma.projectHotspot.findMany({
+      where: { mediaId: null, image: { section: "DASHBOARD", project: { slug } } },
+    });
+    for (const h of hotspots) {
+      const en = (h.label as Record<string, string> | null)?.en;
+      const file = en ? shots.files[en] : undefined;
+      if (!file) continue;
+      const alt = h.label as Record<string, string>;
+      const media = await staticMedia(`/projects/${slug}/features/${file}.webp`, shots.width, shots.height, alt, `${slug} feature: ${en}`);
+      await prisma.projectHotspot.update({ where: { id: h.id }, data: { mediaId: media.id } });
     }
   }
 }

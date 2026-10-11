@@ -37,7 +37,8 @@ export function HeroStage({ mode, assets, copy }: { mode: HeroMode; assets: Hero
   const [rendererState, setRendererState] = useState<"loading" | "ready" | "failed">("loading");
 
   const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
-  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 32, mass: 0.6 });
+  // Light smoothing only: a softer spring made the hero trail behind the wheel and feel sluggish.
+  const progress = useSpring(scrollYProgress, { stiffness: 320, damping: 42, mass: 0.3 });
 
   const active = reduce ? null : resolveMode(mode, assets);
   const Renderer = active ? renderers[active] : null;
@@ -60,7 +61,7 @@ export function HeroStage({ mode, assets, copy }: { mode: HeroMode; assets: Hero
       aria-labelledby="hero-title"
       // Pinned scroll length. Reduced motion: no pin, a normal full-height section.
       // Pulled up under the header so the stage fills the whole first screen.
-      className={`relative -mt-16 md:-mt-20 ${reduce ? "" : "h-[190dvh] md:h-[230dvh]"}`}
+      className={`relative -mt-16 md:-mt-20 ${reduce ? "" : "h-[165dvh] md:h-[190dvh]"}`}
     >
       <div className="sticky top-0 flex h-dvh min-h-[560px] flex-col overflow-hidden pt-16 md:pt-20">
         <HeroName name={copy.name} greeting={copy.greeting} progress={progress} reduce={!!reduce} />
@@ -196,10 +197,10 @@ function RevealWord({ word, index, count, progress }: { word: string; index: num
   const leave = 0.58 + (index / count) * 0.12;
   const opacity = useTransform(progress, [start, start + 0.1, leave, 1], [0, 1, 1, 0]);
   const y = useTransform(progress, [start, start + 0.1, leave, 1], [40, 0, 0, -36]);
-  const filter = useTransform(progress, [leave, 1], ["blur(0px)", "blur(6px)"]);
+  // No animated blur: a filter repainted on every scroll frame is what made scrolling stutter.
   return (
     <motion.span
-      style={{ opacity, y, filter }}
+      style={{ opacity, y }}
       className="max-w-full text-[clamp(2.1rem,9vw,3.4rem)] font-bold uppercase leading-[0.95] tracking-tight text-mist [text-shadow:0_4px_30px_rgb(12_12_12/0.8)] md:max-w-[44vw] md:text-[clamp(2.5rem,4.6vw,5.2rem)]"
     >
       {word}

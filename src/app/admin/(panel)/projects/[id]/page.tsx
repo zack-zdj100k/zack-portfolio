@@ -10,6 +10,7 @@ import {
   deleteArchitectureNode,
   deleteHotspot,
   moveArchitectureNode,
+  removeHotspotImage,
   removeProjectImage,
   saveArchitecture,
   saveArchitectureNode,
@@ -19,6 +20,7 @@ import {
   saveProjectLinks,
   saveProjectTranslation,
   updateProjectImage,
+  uploadHotspotImage,
 } from "@/server/actions/projects";
 import { HotspotPicker } from "@/components/admin/HotspotPicker";
 import { MoveButtons } from "@/components/admin/MoveButtons";
@@ -59,7 +61,7 @@ export default async function ProjectEditor({ params, searchParams }: PageProps<
     where: { id },
     include: {
       translations: true,
-      images: { orderBy: { sortOrder: "asc" }, include: { media: true, hotspots: { orderBy: { sortOrder: "asc" } } } },
+      images: { orderBy: { sortOrder: "asc" }, include: { media: true, hotspots: { orderBy: { sortOrder: "asc" }, include: { media: true } } } },
       links: true,
       architectureNodes: { orderBy: { sortOrder: "asc" } },
     },
@@ -242,24 +244,54 @@ export default async function ProjectEditor({ params, searchParams }: PageProps<
                 />
                 <div className="flex flex-col gap-2">
                   {screen.hotspots.map((h, hi) => (
-                    <form key={h.id} action={saveHotspot} className="grid gap-3 rounded-lg border border-line/70 p-3 md:grid-cols-[32px_80px_80px_160px_1fr_2fr_auto] md:items-end">
-                      <input type="hidden" name="projectId" value={project.id} />
-                      <input type="hidden" name="imageId" value={screen.id} />
-                      <input type="hidden" name="hotspotId" value={h.id} />
-                      <input type="hidden" name="locale" value={locale} />
-                      <span className="pb-3 text-sm font-bold tabular-nums text-mist/70">{hi + 1}</span>
-                      <Input label="X %" name="x" defaultValue={h.x} required />
-                      <Input label="Y %" name="y" defaultValue={h.y} required />
-                      <Select label="Icon" name="icon" options={DASHBOARD_ICON_NAMES.map((n) => ({ value: n, label: n }))} defaultValue={h.icon} />
-                      <Input label="Name" name="label" defaultValue={text(h.label)} maxLength={80} required dir={dir(locale)} />
-                      <Input label="What it does for the business" name="body" defaultValue={text(h.body)} maxLength={300} required dir={dir(locale)} />
-                      <div className="flex gap-2">
-                        <SubmitButton variant="secondary">Save</SubmitButton>
-                        <SubmitButton variant="danger" formAction={deleteHotspot} confirm="Remove this marker?">
-                          Remove
-                        </SubmitButton>
+                    <div key={h.id} className="flex flex-col gap-2">
+                      <form action={saveHotspot} className="grid gap-3 rounded-lg border border-line/70 p-3 md:grid-cols-[32px_80px_80px_160px_1fr_2fr_auto] md:items-end">
+                        <input type="hidden" name="projectId" value={project.id} />
+                        <input type="hidden" name="imageId" value={screen.id} />
+                        <input type="hidden" name="hotspotId" value={h.id} />
+                        <input type="hidden" name="locale" value={locale} />
+                        <span className="pb-3 text-sm font-bold tabular-nums text-mist/70">{hi + 1}</span>
+                        <Input label="X %" name="x" defaultValue={h.x} required />
+                        <Input label="Y %" name="y" defaultValue={h.y} required />
+                        <Select label="Icon" name="icon" options={DASHBOARD_ICON_NAMES.map((n) => ({ value: n, label: n }))} defaultValue={h.icon} />
+                        <Input label="Name" name="label" defaultValue={text(h.label)} maxLength={80} required dir={dir(locale)} />
+                        <Input label="What it does for the business" name="body" defaultValue={text(h.body)} maxLength={300} required dir={dir(locale)} />
+                        <div className="flex gap-2">
+                          <SubmitButton variant="secondary">Save</SubmitButton>
+                          <SubmitButton variant="danger" formAction={deleteHotspot} confirm="Remove this marker?">
+                            Remove
+                          </SubmitButton>
+                        </div>
+                      </form>
+                      <div className="flex flex-wrap items-end gap-3 ps-3">
+                        {h.media && (
+                          <a href={h.media.url} target="_blank" rel="noopener" className="relative block h-14 w-24 shrink-0 overflow-hidden rounded-md border border-line">
+                            <Image src={h.media.url} alt="" fill sizes="96px" className="object-cover object-top" />
+                          </a>
+                        )}
+                        <form action={uploadHotspotImage} className="flex flex-1 flex-wrap items-end gap-3">
+                          <input type="hidden" name="projectId" value={project.id} />
+                          <input type="hidden" name="hotspotId" value={h.id} />
+                          <Input
+                            label={h.media ? "Replace this feature's screenshot" : "This feature's own screenshot"}
+                            name="file"
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp,image/avif"
+                            required
+                            className="min-w-0 flex-1"
+                            hint="Shown on the project page while visitors read this feature. Without one, the page zooms into the marker's area."
+                          />
+                          <SubmitButton variant="secondary">Upload</SubmitButton>
+                        </form>
+                        {h.media && (
+                          <form action={removeHotspotImage}>
+                            <input type="hidden" name="projectId" value={project.id} />
+                            <input type="hidden" name="hotspotId" value={h.id} />
+                            <SubmitButton variant="danger">Remove screenshot</SubmitButton>
+                          </form>
+                        )}
                       </div>
-                    </form>
+                    </div>
                   ))}
                   <form action={saveHotspot} className="grid gap-3 rounded-lg border border-dashed border-line p-3 md:grid-cols-[80px_80px_160px_1fr_2fr_auto] md:items-end">
                     <input type="hidden" name="projectId" value={project.id} />

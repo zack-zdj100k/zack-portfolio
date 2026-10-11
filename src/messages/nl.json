@@ -218,7 +218,11 @@
         "BACKEND": "Server",
         "DATABASE": "Database",
         "EXTERNAL": "Externe dienst"
-      }
+      },
+      "roadmap": "Roadmap",
+      "roadmapIntro": "De eigen diagrammen van het project: wie het gebruikt, hoe de pagina's samenhangen en wat er achter elke stap gebeurt.",
+      "leadsTo": "Leidt naar",
+      "self": "naar zichzelf"
     }
   },
   "pricing": {

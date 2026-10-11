@@ -260,12 +260,13 @@ model MediaAsset {
 
   projectImages ProjectImage[]
   heroFrames    HeroFrame[]
-  portraitOf    Profile[]      @relation("Portrait")
-  heroImageOf   SiteSettings[] @relation("HeroImage")
-  heroDepthOf   SiteSettings[] @relation("HeroDepth")
-  heroModelOf   SiteSettings[] @relation("HeroModel")
-  ogImageOf     SiteSettings[] @relation("OgImage")
+  portraitOf    Profile[]        @relation("Portrait")
+  heroImageOf   SiteSettings[]   @relation("HeroImage")
+  heroDepthOf   SiteSettings[]   @relation("HeroDepth")
+  heroModelOf   SiteSettings[]   @relation("HeroModel")
+  ogImageOf     SiteSettings[]   @relation("OgImage")
   processSteps  ProcessStep[]
+  hotspots      ProjectHotspot[]
   aiServices    AiService[]
 }
 
@@ -501,6 +502,10 @@ model ProjectHotspot {
   /// Per-language text, e.g. {"en": "Orders", "fr": "Commandes"}.
   label     Json
   body      Json
+  /// Optional screenshot of this feature's own page, shown in the scroll-synced dashboard run.
+  /// Without one, the run zooms into the marker's area of the screen instead.
+  mediaId   String?
+  media     MediaAsset?  @relation(fields: [mediaId], references: [id], onDelete: SetNull)
   sortOrder Int          @default(0)
 
   @@index([imageId, sortOrder])

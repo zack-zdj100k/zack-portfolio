@@ -1022,3 +1022,61 @@ export const DASHBOARD_TOURS: Record<string, TourScreenData[]> = {
   "boulboul-art-wall": boulboul,
   "zodic-car": zodic,
 };
+
+/**
+ * Each sidebar feature's own page, captured from the same local builds with synthetic demo data.
+ * Keyed by the hotspot's English label; a feature without an entry zooms into its screen instead.
+ */
+export const FEATURE_SHOTS: Record<string, { width: number; height: number; files: Record<string, string> }> = {
+  "king-253": {
+    width: 1920,
+    height: 1333,
+    files: {
+      Dashboard: "dashboard",
+      Orders: "orders",
+      "Returns & exchanges": "returns",
+      "Abandoned carts": "abandoned",
+      Products: "products",
+      Categories: "categories",
+      Inventory: "inventory",
+      Customers: "customers",
+      Users: "users",
+      Reviews: "reviews",
+      Testimonials: "testimonials",
+      "Social media": "social",
+      "Website content": "content",
+      Locations: "locations",
+    },
+  },
+  "boulboul-art-wall": {
+    width: 1920,
+    height: 1200,
+    files: {
+      Dashboard: "dashboard",
+      "Social media": "social",
+      Orders: "orders",
+      Products: "products",
+      Categories: "categories",
+      "Custom orders": "custom-orders",
+      "Returns & exchanges": "returns",
+      Customers: "customers",
+      Reviews: "reviews",
+      "Site content": "content",
+      Media: "media",
+      Settings: "settings",
+    },
+  },
+  "zodic-car": {
+    width: 1920,
+    height: 1200,
+    files: {
+      Overview: "dashboard",
+      "Manage cars": "cars",
+      "Manage requests": "requests",
+      "Manage users": "users",
+      Analytics: "analytics",
+      "Site settings": "settings",
+      "Add a car": "add-car",
+    },
+  },
+};

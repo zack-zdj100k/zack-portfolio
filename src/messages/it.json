@@ -218,7 +218,11 @@
         "BACKEND": "Server",
         "DATABASE": "Database",
         "EXTERNAL": "Servizio esterno"
-      }
+      },
+      "roadmap": "Roadmap",
+      "roadmapIntro": "Gli schemi del progetto: chi lo usa, come si collegano le pagine e cosa succede dietro ogni passaggio.",
+      "leadsTo": "Porta a",
+      "self": "a sé stesso"
     }
   },
   "pricing": {

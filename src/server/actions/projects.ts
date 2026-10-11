@@ -390,3 +390,24 @@ export async function deleteArchitectureNode(fd: FormData) {
     return nodeId;
   });
 }
+
+/** A dashboard feature's own screenshot (shown in the scroll-synced run instead of a zoomed area). */
+export async function uploadHotspotImage(fd: FormData) {
+  const projectId = str(fd, "projectId", 60);
+  await adminAction(fd, { back: `/admin/projects/${projectId}#dashboard`, entity: "ProjectHotspot", action: "image", success: "Feature screenshot added." }, async () => {
+    const hotspotId = str(fd, "hotspotId", 60);
+    await prisma.projectHotspot.findFirstOrThrow({ where: { id: hotspotId, image: { projectId } } });
+    const media = await saveImage(fd.get("file") as File, { label: "Dashboard feature screenshot", maxEdge: 1920 });
+    await prisma.projectHotspot.update({ where: { id: hotspotId }, data: { mediaId: media.id } });
+    return hotspotId;
+  });
+}
+
+export async function removeHotspotImage(fd: FormData) {
+  const projectId = str(fd, "projectId", 60);
+  await adminAction(fd, { back: `/admin/projects/${projectId}#dashboard`, entity: "ProjectHotspot", action: "image-remove", success: "Feature screenshot removed (still in Media)." }, async () => {
+    const hotspotId = str(fd, "hotspotId", 60);
+    await prisma.projectHotspot.updateMany({ where: { id: hotspotId, image: { projectId } }, data: { mediaId: null } });
+    return hotspotId;
+  });
+}

@@ -218,7 +218,11 @@
         "BACKEND": "Sunucu",
         "DATABASE": "Veritabanı",
         "EXTERNAL": "Harici servis"
-      }
+      },
+      "roadmap": "Yol haritası",
+      "roadmapIntro": "Projenin kendi şemaları: kimin kullandığı, sayfaların nasıl bağlandığı ve her adımın arkasında ne olduğu.",
+      "leadsTo": "Gider",
+      "self": "kendine"
     }
   },
   "pricing": {

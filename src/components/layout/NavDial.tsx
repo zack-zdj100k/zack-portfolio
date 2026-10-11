@@ -211,7 +211,7 @@ export function NavDial({ hidden = [] }: { hidden?: NavKey[] }) {
           aria-controls="nav-dial"
           aria-label={open ? t("closeMenu") : t("openMenu")}
           className={`fixed end-0 top-1/2 z-[80] flex h-[72px] w-9 -translate-y-1/2 items-center justify-center rounded-s-full border border-e-0 ps-1 transition-colors ${
-            open ? "border-ice/40 bg-mist text-ink" : "border-line bg-ink-2/90 text-mist shadow-[0_8px_30px_rgb(0_0_0/0.45)] backdrop-blur-md"
+            open ? "border-ice/40 bg-mist text-ink" : "border-line bg-ink-2 text-mist shadow-[0_8px_30px_rgb(0_0_0/0.45)]"
           }`}
         >
           {open ? <X aria-hidden className="size-[18px]" strokeWidth={2} /> : <Menu aria-hidden className="size-[18px]" strokeWidth={2} />}

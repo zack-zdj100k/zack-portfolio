@@ -218,7 +218,11 @@
         "BACKEND": "Server",
         "DATABASE": "Database",
         "EXTERNAL": "Ekstern tjeneste"
-      }
+      },
+      "roadmap": "Veikart",
+      "roadmapIntro": "Prosjektets egne diagrammer: hvem som bruker det, hvordan sidene henger sammen og hva som skjer bak hvert steg.",
+      "leadsTo": "Fører til",
+      "self": "til seg selv"
     }
   },
   "pricing": {

@@ -90,13 +90,18 @@ export class ActionError extends Error {}
 
 /** Redirect back with a flash message. */
 export function done(path: string, message: string): never {
-  const sep = path.includes("?") ? "&" : "?";
-  redirect(`${path}${sep}ok=${encodeURIComponent(message)}`);
+  redirect(withParam(path, "ok", message));
 }
 
 export function fail(path: string, message: string): never {
-  const sep = path.includes("?") ? "&" : "?";
-  redirect(`${path}${sep}error=${encodeURIComponent(message)}`);
+  redirect(withParam(path, "error", message));
+}
+
+/** Adds a query parameter before any #anchor (after it, the page would never see the message). */
+function withParam(path: string, key: string, value: string) {
+  const [base, hash] = path.split("#", 2);
+  const sep = base.includes("?") ? "&" : "?";
+  return `${base}${sep}${key}=${encodeURIComponent(value)}${hash !== undefined ? `#${hash}` : ""}`;
 }
 
 /** Turns known errors into a flash message; anything else becomes a generic message (no internals leak). */

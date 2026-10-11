@@ -49,7 +49,7 @@ export function AdminShowcase({ items, labels }: { items: Item[]; labels: { demo
                 refs.current[i] = el;
               }}
               data-index={i}
-              className={`flex flex-col gap-5 ${stacked ? "" : "lg:min-h-[62vh] lg:justify-center"}`}
+              className={`flex flex-col gap-5 ${stacked ? "" : "lg:min-h-[42vh] lg:justify-center"}`}
             >
               <div className={`flex flex-col gap-3 border-s-2 ps-5 transition-colors duration-300 ${on ? "border-ice" : "border-line lg:opacity-60"} ${stacked ? "!opacity-100" : ""}`}>
                 <span className="text-sm tabular-nums text-mist/55">{String(i + 1).padStart(2, "0")}</span>

@@ -16,6 +16,9 @@ import { pageMetadata, siteUrl } from "@/lib/seo";
 import { getProjectBySlug, getSkillGroups } from "@/server/services/content";
 import { DashboardRun } from "@/components/projects/DashboardRun";
 import { TechTiles, techKey } from "@/components/projects/TechTiles";
+import { FlowGraph } from "@/components/projects/FlowGraph";
+import { SequenceDiagram } from "@/components/projects/SequenceDiagram";
+import { roadmapsFor } from "@/lib/roadmaps";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/projects/[slug]">): Promise<Metadata> {
   const { locale, slug } = (await params) as { locale: Locale; slug: string };
@@ -49,6 +52,8 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
   ]);
   const d = project.t;
   const title = d?.title ?? project.slug;
+  const roadmaps = roadmapsFor(project.slug, locale);
+  const hasArchitecture = !!architecture && (architecture.chain.length > 0 || !!architecture.frontend || !!architecture.backend || !!architecture.database || !!architecture.flow);
   const wide = project.images.filter((i) => (i.media.width ?? 1) >= (i.media.height ?? 1));
   const tall = project.images.filter((i) => (i.media.width ?? 1) < (i.media.height ?? 1));
   const story = [
@@ -209,8 +214,8 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
         </div>
       </section>
 
-      {/* How it's built: plain-language architecture + request-flow graph */}
-      {architecture && (architecture.chain.length > 0 || architecture.frontend || architecture.backend || architecture.database || architecture.flow) && (
+      {/* How it's built: plain-language architecture, request-flow graph, then the project's roadmap diagrams */}
+      {(hasArchitecture || roadmaps.length > 0) && (
         <section aria-labelledby="arch-title" className="border-t border-line py-20 md:py-28">
           <div className="container-page flex flex-col gap-10 md:gap-14">
             <Reveal className="flex flex-col gap-5">
@@ -218,14 +223,14 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
                 {t("arch.title")}
               </h2>
               <p className="max-w-2xl text-lg leading-relaxed text-mist/75">{t("arch.intro")}</p>
-              {architecture.proposed && (
+              {architecture?.proposed && (
                 <p className="flex max-w-2xl flex-col gap-1 rounded-2xl border border-ice/30 bg-ice/5 px-5 py-4 text-sm text-mist/80">
                   <span className="font-bold uppercase tracking-wider text-ice">{t("arch.proposed")}</span>
                   {t("arch.proposedNote")}
                 </p>
               )}
             </Reveal>
-            {architecture.chain.length > 0 && (
+            {architecture && architecture.chain.length > 0 && (
               <ArchitectureFlow
                 chain={architecture.chain}
                 rtl={dir(locale) === "rtl"}
@@ -243,23 +248,46 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
                 }}
               />
             )}
-            <dl className="grid gap-x-12 gap-y-10 md:grid-cols-2">
-              {(
-                [
-                  ["frontend", architecture.frontend],
-                  ["backend", architecture.backend],
-                  ["database", architecture.database],
-                  ["flow", architecture.flow],
-                ] as const
-              )
-                .filter(([, text]) => text)
-                .map(([key, text]) => (
-                  <Reveal key={key} className="flex flex-col gap-3 border-t border-line pt-5">
-                    <dt className="text-sm uppercase tracking-widest text-mist/60">{t(`arch.${key}`)}</dt>
-                    <dd className="whitespace-pre-line text-lg leading-relaxed text-mist/85">{text}</dd>
-                  </Reveal>
+            {architecture && (
+              <dl className="grid gap-x-12 gap-y-10 md:grid-cols-2">
+                {(
+                    [
+                    ["frontend", architecture.frontend],
+                    ["backend", architecture.backend],
+                    ["database", architecture.database],
+                    ["flow", architecture.flow],
+                  ] as const
+                )
+                  .filter(([, text]) => text)
+                  .map(([key, text]) => (
+                    <Reveal key={key} className="flex flex-col gap-3 border-t border-line pt-5">
+                      <dt className="text-sm uppercase tracking-widest text-mist/60">{t(`arch.${key}`)}</dt>
+                      <dd className="whitespace-pre-line text-lg leading-relaxed text-mist/85">{text}</dd>
+                    </Reveal>
+                  ))}
+              </dl>
+            )}
+            {roadmaps.length > 0 && (
+              <div className="flex flex-col gap-14 border-t border-line pt-12 md:gap-20 md:pt-16">
+                <Reveal className="flex flex-col gap-3">
+                  <h3 className="text-[clamp(1.6rem,3.5vw,2.6rem)] font-black uppercase leading-none text-mist">{t("arch.roadmap")}</h3>
+                  <p className="max-w-2xl text-lg leading-relaxed text-mist/75">{t("arch.roadmapIntro")}</p>
+                </Reveal>
+                {roadmaps.map((r) => (
+                  <figure key={r.key} className="flex flex-col gap-8">
+                    <figcaption className="flex flex-col gap-2">
+                      <span className="text-xl font-bold text-mist md:text-2xl">{r.title}</span>
+                      <span className="max-w-2xl leading-relaxed text-mist/70">{r.intro}</span>
+                    </figcaption>
+                    {r.diagram.type === "flow" ? (
+                      <FlowGraph diagram={r.diagram} labels={{ title: r.title, leadsTo: t("arch.leadsTo") }} />
+                    ) : (
+                      <SequenceDiagram diagram={r.diagram} labels={{ title: r.title, self: t("arch.self") }} />
+                    )}
+                  </figure>
                 ))}
-            </dl>
+              </div>
+            )}
           </div>
         </section>
       )}

@@ -117,7 +117,7 @@ export const getProjectBySlug = cache(async (slug: string, locale: Locale) => {
     prisma.projectImage.findMany({
       where: { projectId: project.id, section: "DASHBOARD" },
       orderBy: { sortOrder: "asc" },
-      include: { media: true, hotspots: { orderBy: { sortOrder: "asc" } } },
+      include: { media: true, hotspots: { orderBy: { sortOrder: "asc" }, include: { media: true } } },
     }),
     project.architectureStatus === "HIDDEN" ? [] : prisma.architectureNode.findMany({ where: { projectId: project.id }, orderBy: { sortOrder: "asc" } }),
   ]);
@@ -151,7 +151,16 @@ export const getProjectBySlug = cache(async (slug: string, locale: Locale) => {
     height: s.media.height ?? 1200,
     alt: altFor(s.media.alt, locale),
     title: altFor(s.title, locale),
-    hotspots: s.hotspots.map((h) => ({ id: h.id, x: h.x, y: h.y, icon: h.icon, label: altFor(h.label, locale), body: altFor(h.body, locale) })),
+    hotspots: s.hotspots.map((h) => ({
+      id: h.id,
+      x: h.x,
+      y: h.y,
+      icon: h.icon,
+      label: altFor(h.label, locale),
+      body: altFor(h.body, locale),
+      // The feature's own screenshot, when one was added.
+      image: h.media ? { src: h.media.url, width: h.media.width ?? 1920, height: h.media.height ?? 1200 } : null,
+    })),
   }));
   return { project, next, dashboard, architecture, testimonials: testimonials.map((x) => ({ ...x, t: pick(x.translations, locale) })) };
 });

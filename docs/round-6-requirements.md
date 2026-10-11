@@ -305,6 +305,13 @@ Log for this round (owner screenshots of 2026-10-11):
 | AI services | Admin → AI services; `AiServices` (Home, Services); `/api/waitlist`; contact `?service=` |
 | Device frames | `DeviceFrame` (project gallery, dashboard tour, preview) |
 | Admin Dashboard Preview | `AdminPreview` / `AdminShowcase` / `MockScreens` (Home, Services); registry `src/lib/admin-showcase.ts` typed against `src/components/admin/nav-items.ts` |
+| Project dashboard run | `DashboardRun` (laptop / tablet / phone frames). Each feature can have its own screenshot (Admin → Projects → Dashboard, per marker; migration `20261011180000_hotspot_screenshot`); the seed fills them from `public/projects/<slug>/features/` (`FEATURE_SHOTS` in `prisma/data/dashboard-tours.ts`). No numbered markers |
+| Roadmap diagrams | `src/lib/roadmaps.ts` (layout + text per language), `FlowGraph` and `SequenceDiagram`, under "How it's built". ZODIC CAR: use cases + request sequence. KING 253: sitemap + cash-on-delivery order flow. Boulboul Art Wall: waiting for its diagram. Laptop: animated diagram; narrower screens: the same content as a list |
+
+Scrolling: the sticky header and the floating menu button no longer blur what is behind them
+(that repaint ran on every scroll frame), the hero's scroll spring is stiffer and its words no
+longer animate a blur, and the scroll-synced runs are shorter. Production build: steady 60 fps
+frames while wheel-scrolling the home page and the longest project pages (desktop and phone).
 
 Found while testing and fixed: an optional field missing from a public form request (not sent at
 all, rather than empty) was rejected as "required" (zod 4 treats a key as optional only through
@@ -382,3 +389,6 @@ errors. Typecheck and lint clean.
 - AI agents / AI automations: confirm or rewrite the drafted descriptions, then publish them. Decide
   whether the Coming Soon waitlists are on (off by default).
 - Review the machine-drafted translations of the new texts.
+- Boulboul Art Wall's roadmap diagram (to be redrawn like the ZODIC CAR and KING 253 ones).
+- The feature screenshots come from local demo builds of each project with synthetic data. Replace
+  any of them in Admin → Projects → Dashboard if the live product looks different.

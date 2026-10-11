@@ -43,6 +43,7 @@ enum ImageKind {
   REAL
   CONCEPT
   DEMO
+  VISUAL_EXPLORATION
 }
 
 /// GALLERY images are the project's screenshots; DASHBOARD images are admin screens with an annotated tour.
@@ -92,6 +93,39 @@ enum ReferralStatus {
   NOT_ELIGIBLE
   REWARD_DUE
   PAID
+}
+
+/// HIDDEN = section not shown; PROPOSED = shown with a "Concept / proposed architecture" label.
+enum ArchitectureStatus {
+  HIDDEN
+  PROPOSED
+  CONFIRMED
+}
+
+enum ArchitectureNodeKind {
+  CLIENT
+  FRONTEND
+  API
+  BACKEND
+  DATABASE
+  EXTERNAL
+}
+
+enum AiServiceStatus {
+  AVAILABLE
+  COMING_SOON
+  HIDDEN
+}
+
+enum AiServiceCta {
+  CONTACT
+  WAITLIST
+  NONE
+}
+
+enum InquiryKind {
+  INQUIRY
+  WAITLIST
 }
 
 enum InquiryStatus {
@@ -231,6 +265,8 @@ model MediaAsset {
   heroDepthOf   SiteSettings[] @relation("HeroDepth")
   heroModelOf   SiteSettings[] @relation("HeroModel")
   ogImageOf     SiteSettings[] @relation("OgImage")
+  processSteps  ProcessStep[]
+  aiServices    AiService[]
 }
 
 // ─── Profile ────────────────────────────────────────────────────────────────
@@ -244,8 +280,6 @@ model Profile {
   portrait     MediaAsset?          @relation("Portrait", fields: [portraitId], references: [id], onDelete: SetNull)
   // Spoken languages, shown as-is (e.g. "Arabic", "French").
   languages    String[]
-  // { frontend: string[], backend: string[], databases: string[], tools: string[] }
-  skills       Json                 @default("{}")
   translations ProfileTranslation[]
   updatedAt    DateTime             @updatedAt
 }
@@ -286,45 +320,156 @@ model ExperienceTranslation {
   @@id([itemId, locale])
 }
 
+// ─── Skills ─────────────────────────────────────────────────────────────────
+
+/// A family of skills ("Programming languages", "Database tools"...), in display order.
+model SkillGroup {
+  id           String                  @id @default(uuid())
+  key          String                  @unique
+  sortOrder    Int                     @default(0)
+  visible      Boolean                 @default(true)
+  translations SkillGroupTranslation[]
+  skills       Skill[]
+}
+
+model SkillGroupTranslation {
+  groupId  String
+  group    SkillGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  locale   String
+  name     String
+  reviewed Boolean    @default(false)
+
+  @@id([groupId, locale])
+}
+
+model Skill {
+  id           String             @id @default(uuid())
+  groupId      String
+  group        SkillGroup         @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  /// Brand names are not translated ("Power BI").
+  name         String
+  /// Periodic-table symbol; empty = derived from the name (src/lib/stack.ts).
+  symbol       String?
+  sortOrder    Int                @default(0)
+  visible      Boolean            @default(true)
+  translations SkillTranslation[]
+  projects     SkillProject[]
+
+  @@index([groupId, sortOrder])
+}
+
+/// "How I use it", in the owner's words. Empty = only the name is shown. No proficiency levels.
+model SkillTranslation {
+  skillId  String
+  skill    Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  locale   String
+  usage    String  @db.Text
+  reviewed Boolean @default(false)
+
+  @@id([skillId, locale])
+}
+
+/// Projects the owner says demonstrate a skill.
+model SkillProject {
+  skillId   String
+  skill     Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([skillId, projectId])
+}
+
+// ─── How I work ─────────────────────────────────────────────────────────────
+
+model ProcessStep {
+  id           String                   @id @default(uuid())
+  /// Icon name from src/components/about/process-icons.ts; empty = the step number only.
+  icon         String?
+  mediaId      String?
+  media        MediaAsset?              @relation(fields: [mediaId], references: [id], onDelete: SetNull)
+  sortOrder    Int                      @default(0)
+  visible      Boolean                  @default(true)
+  translations ProcessStepTranslation[]
+}
+
+model ProcessStepTranslation {
+  stepId      String
+  step        ProcessStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  locale      String
+  title       String
+  description String      @db.Text
+  reviewed    Boolean     @default(false)
+
+  @@id([stepId, locale])
+}
+
 // ─── Projects ───────────────────────────────────────────────────────────────
 
 model Project {
-  id           String               @id @default(uuid())
-  slug         String               @unique
-  category     ProjectCategory
+  id                 String               @id @default(uuid())
+  slug               String               @unique
+  category           ProjectCategory
   // null = not confirmed by the owner yet; no label is shown.
-  origin       ProjectOrigin?
-  stage        ProjectStage
-  status       PublishStatus        @default(DRAFT)
-  featured     Boolean              @default(false)
-  sortOrder    Int                  @default(0)
-  projectDate  DateTime?
-  technologies String[]
-  translations ProjectTranslation[]
-  images       ProjectImage[]
-  links        ProjectLink[]
-  testimonials Testimonial[]
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @updatedAt
+  origin             ProjectOrigin?
+  stage              ProjectStage
+  status             PublishStatus        @default(DRAFT)
+  featured           Boolean              @default(false)
+  sortOrder          Int                  @default(0)
+  projectDate        DateTime?
+  technologies       String[]
+  translations       ProjectTranslation[]
+  images             ProjectImage[]
+  links              ProjectLink[]
+  testimonials       Testimonial[]
+  skills             SkillProject[]
+  /// "How it's built" section; every graph starts HIDDEN or PROPOSED until the owner confirms it.
+  architectureStatus ArchitectureStatus   @default(HIDDEN)
+  architectureNodes  ArchitectureNode[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
 
   @@index([status, sortOrder])
 }
 
 model ProjectTranslation {
-  projectId String
-  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  locale    String
-  title     String
-  summary   String   @db.Text
-  problem   String?  @db.Text
-  role      String?  @db.Text
-  solution  String?  @db.Text
-  challenge String?  @db.Text
-  outcome   String?  @db.Text
-  features  String[]
-  reviewed  Boolean  @default(false)
+  projectId    String
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  locale       String
+  title        String
+  summary      String   @db.Text
+  problem      String?  @db.Text
+  role         String?  @db.Text
+  solution     String?  @db.Text
+  challenge    String?  @db.Text
+  outcome      String?  @db.Text
+  features     String[]
+  /// How it's built, in plain language.
+  frontendText String?  @db.Text
+  backendText  String?  @db.Text
+  databaseText String?  @db.Text
+  flowText     String?  @db.Text
+  reviewed     Boolean  @default(false)
 
   @@id([projectId, locale])
+}
+
+/// One box of a project's architecture graph. parentId = null: the main left-to-right chain, in
+/// sortOrder; set: a branch hanging off that node (e.g. image storage off the server).
+model ArchitectureNode {
+  id         String               @id @default(uuid())
+  projectId  String
+  project    Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  kind       ArchitectureNodeKind
+  technology String?
+  parentId   String?
+  parent     ArchitectureNode?    @relation("Branch", fields: [parentId], references: [id], onDelete: Cascade)
+  branches   ArchitectureNode[]   @relation("Branch")
+  /// Per-language text, e.g. {"en": "Order server"}; empty = the default name for the kind.
+  label      Json?
+  body       Json?
+  sortOrder  Int                  @default(0)
+
+  @@index([projectId, sortOrder])
 }
 
 model ProjectImage {
@@ -454,37 +599,68 @@ model PackagePrice {
 
 // ─── Referral ───────────────────────────────────────────────────────────────
 
-// market = country code, or "*" for every country without its own offer.
-model CountryOffer {
-  id                   String                    @id @default(uuid())
-  market               String
-  currency             String
-  rewardMinor          BigInt
-  category             ProjectCategory?
-  minProjectValueMinor BigInt?
-  status               PublishStatus             @default(DRAFT)
-  sortOrder            Int                       @default(0)
-  translations         CountryOfferTranslation[]
-  referrals            Referral[]
-
-  @@index([market, status])
+/// A referral programme. It applies only to the countries listed in it (no "everyone else").
+model ReferralOffer {
+  id           String                     @id @default(uuid())
+  /// Internal name, admin only.
+  name         String
+  status       PublishStatus              @default(DRAFT)
+  sortOrder    Int                        @default(0)
+  translations ReferralOfferTranslation[]
+  countries    ReferralOfferCountry[]
 }
 
-model CountryOfferTranslation {
-  offerId    String
-  offer      CountryOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
-  locale     String
-  whenEarned String       @db.Text
-  terms      String       @db.Text
-  reviewed   Boolean      @default(false)
+/// Default texts for every country in the offer; a country can override them.
+model ReferralOfferTranslation {
+  offerId          String
+  offer            ReferralOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  locale           String
+  eligibility      String        @db.Text
+  payoutConditions String        @db.Text
+  terms            String        @db.Text
+  reviewed         Boolean       @default(false)
 
   @@id([offerId, locale])
 }
 
+/// One eligible country, chosen explicitly by the owner, with its own currency and reward.
+model ReferralOfferCountry {
+  id                   String                            @id @default(uuid())
+  offerId              String
+  offer                ReferralOffer                     @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  /// ISO 3166-1 alpha-2.
+  country              String
+  available            Boolean                           @default(true)
+  currency             String
+  rewardMinor          BigInt
+  /// Project categories covered; empty = every category.
+  categories           ProjectCategory[]
+  minProjectValueMinor BigInt?
+  status               PublishStatus                     @default(DRAFT)
+  translations         ReferralOfferCountryTranslation[]
+  referrals            Referral[]
+
+  @@unique([offerId, country])
+  @@index([country, status])
+}
+
+/// Per-country overrides; empty fields use the offer's text.
+model ReferralOfferCountryTranslation {
+  offerCountryId   String
+  offerCountry     ReferralOfferCountry @relation(fields: [offerCountryId], references: [id], onDelete: Cascade)
+  locale           String
+  eligibility      String?              @db.Text
+  payoutConditions String?              @db.Text
+  terms            String?              @db.Text
+  reviewed         Boolean              @default(false)
+
+  @@id([offerCountryId, locale])
+}
+
 model Referral {
-  id                     String          @id @default(uuid())
+  id                     String                @id @default(uuid())
   offerId                String?
-  offer                  CountryOffer?   @relation(fields: [offerId], references: [id], onDelete: SetNull)
+  offer                  ReferralOfferCountry? @relation(fields: [offerId], references: [id], onDelete: SetNull)
   referrerName           String
   referrerEmail          String?
   referrerPhone          String?
@@ -493,20 +669,53 @@ model Referral {
   clientContact          String
   clientCountry          String?
   projectCategory        ProjectCategory
-  message                String?         @db.Text
+  message                String?               @db.Text
   locale                 String
   consent                Boolean
-  status                 ReferralStatus  @default(NEW)
+  status                 ReferralStatus        @default(NEW)
   // Reward promised at submission time; later offer edits don't change it.
   rewardMinorSnapshot    BigInt?
   rewardCurrencySnapshot String?
-  adminNotes             String?         @db.Text
+  adminNotes             String?               @db.Text
   paidAt                 DateTime?
   archivedAt             DateTime?
-  createdAt              DateTime        @default(now())
-  updatedAt              DateTime        @updatedAt
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
 
   @@index([status, createdAt])
+}
+
+// ─── AI services ────────────────────────────────────────────────────────────
+
+/// AVAILABLE services are offered now; COMING_SOON ones never show a price or a "start" button.
+model AiService {
+  id              String                 @id @default(uuid())
+  key             String                 @unique
+  status          AiServiceStatus        @default(HIDDEN)
+  publishStatus   PublishStatus          @default(DRAFT)
+  cta             AiServiceCta           @default(CONTACT)
+  /// Coming Soon items only: show the waitlist form.
+  waitlistEnabled Boolean                @default(false)
+  /// Finance and trading items show the "no financial advice, no promised returns" note.
+  financial       Boolean                @default(false)
+  icon            String?
+  mediaId         String?
+  media           MediaAsset?            @relation(fields: [mediaId], references: [id], onDelete: SetNull)
+  sortOrder       Int                    @default(0)
+  translations    AiServiceTranslation[]
+  inquiries       ContactInquiry[]
+}
+
+model AiServiceTranslation {
+  serviceId   String
+  service     AiService @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  locale      String
+  title       String
+  description String    @db.Text
+  ctaLabel    String?
+  reviewed    Boolean   @default(false)
+
+  @@id([serviceId, locale])
 }
 
 // ─── Contact ────────────────────────────────────────────────────────────────
@@ -523,6 +732,9 @@ model ContactInquiry {
   message         String           @db.Text
   locale          String
   consent         Boolean
+  kind            InquiryKind      @default(INQUIRY)
+  aiServiceId     String?
+  aiService       AiService?       @relation(fields: [aiServiceId], references: [id], onDelete: SetNull)
   status          InquiryStatus    @default(NEW)
   adminNotes      String?          @db.Text
   archivedAt      DateTime?

@@ -7,8 +7,12 @@ import { prisma } from "@/server/db";
 import {
   addDashboardScreens,
   addProjectImages,
+  deleteArchitectureNode,
   deleteHotspot,
+  moveArchitectureNode,
   removeProjectImage,
+  saveArchitecture,
+  saveArchitectureNode,
   saveDashboardScreen,
   saveHotspot,
   saveProject,
@@ -17,6 +21,7 @@ import {
   updateProjectImage,
 } from "@/server/actions/projects";
 import { HotspotPicker } from "@/components/admin/HotspotPicker";
+import { MoveButtons } from "@/components/admin/MoveButtons";
 import { DASHBOARD_ICON_NAMES } from "@/components/projects/dashboard-icons";
 import { CATEGORY_OPTIONS, Card, Checkbox, Flash, Input, LocaleTabs, PageTitle, Select, STATUS_OPTIONS, Textarea } from "@/components/admin/ui";
 import { SubmitButton } from "@/components/admin/buttons";
@@ -29,6 +34,21 @@ const KIND_OPTIONS = [
   { value: "REAL", label: "Real screenshot" },
   { value: "CONCEPT", label: "Concept visual (labelled on the site)" },
   { value: "DEMO", label: "Demo build (labelled on the site)" },
+  { value: "VISUAL_EXPLORATION", label: "Visual exploration (labelled on the site)" },
+];
+
+const ARCH_STATUS = [
+  { value: "HIDDEN", label: "Hidden (no section on the project page)" },
+  { value: "PROPOSED", label: "Proposed: shown with a “Concept / proposed architecture” label" },
+  { value: "CONFIRMED", label: "Confirmed: matches the real project" },
+];
+const ARCH_KINDS = [
+  { value: "CLIENT", label: "Visitor / client (browser, phone)" },
+  { value: "FRONTEND", label: "Frontend (website or app screens)" },
+  { value: "API", label: "API" },
+  { value: "BACKEND", label: "Backend / server" },
+  { value: "DATABASE", label: "Database" },
+  { value: "EXTERNAL", label: "External service (payments, storage, email...)" },
 ];
 
 export default async function ProjectEditor({ params, searchParams }: PageProps<"/admin/projects/[id]">) {
@@ -41,6 +61,7 @@ export default async function ProjectEditor({ params, searchParams }: PageProps<
       translations: true,
       images: { orderBy: { sortOrder: "asc" }, include: { media: true, hotspots: { orderBy: { sortOrder: "asc" } } } },
       links: true,
+      architectureNodes: { orderBy: { sortOrder: "asc" } },
     },
   });
   if (!project) notFound();
@@ -267,6 +288,80 @@ export default async function ProjectEditor({ params, searchParams }: PageProps<
               <Select label="Label on the site" name="kind" options={KIND_OPTIONS.filter((k) => k.value !== "CONCEPT")} defaultValue="DEMO" />
               <SubmitButton>Upload</SubmitButton>
             </form>
+          </div>
+        </Card>
+      </div>
+
+      <div id="architecture" className="scroll-mt-24">
+        <Card
+          title="How it's built"
+          description={`Architecture section on the project page: plain-language texts and a flow graph. Keep it true to the real project; if anything is unconfirmed, choose “Proposed”. Texts edited in ${localeNames[locale]} (language tabs are in “Text by language”).`}
+        >
+          <form action={saveArchitecture} className="grid gap-4 md:grid-cols-2">
+            <input type="hidden" name="id" value={project.id} />
+            <input type="hidden" name="locale" value={locale} />
+            <Select label="Status" name="architectureStatus" options={ARCH_STATUS} defaultValue={project.architectureStatus} className="md:col-span-2" />
+            <Textarea label="Frontend: how it's built and what users interact with" name="frontendText" defaultValue={tr?.frontendText ?? en?.frontendText} rows={3} maxLength={2000} dir={dir(locale)} />
+            <Textarea label="Backend / server: how requests and business logic are handled" name="backendText" defaultValue={tr?.backendText ?? en?.backendText} rows={3} maxLength={2000} dir={dir(locale)} />
+            <Textarea label="Database: which one, and what kind of information it stores" name="databaseText" defaultValue={tr?.databaseText ?? en?.databaseText} rows={3} maxLength={2000} dir={dir(locale)} />
+            <Textarea label="Request flow: browser → website → server → database / services" name="flowText" defaultValue={tr?.flowText ?? en?.flowText} rows={3} maxLength={2000} dir={dir(locale)} />
+            <div className="md:col-span-2">
+              <SubmitButton>Save architecture</SubmitButton>
+            </div>
+          </form>
+
+          <h3 className="mb-1 mt-8 border-t border-line pt-6 font-bold text-mist">Flow graph</h3>
+          <p className="mb-4 text-sm text-mist/60">Main chain from left to right (top to bottom on phones). A step can branch off a main step, e.g. image storage off the server. Empty names use the default name for the kind.</p>
+          <div className="flex flex-col gap-3">
+            {(() => {
+              const main = project.architectureNodes.filter((n) => !n.parentId);
+              const parentOptions = [{ value: "", label: "Main chain" }, ...main.map((m, mi) => ({ value: m.id, label: `Branch of step ${mi + 1} (${m.kind.toLowerCase()})` }))];
+              const row = (n: (typeof project.architectureNodes)[number], idx: number, siblings: typeof project.architectureNodes, branch: boolean) => (
+                <div key={`${n.id}-${locale}`} className={`rounded-xl border border-line p-3 ${branch ? "ms-6 border-dashed md:ms-12" : ""}`}>
+                  <div className="mb-2 flex items-center justify-between gap-3 text-sm">
+                    <span className="font-bold text-mist">{branch ? `↳ Branch ${idx + 1}` : `Step ${idx + 1}`}</span>
+                    <MoveButtons action={moveArchitectureNode} id={n.id} locale={locale} first={idx === 0} last={idx === siblings.length - 1} label="step" />
+                  </div>
+                  <form action={saveArchitectureNode} className="grid gap-3 md:grid-cols-[1fr_1fr_1fr] md:items-end">
+                    <input type="hidden" name="projectId" value={project.id} />
+                    <input type="hidden" name="nodeId" value={n.id} />
+                    <input type="hidden" name="locale" value={locale} />
+                    <Select label="Kind" name="kind" options={ARCH_KINDS} defaultValue={n.kind} />
+                    <Input label="Technology" name="technology" defaultValue={n.technology} maxLength={80} placeholder="e.g. PostgreSQL" />
+                    <Select label="Position" name="parentId" options={parentOptions.filter((o) => o.value !== n.id)} defaultValue={n.parentId ?? ""} />
+                    <Input label={`Name (${localeNames[locale]})`} name="label" defaultValue={text(n.label)} maxLength={80} dir={dir(locale)} placeholder="Optional" />
+                    <Input label={`One-line explanation (${localeNames[locale]})`} name="body" defaultValue={text(n.body)} maxLength={300} dir={dir(locale)} className="md:col-span-2" />
+                    <div className="flex gap-2 md:col-span-3">
+                      <SubmitButton variant="secondary">Save</SubmitButton>
+                      <SubmitButton variant="danger" formAction={deleteArchitectureNode} confirm="Delete this step (and its branches)?">
+                        Delete
+                      </SubmitButton>
+                    </div>
+                  </form>
+                </div>
+              );
+              return (
+                <>
+                  {main.map((m, mi) => {
+                    const branches = project.architectureNodes.filter((b) => b.parentId === m.id);
+                    return (
+                      <div key={m.id} className="flex flex-col gap-2">
+                        {row(m, mi, main, false)}
+                        {branches.map((b, bi) => row(b, bi, branches, true))}
+                      </div>
+                    );
+                  })}
+                  <form action={saveArchitectureNode} className="grid gap-3 rounded-xl border border-dashed border-line p-3 md:grid-cols-[1fr_1fr_1fr_auto] md:items-end">
+                    <input type="hidden" name="projectId" value={project.id} />
+                    <input type="hidden" name="locale" value={locale} />
+                    <Select label="New step: kind" name="kind" options={ARCH_KINDS} defaultValue="BACKEND" />
+                    <Input label="Technology" name="technology" maxLength={80} />
+                    <Select label="Position" name="parentId" options={parentOptions} defaultValue="" />
+                    <SubmitButton variant="secondary">Add step</SubmitButton>
+                  </form>
+                </>
+              );
+            })()}
           </div>
         </Card>
       </div>

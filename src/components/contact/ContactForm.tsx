@@ -12,17 +12,21 @@ export function ContactForm({
   defaultCountry,
   defaultBudget,
   defaultCategory,
+  aiService,
   headingId,
 }: {
   countries: { code: string; name: string }[];
   defaultCountry: string | null;
   defaultBudget?: string;
   defaultCategory?: string;
+  /** Set when the visitor came from an AI service's button; the inquiry is linked to it. */
+  aiService?: { id: string; title: string };
   /** When the page shows its own heading for the form, pass its id; the form then skips its own. */
   headingId?: string;
 }) {
   const t = useTranslations("contact");
   const tp = useTranslations("projects");
+  const tAi = useTranslations("ai");
   const { status, errors, formError, onSubmit, sendingLabel } = usePublicForm("/api/contact", { emailOrPhone: ["email", "phone"] });
 
   return (
@@ -75,6 +79,12 @@ export function ContactForm({
 
       <fieldset className="flex flex-col gap-6">
         <legend className="mb-4 text-sm uppercase tracking-widest text-mist/60">{t("groupProject")}</legend>
+        {aiService && (
+          <p className="w-fit rounded-full border border-ice/40 px-4 py-1.5 text-sm text-ice">
+            <input type="hidden" name="aiServiceId" value={aiService.id} />
+            {tAi("aboutService", { service: aiService.title })}
+          </p>
+        )}
         <SelectField
           name="projectCategory"
           label={t("category")}

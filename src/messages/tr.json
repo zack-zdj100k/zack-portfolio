@@ -31,7 +31,7 @@
     "privacy": "Gizlilik"
   },
   "home": {
-    "metaDescription": "İşletmeler için web siteleri, uygulamalar ve masaüstü yazılımlar geliştiren yazılım mühendisi. Projelere, hizmetlere ve fiyatlara göz atın, sonra projenizi konuşalım.",
+    "metaDescription": "Şirketler, küçük işletmeler, girişimler ve proje fikri olan kişiler için web siteleri, uygulamalar ve masaüstü yazılımlar geliştiren yazılım mühendisi. Projeleri, hizmetleri ve fiyatları görün, sonra projenizi konuşalım.",
     "hero": {
       "greeting": "Merhaba, ben",
       "ctaPrimary": "Projeyi konuşalım",
@@ -58,12 +58,12 @@
     },
     "referral": {
       "title": "Bir proje getir. Ödülü paylaş.",
-      "body": "Web sitesi, uygulama ya da masaüstü yazılıma ihtiyacı olan bir işletme tanıyor musunuz? Bizi tanıştırın. Proje teklif koşullarına göre gerçekleşirse ödül kazanırsınız.",
+      "body": "Web sitesine, uygulamaya ya da masaüstü yazılıma ihtiyacı olan bir işletme, girişim veya projesi olan birini mi tanıyorsunuz? Bizi tanıştırın. Proje teklif koşullarına göre başlarsa ödül kazanırsınız.",
       "cta": "Tavsiye teklifini gör"
     },
     "contact": {
       "title": "İşinizi büyütelim ya da sıfırdan kuralım.",
-      "body": "İşletmenizin neye ihtiyacı olduğunu anlatın. Sorular, bir plan ve bir tahminle dönüş yapayım."
+      "body": "İşletmenizin veya projenizin neye ihtiyacı olduğunu anlatın. Sorular, bir plan ve bir tahminle dönüş yapayım."
     }
   },
   "about": {
@@ -82,7 +82,7 @@
       "appsBody": "Mağazalar, şirketler ve restoranlar için web ve mobil uygulamalar; müşterilerinizin ve ekibinizin her gün tekrarladığı işlere göre tasarlanır.",
       "softwareTitle": "Masaüstü yazılımlar",
       "softwareBody": "Mağazalar, kafeler, restoranlar ve ofisler için programlar: satış, stok, siparişler ve işletmenizin günlük kayıtları.",
-      "intro": "İşletmenizin çalışma şekline göre planlanır ve her gün kolayca kullanılır."
+      "intro": "İşletmenizin veya projenizin işleyişine göre planlanır, her gün kolayca kullanılır."
     },
     "experience": {
       "title": "Deneyim",
@@ -91,7 +91,7 @@
     "howIWork": {
       "title": "Nasıl çalışıyorum",
       "understandTitle": "Anlamak",
-      "understandBody": "İşinizi, müşterilerinizi ve çözmek istediğiniz sorunu konuşuruz.",
+      "understandBody": "İşinizi veya fikrinizi, hitap ettiği kişileri ve çözmek istediğiniz sorunu konuşuruz.",
       "planTitle": "Planlamak",
       "planBody": "Çalışma başlamadan önce yazılı bir kapsam alırsınız: özellikler, süre ve fiyat.",
       "buildTitle": "Geliştirmek",
@@ -121,7 +121,7 @@
     "facts": {
       "title": "Kısaca",
       "focus": "Odak",
-      "focusValue": "İşletmeler için yazılım",
+      "focusValue": "İşletmeler ve projeler için yazılım",
       "stack": "Ana teknolojiler"
     },
     "badge": {
@@ -132,6 +132,11 @@
       "title": "Teknolojilerim, periyodik tablo olarak.",
       "intro": "Görmek için bir kutunun üzerine gelin veya dokunun. Bir aileyi aydınlatmak için seçin.",
       "all": "Tümü"
+    },
+    "usage": {
+      "title": "Teknolojilerimi nasıl kullanıyorum",
+      "intro": "Her aracın işimdeki yeri, kendi sözlerimle, ve onu görebileceğiniz projeler.",
+      "shownIn": "Görüldüğü proje"
     }
   },
   "projects": {
@@ -161,12 +166,14 @@
     },
     "imageNote": {
       "CONCEPT": "Konsept olarak işaretlenen görseller görsel denemelerdir, son ekran görüntüleri değildir.",
-      "DEMO": "Görseller canlı ürünü değil, bir demo sürümünü gösterir."
+      "DEMO": "Görseller canlı ürünü değil, bir demo sürümünü gösterir.",
+      "VISUAL_EXPLORATION": "Görsel keşif olarak işaretlenen görseller tasarım çalışmalarıdır, bitmiş ürünün ekran görüntüleri değildir."
     },
     "imageKind": {
       "REAL": "Ekran görüntüsü",
       "CONCEPT": "Konsept görsel",
-      "DEMO": "Demo sürümü"
+      "DEMO": "Demo sürümü",
+      "VISUAL_EXPLORATION": "Görsel keşif"
     },
     "detail": {
       "back": "Tüm projeler",
@@ -192,13 +199,33 @@
       "dashboardTitle": "Arkadaki yönetim paneli",
       "dashboardIntro": "Her simgenin bir görevi var. İşletmeye ne kattığını görmek için bir numaranın üzerine gelin veya dokunun.",
       "screens": "Panel ekranları"
+    },
+    "arch": {
+      "title": "Nasıl yapıldı",
+      "intro": "Ne gördüğünüz, arkada ne olduğu ve bilgilerin nerede tutulduğu, sade bir dille.",
+      "proposed": "Konsept / önerilen mimari",
+      "proposedNote": "Bu özet, projenin teknoloji listesinden hazırlanmıştır ve ayrıntıları henüz doğrulanmamıştır. Gerçek yapı farklı olabilir.",
+      "graph": "Bir isteğin yolu, adım adım",
+      "branches": "Bağlı servisler",
+      "frontend": "Ön yüz: kullanıcıların gördüğü ve kullandığı",
+      "backend": "Arka uç ve sunucu: istekler ve iş mantığı",
+      "database": "Veritabanı: neler saklanır",
+      "flow": "Bir istek nasıl ilerler",
+      "kinds": {
+        "CLIENT": "Ziyaretçi",
+        "FRONTEND": "Web sitesi",
+        "API": "API",
+        "BACKEND": "Sunucu",
+        "DATABASE": "Veritabanı",
+        "EXTERNAL": "Harici servis"
+      }
     }
   },
   "pricing": {
     "metaTitle": "Hizmetler ve Fiyatlar",
-    "metaDescription": "İşletmeler için web siteleri, uygulamalar ve masaüstü yazılımlar; başlangıç fiyatları, nelerin dahil olduğu ve alan adı, barındırma ve bakımın işleyişi.",
+    "metaDescription": "Şirketler, küçük işletmeler, girişimler ve bireysel projeler için web siteleri, uygulamalar ve masaüstü yazılımlar: başlangıç fiyatları, nelerin dahil olduğu ve alan adı, barındırma ile bakımın nasıl işlediği.",
     "title": "Hizmetler ve Fiyatlar",
-    "intro": "Her proje işinize ve kapsamına göre planlanır. Önce hizmetler, ardından fiyatlandırmanın işleyişi.",
+    "intro": "Her proje işinize veya fikrinize ve kapsamına göre planlanır. Önce hizmetler, ardından fiyatlandırmanın işleyişi.",
     "servicesTitle": "Hizmetler",
     "pricingTitle": "Fiyatlar",
     "pricingIntro": "Fiyatlar başlangıç noktalarıdır. Son teklif kapsam, özellikler, entegrasyonlar, tasarım ve süreye bağlıdır ve çalışma başlamadan önce yazılı olarak verilir.",
@@ -222,7 +249,7 @@
       "maintenanceTitle": "Bakım",
       "maintenanceBody": "Teslim edilen kapsamdaki hatalar düzeltilir. Yeni özellikler veya kapsam değişiklikleri ayrıca fiyatlandırılır.",
       "goalTitle": "Amaç",
-      "goalBody": "İşinizi kolaylaştıran ve işletmenizin büyümesine yardımcı olan bir yazılım. Sonuçlar birçok etkene bağlıdır, bu yüzden belirli satış rakamları vaat edilmez."
+      "goalBody": "İşinizi kolaylaştıran ve işletmenizin ya da projenizin büyümesine yardımcı olan yazılım. Sonuçlar birçok etkene bağlıdır, bu yüzden belirli satış rakamları vaat edilmez."
     },
     "estimator": {
       "title": "Bütçenizi belirleyin",
@@ -250,7 +277,7 @@
     "metaTitle": "Tavsiye teklifi",
     "metaDescription": "Web sitesi, uygulama veya masaüstü yazılıma ihtiyacı olan bir işletmeyi tavsiye edin; proje teklif koşullarına göre gerçekleşince ödül kazanın.",
     "title": "Bir proje getir. Ödülü paylaş.",
-    "intro": "Web sitesi, uygulama ya da masaüstü yazılıma ihtiyacı olan bir işletme tanıyor musunuz? Bizi tanıştırın. Proje gerçekleşir ve aşağıdaki koşulları sağlarsa ödül kazanırsınız.",
+    "intro": "Web sitesine, uygulamaya ya da masaüstü yazılıma ihtiyacı olan bir işletme, girişim veya projesi olan birini mi tanıyorsunuz? Onu tanıtın. Proje başlar ve aşağıdaki koşulları karşılarsa ödül kazanırsınız.",
     "howTitle": "Nasıl çalışır",
     "step1Title": "Tanıştırın",
     "step1Body": "İşletmenin bilgilerini, onun izniyle aşağıdaki formla gönderin.",
@@ -260,7 +287,7 @@
     "step3Body": "Teklif koşulları sağlandığında ödülünüz ödenir.",
     "countryLabel": "Ülkeniz",
     "countryPlaceholder": "Ülkenizi seçin",
-    "countryHint": "Ödül ülkenize göre değişir.",
+    "countryHint": "Teklifler ülkeye göre belirlenir. Geçerli olanı görmek için ülkenizi seçin.",
     "rewardHeadline": "Ödülünüz: {amount}",
     "rewardPerProject": "koşulları sağlayan her tavsiye edilen proje için",
     "rewardFor": "Geçerli olduğu alan: {category}",
@@ -286,7 +313,8 @@
     "consent": "İşletmenin iletişime geçilmesini kabul ettiğini onaylıyor ve bu tavsiyenin işlenmesi için bilgilerimin saklanmasını kabul ediyorum.",
     "submit": "Tavsiyeyi gönder",
     "successTitle": "Tavsiye alındı. Teşekkürler!",
-    "successBody": "İşletmeyle iletişime geçip sizi bilgilendireceğim."
+    "successBody": "İşletmeyle iletişime geçip sizi bilgilendireceğim.",
+    "eligibility": "Kimler katılabilir"
   },
   "contact": {
     "metaTitle": "İletişim",
@@ -333,7 +361,8 @@
     "generic": "Bir sorun oluştu. Tekrar deneyin veya başka bir iletişim yolu kullanın.",
     "network": "Mesaj gönderilemedi. Bağlantınızı kontrol edip tekrar deneyin.",
     "sending": "Gönderiliyor...",
-    "fixErrors": "Lütfen işaretli alanları düzeltin."
+    "fixErrors": "Lütfen işaretli alanları düzeltin.",
+    "notEligible": "Ülkenizdeki tavsiye teklifi bu proje türünü kapsamıyor."
   },
   "privacy": {
     "metaTitle": "Gizlilik",
@@ -349,5 +378,87 @@
     "rightsBody": "Bilgilerinizi görmek, düzeltmek veya silmek için istediğiniz zaman iletişim sayfasından talepte bulunabilirsiniz.",
     "cookiesTitle": "Çerezler",
     "cookiesBody": "Site izleme çerezi kullanmaz. Dili değiştirdiğinizde bir çerez seçiminizi hatırlar."
+  },
+  "ai": {
+    "title": "Yapay zekâ hizmetleri",
+    "intro": "İşletmeniz veya projeniz için gerçek iş yapan, mevcut çalışma şeklinize göre kurulan yapay zekâ. Bugün sunulanlar açıkça belirtilmiştir; diğerleri yolda.",
+    "available": "Şimdi mevcut",
+    "availableBadge": "Şimdi mevcut",
+    "comingSoon": "Yakında",
+    "comingSoonBadge": "Yakında",
+    "notYetAvailable": "Henüz mevcut değil. Bir başlangıç tarihi vaat edilmiyor.",
+    "cta": "Konuşalım",
+    "waitlistCta": "Bekleme listesine katıl",
+    "waitlistIntro": "E-postanızı bırakın, hizmet sunulduğunda haber alın. Başka bir şey değil.",
+    "waitlistConsent": "Bu hizmet sunulduğunda bilgilendirilmek için adımın, e-postamın ve ülkemin saklanmasını kabul ediyorum.",
+    "waitlistSubmit": "Katıl",
+    "waitlistSuccessTitle": "Listedesiniz.",
+    "waitlistSuccessBody": "Bu hizmet sunulduğunda tek bir mesaj alacaksınız.",
+    "financialNote": "Yalnızca yazılımdır. Finansal veya yatırım tavsiyesi değildir; hiçbir getiri, kâr ya da sonuç vaat edilmez.",
+    "aboutService": "Konu: {service}"
+  },
+  "showcase": {
+    "title": "Sitenizi kendiniz yönetin",
+    "intro": "Bu sitenin arkasındaki yönetim panelinin yapabildikleri bunlar. Projenizin de böyle bir paneli olabilir; içerikleri, fiyatları ve teklifleri bir geliştiriciyi beklemeden güncellersiniz.",
+    "note": "Ekranlar uydurma verilerle hazırlanmış bir demodur. Gerçek panel gizli ve korumalıdır.",
+    "demo": "Demo verisi",
+    "address": "admin · demo",
+    "screenOf": "Demo ekranı",
+    "features": {
+      "projects": {
+        "title": "Projeler",
+        "body": "Bir proje ekleyin, hikâyesini her dilde yazın, ekran görüntüleri yükleyin ve taslak ya da yayında seçin. Siz karar vermeden hiçbir şey yayına girmez."
+      },
+      "uploads": {
+        "title": "Görsel yükleme",
+        "body": "Ekran görüntülerini ve fotoğrafları bırakın. Otomatik olarak boyutlandırılır, gerçek, konsept veya demo olarak etiketlenir ve sitenin her yerinde kullanılabilir."
+      },
+      "pricing": {
+        "title": "Fiyatlar",
+        "body": "Ülkeye ve para birimine göre paketler; fiyat çubuğunun aralığı, teslim süreleri ve nelerin dahil olduğu."
+      },
+      "referral": {
+        "title": "Tavsiye teklifleri",
+        "body": "Hangi ülkelerin katılabileceğini tek tek seçin, sonra her biri için para birimi, ödül, kapsanan projeler ve koşulları belirleyin. Gelen tavsiyeler ödül ödenene kadar takip edilir."
+      },
+      "inquiries": {
+        "title": "Talepler",
+        "body": "İletişim formundan ve bekleme listelerinden gelen tüm mesajlar tek bir özel kutuda; durum, notlar ve hızlı e-posta ya da WhatsApp yanıtıyla."
+      },
+      "translations": {
+        "title": "Çeviriler",
+        "body": "Tüm herkese açık metinler 13 dilde, gözden geçirilenleri gösteren bir işaretle. Herhangi bir cümleyi koda dokunmadan değiştirin."
+      },
+      "profile": {
+        "title": "Profil",
+        "body": "Ad, unvan, fotoğraf, tanıtım, diller ve deneyim. Hakkımda sayfası kaydeder kaydetmez güncellenir."
+      },
+      "process": {
+        "title": "Nasıl çalışırım",
+        "body": "Sürecin adımlarını ekleyin, sıralayın, gizleyin veya yeniden yazın; her birine bir simge veya görsel verin."
+      },
+      "skills": {
+        "title": "Yetenekler",
+        "body": "Teknolojileri gruplayın, her birinin nasıl kullanıldığını anlatın ve onu gösteren projelere bağlayın."
+      },
+      "ai": {
+        "title": "Yapay zekâ hizmetleri",
+        "body": "Her hizmeti şimdi mevcut veya yakında olarak işaretleyin, açıklamasını ve görselini düzenleyin, bekleme listesini açıp kapatın."
+      }
+    }
+  },
+  "audience": {
+    "title": "Kimlerle çalışıyorum",
+    "intro": "Yalnızca büyük şirketlerle değil. Gerçek bir işiniz veya gerçek bir projeniz varsa, büyük ya da küçük, birlikte inşa edebiliriz.",
+    "companiesTitle": "Şirketler",
+    "companiesBody": "Yeni bir platforma, bir iç araca ya da tabloların yerini alacak bir sisteme ihtiyacı olan ekipler.",
+    "smallTitle": "Küçük işletmeler",
+    "smallBody": "Bulunmak ve çevrimiçi sipariş almak isteyen mağazalar, restoranlar, kafeler, klinikler ve yerel hizmetler.",
+    "startupsTitle": "Girişimciler ve girişimler",
+    "startupsBody": "Yayına alınacak, gerçek kullanıcılarla denenecek ve adım adım büyütülecek ilk sürüm.",
+    "individualsTitle": "Fikri olan bireyler",
+    "individualsBody": "Size ait bir iş, proje veya yazılım fikri, henüz başlangıçta olsa bile.",
+    "line": "Şirketlerle, küçük işletmelerle, girişimcilerle ve girişimlerle, ayrıca bir iş, proje veya yazılım fikri olan bireylerle çalışıyorum.",
+    "legit": "Hizmetler yasal işletmeler ve projeler içindir."
   }
 }

@@ -1,10 +1,14 @@
 # Round 6 requirements: plan, content model, admin schema, acceptance checklist
 
-Status: **planned, not built.** Implementation starts only after the owner sends the information in
-[owner-information.md](owner-information.md) (section "Round 6") and explicitly approves it. All
-earlier requirements in [roadmap.md](roadmap.md), [PRODUCT.md](../PRODUCT.md) and
+Status: **built (2026-10-11), owner approved implementation.** Owner facts that are still missing
+(skill descriptions, confirmed architecture, referral countries, AI service descriptions) are left
+empty or kept as drafts; nothing was invented. See "What still needs the owner" at the end.
+All earlier requirements in [roadmap.md](roadmap.md), [PRODUCT.md](../PRODUCT.md) and
 [architecture.md](architecture.md) still apply. Where this file changes an earlier decision, it says
 so.
+
+To update an existing installation: `npm install`, `npm run db:deploy` (or `db:migrate` locally),
+then `npm run db:seed` (adds the new rows; never overwrites your edits).
 
 Rules that apply to every item below: nothing is invented (skills, proficiency, project usage,
 architecture facts, prices, rewards, AI service descriptions); every public text is editable per
@@ -34,9 +38,10 @@ Groups (frameworks, databases and tools are never labelled as programming langua
 
 Public: the periodic-table display (home + About) reads these groups; the filter chips become the
 group names. A new **How I Use My Technologies** section lists each visible skill with the owner's
-own explanation and links to the projects that demonstrate it. No proficiency bars or levels. A
-skill with no usage text shows only its name, and a skill with no linked project shows no project
-line.
+own explanation and links to the projects that demonstrate it. No proficiency bars or levels. The
+section lists only skills that have a description or a linked project (the periodic table lists them
+all), and hides itself until at least one has. The earlier stack list is kept in four **hidden**
+"Previous list" groups so the owner can decide what to keep.
 
 Schema (replaces `Profile.skills`):
 
@@ -126,9 +131,9 @@ the nodes (add, edit, reorder, branch, delete), with a live preview of the graph
 
 ## 3. Editable "How I Work" process
 
-**Changes an earlier decision.** The steps are hard-coded today (`STEPS` + `about.howIWork.*` in
-`src/messages/*.json`, used on Home and About). They move to the database, seeded once from the
-current texts in all 13 languages so nothing visible changes on day one.
+**Changes an earlier decision.** The steps were hard-coded (`STEPS` + `about.howIWork.*` in
+`src/messages/*.json`, used on Home and About). They now live in the database, seeded once from those
+texts in all 13 languages. The desktop "pinned notes" layout now handles any number of steps.
 
 ```prisma
 model ProcessStep {
@@ -182,12 +187,14 @@ becomes a draft with **no countries** until the owner picks them.
 Admin, **Admin → Referral offers**: a multi-select country picker with search and region shortcuts
 (shortcuts only pre-tick, and the owner reviews every country). Each selected country can then be
 edited on its own: availability, currency, reward, categories, conditions, translations and status.
-A "copy settings to selected countries" helper covers several EUR countries at once.
+"Change several countries at once" updates currency, reward, status, availability or categories for
+the ticked countries. Offer texts (eligibility, payout conditions, terms) are the defaults; a country
+can override any of them per language.
 
 Public, **/referral**: the visitor picks their country first. Only that country's published,
-available offer is shown, in its own currency. With no offer, the page says "no referral offer in
-your country yet" and still shows the contact link. The submit endpoint re-checks eligibility on the
-server.
+available offer is shown, in its own currency, and the form only offers the project categories it
+covers. With no offer, the page says "no referral offer in your country yet" and still shows the
+contact link. The submit endpoint re-checks country and category on the server.
 
 ## 5. Intended audience
 
@@ -284,7 +291,26 @@ Log for this round (owner screenshots of 2026-10-11):
 
 ---
 
-## Implementation order (after approval)
+## Built (2026-10-11)
+
+| Item | Where |
+| --- | --- |
+| Schema + data migration | `prisma/migrations/20261011120000_round6` (old skills → hidden groups; CountryOffer → ReferralOffer/ReferralOfferCountry, ids kept so referrals stay linked; the "*" offer gets no countries) |
+| Seed content | `prisma/data/round6.ts` (skill groups, AI services, PROPOSED architecture drafts), steps from the message files |
+| Skills | Admin → Skills; `SkillsTable`, `SkillUsage` (About) |
+| Architecture | Admin → Projects → How it's built; `ArchitectureFlow` on project pages |
+| How I Work | Admin → How I work; `HowItWorks` (Home, About) |
+| Referral | Admin → Referral offers; `ReferralExperience`; `/api/referrals` |
+| Audience | `WhoIWorkWith` (Home, About, Services, Contact) + reworded texts in 13 languages; profile title default |
+| AI services | Admin → AI services; `AiServices` (Home, Services); `/api/waitlist`; contact `?service=` |
+| Device frames | `DeviceFrame` (project gallery, dashboard tour, preview) |
+| Admin Dashboard Preview | `AdminPreview` / `AdminShowcase` / `MockScreens` (Home, Services); registry `src/lib/admin-showcase.ts` typed against `src/components/admin/nav-items.ts` |
+
+Found while testing and fixed: an optional field missing from a public form request (not sent at
+all, rather than empty) was rejected as "required" (zod 4 treats a key as optional only through
+`.optional()`); the existing forms always sent every field, so only the new waitlist form hit it.
+
+## Implementation order (as built)
 
 1. Schema migration for items 1–4 and 6, plus data migration (skills JSON → tables, steps from
    messages → `ProcessStep`, `CountryOffer` → `ReferralOffer`/`ReferralOfferCountry`).
@@ -298,43 +324,61 @@ Log for this round (owner screenshots of 2026-10-11):
 ## Acceptance checklist
 
 Skills
-- [ ] Groups exactly as listed; no framework, database or tool appears under "Programming languages"
-- [ ] Admin can add, edit, reorder, hide and delete groups, skills and "How I use it" texts per language
-- [ ] No proficiency levels anywhere; project links only where the owner ticked them
+- [x] Groups exactly as listed; no framework, database or tool appears under "Programming languages"
+- [x] Admin can add, edit, reorder, hide and delete groups, skills and "How I use it" texts per language
+- [x] No proficiency levels anywhere; project links only where the owner ticked them
 
 Project architecture
-- [ ] Every published project shows frontend, backend, database, request flow, role and technologies, or hides the section
-- [ ] The flow graph matches that project's real nodes; unconfirmed graphs carry the "Concept / proposed architecture" badge
-- [ ] Graph is an ordered list for screen readers, static with reduced motion, vertical on phones
+- [x] Every published project shows frontend, backend, database, request flow, role and technologies, or hides the section
+- [x] The flow graph matches that project's real nodes; unconfirmed graphs carry the "Concept / proposed architecture" badge
+- [x] Graph is an ordered list for screen readers, static with reduced motion, vertical on phones
 
 How I Work
-- [ ] No step text is hard-coded in page components; Home and About read `ProcessStep`
-- [ ] Admin can add, edit, reorder, hide and delete steps, with icon/image and translations
+- [x] No step text is hard-coded in page components; Home and About read `ProcessStep`
+- [x] Admin can add, edit, reorder, hide and delete steps, with icon/image and translations
 
 Referral
-- [ ] No wildcard: an unlisted country sees "no offer in your country yet"
-- [ ] Two EUR countries can have different offers; a non-EUR country shows its own currency
-- [ ] Availability, currency, reward, categories, conditions, translations and status are editable per country
-- [ ] Server rejects referrals for countries without a published, available offer
+- [x] No wildcard: an unlisted country sees "no offer in your country yet"
+- [x] Two EUR countries can have different offers; a non-EUR country shows its own currency
+- [x] Availability, currency, reward, categories, conditions, translations and status are editable per country
+- [x] Server rejects referrals for countries without a published, available offer
 
 Audience
-- [ ] Home, About, Services and Contact address companies, small businesses, entrepreneurs/startups and individuals with a legitimate idea, in all 13 languages
+- [x] Home, About, Services and Contact address companies, small businesses, entrepreneurs/startups and individuals with a legitimate idea, in all 13 languages
 
 AI services
-- [ ] AI agents and AI automations are marked available only once their descriptions are confirmed and published
-- [ ] The three Coming Soon items are visibly separate, with no price or "start" button
-- [ ] No text promises returns, profits or financial outcomes
-- [ ] Waitlist form appears only when the admin enables it; sign-ups arrive in Inquiries
+- [x] AI agents and AI automations are marked available only once their descriptions are confirmed and published
+- [x] The three Coming Soon items are visibly separate, with no price or "start" button
+- [x] No text promises returns, profits or financial outcomes
+- [x] Waitlist form appears only when the admin enables it; sign-ups arrive in Inquiries
 
 Screenshots and frames
-- [ ] Framed screenshots stay legible at 390 px (frame chrome reduced on phones)
-- [ ] Every non-real image carries a Concept / Demo / Visual Exploration badge
+- [x] Framed screenshots stay legible at 390 px (frame chrome reduced on phones)
+- [x] Every non-real image carries a Concept / Demo / Visual Exploration badge
 
 Admin Dashboard Preview
-- [ ] Synthetic data only, checked by searching the demo data for real names, emails and phone numbers
-- [ ] Every admin nav entry is in the showcase registry or explicitly excluded (build check)
-- [ ] Desktop scroll sync works; phones and reduced motion get the static step list
-- [ ] `/admin/*` still redirects to the login page when signed out
+- [x] Synthetic data only, checked by searching the demo data for real names, emails and phone numbers
+- [x] Every admin nav entry is in the showcase registry or explicitly excluded (build check)
+- [x] Desktop scroll sync works; phones and reduced motion get the static step list
+- [x] `/admin/*` still redirects to the login page when signed out
 
 Errors
-- [ ] Screenshots 1, 3, 4 and 5 no longer reproduce (done in this round, see log above)
+- [x] Screenshots 1, 3, 4 and 5 no longer reproduce (see log above)
+
+Verified with Playwright against a local PostgreSQL: every new admin flow through the real UI
+(skills, steps, referral countries incl. the clash check, AI services incl. the promise-wording
+check, waitlist, architecture branch), the public results, and every public page at 390 / 768 /
+1024 / 1440 px in English and Arabic (RTL) plus reduced motion: no horizontal scroll, no console
+errors. Typecheck and lint clean.
+
+## What still needs the owner
+
+- How you use each technology, and which projects show it (Admin → Skills). Until then the "How I
+  use my technologies" section stays hidden.
+- Confirm or correct the three architecture drafts, then set them to Confirmed (they show
+  "Concept / proposed architecture" until then).
+- Referral: pick the eligible countries for the second offer (it has none), confirm amounts and
+  conditions, publish. Both offers are drafts.
+- AI agents / AI automations: confirm or rewrite the drafted descriptions, then publish them. Decide
+  whether the Coming Soon waitlists are on (off by default).
+- Review the machine-drafted translations of the new texts.

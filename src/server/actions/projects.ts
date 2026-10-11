@@ -2,7 +2,7 @@
 
 import { prisma } from "@/server/db";
 import { deleteMedia, saveImage } from "@/server/services/media";
-import { ActionError, bool, lines, list, localeOf, oneOf, optStr, slugify, str } from "./helpers";
+import { ActionError, bool, lines, list, localeOf, oneOf, optStr, reorderWrites, slugify, str } from "./helpers";
 import { DASHBOARD_ICON_NAMES } from "@/components/projects/dashboard-icons";
 import { adminAction } from "./run";
 
@@ -94,7 +94,7 @@ export async function addProjectImages(fd: FormData) {
     const files = fd.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
     if (files.length === 0) throw new ActionError("Select at least one image.");
     if (files.length > 12) throw new ActionError("Upload up to 12 images at a time.");
-    const kind = oneOf(fd, "kind", ["REAL", "CONCEPT", "DEMO"] as const, "REAL");
+    const kind = oneOf(fd, "kind", ["REAL", "CONCEPT", "DEMO", "VISUAL_EXPLORATION"] as const, "REAL");
     const alt = optStr(fd, "alt", 200);
     const last = await prisma.projectImage.aggregate({ where: { projectId: id }, _max: { sortOrder: true } });
     let order = (last._max.sortOrder ?? -1) + 1;
@@ -133,7 +133,7 @@ export async function updateProjectImage(fd: FormData) {
     const media = await prisma.mediaAsset.findUniqueOrThrow({ where: { id: image.mediaId } });
     const alt = { ...((media.alt as Record<string, string>) ?? {}), en: str(fd, "alt", 200) };
     await prisma.$transaction([
-      prisma.projectImage.update({ where: { id: imageId }, data: { kind: oneOf(fd, "kind", ["REAL", "CONCEPT", "DEMO"] as const, image.kind) } }),
+      prisma.projectImage.update({ where: { id: imageId }, data: { kind: oneOf(fd, "kind", ["REAL", "CONCEPT", "DEMO", "VISUAL_EXPLORATION"] as const, image.kind) } }),
       prisma.mediaAsset.update({ where: { id: media.id }, data: { alt } }),
     ]);
     return imageId;
@@ -235,7 +235,7 @@ export async function addDashboardScreens(fd: FormData) {
     const files = fd.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
     if (files.length === 0) throw new ActionError("Select at least one screenshot.");
     if (files.length > 6) throw new ActionError("Upload up to 6 screens at a time.");
-    const kind = oneOf(fd, "kind", ["REAL", "DEMO"] as const, "DEMO");
+    const kind = oneOf(fd, "kind", ["REAL", "DEMO", "VISUAL_EXPLORATION"] as const, "DEMO");
     const title = optStr(fd, "title", 60);
     const last = await prisma.projectImage.aggregate({ where: { projectId: id, section: "DASHBOARD" }, _max: { sortOrder: true } });
     let order = (last._max.sortOrder ?? -1) + 1;
@@ -256,7 +256,7 @@ export async function saveDashboardScreen(fd: FormData) {
     const image = await prisma.projectImage.findFirstOrThrow({ where: { id: imageId, projectId, section: "DASHBOARD" } });
     await prisma.projectImage.update({
       where: { id: imageId },
-      data: { title: withLocale(image.title, locale, optStr(fd, "title", 60)), kind: oneOf(fd, "kind", ["REAL", "DEMO"] as const, "DEMO") },
+      data: { title: withLocale(image.title, locale, optStr(fd, "title", 60)), kind: oneOf(fd, "kind", ["REAL", "DEMO", "VISUAL_EXPLORATION"] as const, "DEMO") },
     });
     return imageId;
   });
@@ -295,5 +295,98 @@ export async function deleteHotspot(fd: FormData) {
     const h = await prisma.projectHotspot.findFirstOrThrow({ where: { id: hotspotId, image: { projectId } } });
     await prisma.projectHotspot.delete({ where: { id: h.id } });
     return h.id;
+  });
+}
+
+const ARCH_KINDS = ["CLIENT", "FRONTEND", "API", "BACKEND", "DATABASE", "EXTERNAL"] as const;
+const archBack = (id: string, locale: string) => `/admin/projects/${id}?locale=${locale}#architecture`;
+
+/** "How it's built": status + the four plain-language texts for one language. */
+export async function saveArchitecture(fd: FormData) {
+  const id = str(fd, "id", 60);
+  const locale = localeOf(fd);
+  await adminAction(fd, { back: archBack(id, locale), entity: "Project", action: "architecture", success: "Architecture saved." }, async () => {
+    const status = oneOf(fd, "architectureStatus", ["HIDDEN", "PROPOSED", "CONFIRMED"] as const, "HIDDEN");
+    const texts = {
+      frontendText: optStr(fd, "frontendText", 2000),
+      backendText: optStr(fd, "backendText", 2000),
+      databaseText: optStr(fd, "databaseText", 2000),
+      flowText: optStr(fd, "flowText", 2000),
+    };
+    const tr = await prisma.projectTranslation.findUnique({ where: { projectId_locale: { projectId: id, locale } } });
+    if (!tr && Object.values(texts).some(Boolean)) throw new ActionError("Save this language's title and summary first (Text by language).");
+    await prisma.$transaction([
+      prisma.project.update({ where: { id }, data: { architectureStatus: status } }),
+      ...(tr ? [prisma.projectTranslation.update({ where: { projectId_locale: { projectId: id, locale } }, data: texts })] : []),
+    ]);
+    return id;
+  });
+}
+
+export async function saveArchitectureNode(fd: FormData) {
+  const projectId = str(fd, "projectId", 60);
+  const locale = localeOf(fd);
+  await adminAction(fd, { back: archBack(projectId, locale), entity: "ArchitectureNode", action: "save", success: "Graph step saved." }, async () => {
+    const nodeId = optStr(fd, "nodeId", 60);
+    const kind = oneOf(fd, "kind", ARCH_KINDS, "BACKEND");
+    const technology = optStr(fd, "technology", 80);
+    const parentRaw = str(fd, "parentId", 60);
+    // A branch can only hang off a main-chain step of the same project (one level deep).
+    const parent = parentRaw
+      ? await prisma.architectureNode.findFirst({ where: { id: parentRaw, projectId, parentId: null }, select: { id: true } })
+      : null;
+    if (nodeId) {
+      const node = await prisma.architectureNode.findFirstOrThrow({ where: { id: nodeId, projectId } });
+      if (parent?.id === node.id) throw new ActionError("A step can't branch off itself.");
+      if (parent && (await prisma.architectureNode.count({ where: { parentId: node.id } })) > 0) {
+        throw new ActionError("This step has branches of its own, so it must stay in the main chain.");
+      }
+      await prisma.architectureNode.update({
+        where: { id: nodeId },
+        data: {
+          kind,
+          technology,
+          parentId: parent?.id ?? null,
+          label: withLocale(node.label, locale, optStr(fd, "label", 80)),
+          body: withLocale(node.body, locale, optStr(fd, "body", 300)),
+        },
+      });
+      return nodeId;
+    }
+    const last = await prisma.architectureNode.aggregate({ where: { projectId }, _max: { sortOrder: true } });
+    const node = await prisma.architectureNode.create({
+      data: {
+        projectId,
+        kind,
+        technology,
+        parentId: parent?.id ?? null,
+        label: withLocale(null, locale, optStr(fd, "label", 80)),
+        body: withLocale(null, locale, optStr(fd, "body", 300)),
+        sortOrder: (last._max.sortOrder ?? -1) + 1,
+      },
+    });
+    return node.id;
+  });
+}
+
+export async function moveArchitectureNode(fd: FormData) {
+  const id = str(fd, "id", 60);
+  const locale = localeOf(fd);
+  const node = await prisma.architectureNode.findUnique({ where: { id }, select: { projectId: true, parentId: true } });
+  await adminAction(fd, { back: archBack(node?.projectId ?? "", locale), entity: "ArchitectureNode", action: "reorder", success: "Order saved." }, async () => {
+    if (!node) throw new ActionError("That step no longer exists.");
+    const siblings = await prisma.architectureNode.findMany({ where: { projectId: node.projectId, parentId: node.parentId }, orderBy: { sortOrder: "asc" } });
+    await prisma.$transaction(reorderWrites(siblings, id, str(fd, "op", 10), (sid, sortOrder) => prisma.architectureNode.update({ where: { id: sid }, data: { sortOrder } })));
+    return id;
+  });
+}
+
+export async function deleteArchitectureNode(fd: FormData) {
+  const projectId = str(fd, "projectId", 60);
+  const locale = localeOf(fd);
+  await adminAction(fd, { back: archBack(projectId, locale), entity: "ArchitectureNode", action: "delete", success: "Graph step deleted (with its branches)." }, async () => {
+    const nodeId = str(fd, "nodeId", 60);
+    await prisma.architectureNode.deleteMany({ where: { id: nodeId, projectId } });
+    return nodeId;
   });
 }

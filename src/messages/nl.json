@@ -31,7 +31,7 @@
     "privacy": "Privacy"
   },
   "home": {
-    "metaDescription": "Software engineer die websites, apps en desktopsoftware bouwt voor bedrijven. Bekijk projecten, diensten en prijzen, en laten we over je project praten.",
+    "metaDescription": "Software engineer die websites, apps en desktopsoftware bouwt voor bedrijven, kleine ondernemingen, startups en mensen met een projectidee. Bekijk de projecten, diensten en prijzen en bespreek daarna je project.",
     "hero": {
       "greeting": "Hoi, ik ben",
       "ctaPrimary": "Bespreek een project",
@@ -58,12 +58,12 @@
     },
     "referral": {
       "title": "Breng een project. Deel de beloning.",
-      "body": "Ken je een bedrijf dat een website, app of desktopsoftware nodig heeft? Stel ons aan elkaar voor. Gaat het project door volgens de voorwaarden, dan krijg je een beloning.",
+      "body": "Ken je een bedrijf, een startup of iemand met een project die een website, een app of desktopsoftware nodig heeft? Breng ons in contact. Gaat het project door onder de voorwaarden van het aanbod, dan krijg je een beloning.",
       "cta": "Bekijk het doorverwijsaanbod"
     },
     "contact": {
       "title": "Laten we je bedrijf laten groeien, of er een bouwen.",
-      "body": "Vertel wat je bedrijf nodig heeft. Ik reageer met vragen, een plan en een inschatting."
+      "body": "Vertel wat je bedrijf of project nodig heeft. Ik reageer met vragen, een plan en een inschatting."
     }
   },
   "about": {
@@ -82,7 +82,7 @@
       "appsBody": "Web- en mobiele apps voor winkels, bedrijven en restaurants, gebouwd rond de taken die je klanten en team elke dag doen.",
       "softwareTitle": "Desktopsoftware",
       "softwareBody": "Programma's voor winkels, cafés, restaurants en kantoren: verkoop, voorraad, bestellingen en de dagelijkse administratie van je bedrijf.",
-      "intro": "Gepland rond hoe je bedrijf werkt, en makkelijk in dagelijks gebruik."
+      "intro": "Afgestemd op hoe je bedrijf of project werkt, en elke dag makkelijk te gebruiken."
     },
     "experience": {
       "title": "Ervaring",
@@ -91,7 +91,7 @@
     "howIWork": {
       "title": "Hoe ik werk",
       "understandTitle": "Begrijpen",
-      "understandBody": "We praten over je bedrijf, je klanten en het probleem dat je wilt oplossen.",
+      "understandBody": "We praten over je bedrijf of idee, de mensen voor wie het is en het probleem dat je wilt oplossen.",
       "planTitle": "Plannen",
       "planBody": "Je krijgt een schriftelijke scope: functies, planning en prijs, voordat er iets begint.",
       "buildTitle": "Bouwen",
@@ -121,7 +121,7 @@
     "facts": {
       "title": "In het kort",
       "focus": "Focus",
-      "focusValue": "Software voor bedrijven",
+      "focusValue": "Software voor bedrijven en projecten",
       "stack": "Belangrijkste stack"
     },
     "badge": {
@@ -132,6 +132,11 @@
       "title": "Mijn stack, als periodiek systeem.",
       "intro": "Beweeg over of tik op een vakje om het te zien. Kies een familie om die op te lichten.",
       "all": "Alles"
+    },
+    "usage": {
+      "title": "Hoe ik mijn technologieën gebruik",
+      "intro": "Waarvoor ik elk hulpmiddel gebruik, in mijn eigen woorden, en de projecten waarin je het ziet.",
+      "shownIn": "Te zien in"
     }
   },
   "projects": {
@@ -161,12 +166,14 @@
     },
     "imageNote": {
       "CONCEPT": "Beelden gemarkeerd als concept zijn visuele verkenningen, geen definitieve screenshots.",
-      "DEMO": "De beelden tonen een demoversie, niet het live product."
+      "DEMO": "De beelden tonen een demoversie, niet het live product.",
+      "VISUAL_EXPLORATION": "Afbeeldingen gemarkeerd als visuele verkenning zijn ontwerpstudies, geen screenshots van het eindproduct."
     },
     "imageKind": {
       "REAL": "Screenshot",
       "CONCEPT": "Conceptbeeld",
-      "DEMO": "Demoversie"
+      "DEMO": "Demoversie",
+      "VISUAL_EXPLORATION": "Visuele verkenning"
     },
     "detail": {
       "back": "Alle projecten",
@@ -192,13 +199,33 @@
       "dashboardTitle": "Het dashboard erachter",
       "dashboardIntro": "Elk icoon heeft een taak. Ga erover of tik op een nummer om te zien wat het voor het bedrijf doet.",
       "screens": "Dashboardschermen"
+    },
+    "arch": {
+      "title": "Zo is het gebouwd",
+      "intro": "Wat je ziet, wat er achter gebeurt en waar de gegevens bewaard worden, in gewone taal.",
+      "proposed": "Concept / voorgestelde architectuur",
+      "proposedNote": "Dit overzicht is opgesteld op basis van de technologielijst van het project en nog niet in detail bevestigd. De echte opzet kan afwijken.",
+      "graph": "De route van een verzoek, stap voor stap",
+      "branches": "Gekoppelde diensten",
+      "frontend": "Frontend: wat gebruikers zien en gebruiken",
+      "backend": "Backend en server: verzoeken en bedrijfslogica",
+      "database": "Database: wat er wordt opgeslagen",
+      "flow": "Hoe een verzoek loopt",
+      "kinds": {
+        "CLIENT": "Bezoeker",
+        "FRONTEND": "Website",
+        "API": "API",
+        "BACKEND": "Server",
+        "DATABASE": "Database",
+        "EXTERNAL": "Externe dienst"
+      }
     }
   },
   "pricing": {
     "metaTitle": "Diensten en prijzen",
-    "metaDescription": "Websites, apps en desktopsoftware voor bedrijven, met vanafprijzen, wat inbegrepen is en hoe domein, hosting en onderhoud werken.",
+    "metaDescription": "Websites, apps en desktopsoftware voor bedrijven, kleine ondernemingen, startups en eigen projecten: startprijzen, wat erbij zit en hoe domein, hosting en onderhoud werken.",
     "title": "Diensten en prijzen",
-    "intro": "Elk project wordt gepland rond je bedrijf en de scope. Eerst de diensten, daarna hoe de prijzen werken.",
+    "intro": "Elk project wordt gepland rond je bedrijf of idee en de omvang ervan. Dit zijn de diensten, daarna hoe de prijzen werken.",
     "servicesTitle": "Diensten",
     "pricingTitle": "Prijzen",
     "pricingIntro": "Prijzen zijn een vertrekpunt. De uiteindelijke offerte hangt af van scope, functies, koppelingen, ontwerp en planning, en je krijgt die schriftelijk voordat het werk begint.",
@@ -222,7 +249,7 @@
       "maintenanceTitle": "Onderhoud",
       "maintenanceBody": "Bugs in de opgeleverde scope worden opgelost. Nieuwe functies of wijzigingen in de scope krijgen een aparte offerte.",
       "goalTitle": "Het doel",
-      "goalBody": "Software die je werk makkelijker maakt en je bedrijf helpt groeien. Resultaten hangen van veel factoren af, dus er worden geen verkoopcijfers beloofd."
+      "goalBody": "Software die je werk makkelijker maakt en je bedrijf of project helpt groeien. Resultaten hangen van veel af, dus er worden geen verkoopcijfers beloofd."
     },
     "estimator": {
       "title": "Bepaal je budget",
@@ -250,7 +277,7 @@
     "metaTitle": "Doorverwijsaanbod",
     "metaDescription": "Verwijs een bedrijf door dat een website, app of desktopsoftware nodig heeft en ontvang een beloning als het project doorgaat volgens de voorwaarden.",
     "title": "Breng een project. Deel de beloning.",
-    "intro": "Ken je een bedrijf dat een website, app of desktopsoftware nodig heeft? Stel ze aan me voor. Gaat het project door en voldoet het aan de voorwaarden hieronder, dan krijg je een beloning.",
+    "intro": "Ken je een bedrijf, een startup of iemand met een project die een website, een app of desktopsoftware nodig heeft? Stel ze voor. Gaat het project door en voldoet het aan de voorwaarden hieronder, dan krijg je een beloning.",
     "howTitle": "Zo werkt het",
     "step1Title": "Voorstellen",
     "step1Body": "Stuur de gegevens van het bedrijf via het formulier hieronder, met hun toestemming.",
@@ -260,7 +287,7 @@
     "step3Body": "Als aan de voorwaarden van het aanbod is voldaan, wordt je beloning uitbetaald.",
     "countryLabel": "Jouw land",
     "countryPlaceholder": "Kies je land",
-    "countryHint": "De beloning hangt af van je land.",
+    "countryHint": "Aanbiedingen gelden per land. Kies het jouwe om te zien welk aanbod van toepassing is.",
     "rewardHeadline": "Jouw beloning: {amount}",
     "rewardPerProject": "voor elk doorverwezen project dat aan de voorwaarden voldoet",
     "rewardFor": "Geldt voor: {category}",
@@ -286,7 +313,8 @@
     "consent": "Ik bevestig dat het bedrijf ermee instemt benaderd te worden, en ik ga ermee akkoord dat mijn gegevens worden bewaard om deze doorverwijzing te verwerken.",
     "submit": "Doorverwijzing versturen",
     "successTitle": "Doorverwijzing ontvangen. Bedankt!",
-    "successBody": "Ik neem contact op met het bedrijf en houd je op de hoogte."
+    "successBody": "Ik neem contact op met het bedrijf en houd je op de hoogte.",
+    "eligibility": "Wie kan meedoen"
   },
   "contact": {
     "metaTitle": "Contact",
@@ -333,7 +361,8 @@
     "generic": "Er ging iets mis. Probeer het opnieuw of gebruik een andere contactmogelijkheid.",
     "network": "Het bericht kon niet worden verstuurd. Controleer je verbinding en probeer het opnieuw.",
     "sending": "Versturen...",
-    "fixErrors": "Verbeter de gemarkeerde velden."
+    "fixErrors": "Verbeter de gemarkeerde velden.",
+    "notEligible": "Het doorverwijsaanbod in jouw land dekt dit type project niet."
   },
   "privacy": {
     "metaTitle": "Privacy",
@@ -349,5 +378,87 @@
     "rightsBody": "Je kunt altijd via de contactpagina vragen om je gegevens in te zien, te corrigeren of te verwijderen.",
     "cookiesTitle": "Cookies",
     "cookiesBody": "De site gebruikt geen trackingcookies. Eén cookie onthoudt je taalkeuze als je die wijzigt."
+  },
+  "ai": {
+    "title": "AI-diensten",
+    "intro": "AI die echt werk doet voor je bedrijf of project, gebouwd rond hoe je nu al werkt. Wat vandaag beschikbaar is, staat duidelijk aangegeven; de rest komt eraan.",
+    "available": "Nu beschikbaar",
+    "availableBadge": "Nu beschikbaar",
+    "comingSoon": "Binnenkort",
+    "comingSoonBadge": "Binnenkort",
+    "notYetAvailable": "Nog niet beschikbaar. Er wordt geen startdatum beloofd.",
+    "cta": "Laten we praten",
+    "waitlistCta": "Op de wachtlijst",
+    "waitlistIntro": "Laat je e-mailadres achter en je hoort het wanneer dit beschikbaar is. Verder niets.",
+    "waitlistConsent": "Ik ga ermee akkoord dat mijn naam, e-mailadres en land worden bewaard om me te laten weten wanneer deze dienst beschikbaar is.",
+    "waitlistSubmit": "Aanmelden",
+    "waitlistSuccessTitle": "Je staat op de lijst.",
+    "waitlistSuccessBody": "Je krijgt één bericht zodra deze dienst beschikbaar is.",
+    "financialNote": "Alleen software. Dit is geen financieel of beleggingsadvies, en er worden geen rendementen, winsten of resultaten beloofd.",
+    "aboutService": "Over: {service}"
+  },
+  "showcase": {
+    "title": "Beheer je site zelf",
+    "intro": "Dit kan het dashboard achter deze website. Jouw project kan er ook een krijgen, zodat je inhoud, prijzen en aanbiedingen bijwerkt zonder op een ontwikkelaar te wachten.",
+    "note": "De schermen zijn een demo met verzonnen gegevens. Het echte dashboard is privé en beveiligd.",
+    "demo": "Demogegevens",
+    "address": "admin · demo",
+    "screenOf": "Demoscherm",
+    "features": {
+      "projects": {
+        "title": "Projecten",
+        "body": "Voeg een project toe, schrijf het verhaal in elke taal, upload screenshots en kies concept of gepubliceerd. Niets gaat live voordat jij dat beslist."
+      },
+      "uploads": {
+        "title": "Afbeeldingen uploaden",
+        "body": "Sleep screenshots en foto's erin. Ze worden automatisch verkleind, gelabeld als echt, concept of demo, en zijn overal op de site te gebruiken."
+      },
+      "pricing": {
+        "title": "Prijzen",
+        "body": "Pakketten per land en valuta, met het bereik van de prijsschuif, levertijden en wat erbij zit."
+      },
+      "referral": {
+        "title": "Doorverwijsaanbod",
+        "body": "Kies precies welke landen mogen meedoen en stel per land de valuta, beloning, gedekte projecten en voorwaarden in. Binnengekomen doorverwijzingen worden gevolgd tot de beloning is betaald."
+      },
+      "inquiries": {
+        "title": "Aanvragen",
+        "body": "Alle berichten van het contactformulier en de wachtlijsten in één privé-inbox, met status, notities en een snel antwoord via e-mail of WhatsApp."
+      },
+      "translations": {
+        "title": "Vertalingen",
+        "body": "Elke openbare tekst in 13 talen, met een markering van wat al nagekeken is. Wijzig elke zin zonder code aan te raken."
+      },
+      "profile": {
+        "title": "Profiel",
+        "body": "Naam, titel, foto, introductie, talen en ervaring. De pagina Over mij wordt bijgewerkt zodra je opslaat."
+      },
+      "process": {
+        "title": "Hoe ik werk",
+        "body": "Voeg stappen van het proces toe, zet ze in een andere volgorde, verberg of herschrijf ze, met een icoon of afbeelding per stap."
+      },
+      "skills": {
+        "title": "Vaardigheden",
+        "body": "Groepeer de technologieën, leg uit hoe elke wordt gebruikt en koppel de projecten die het laten zien."
+      },
+      "ai": {
+        "title": "AI-diensten",
+        "body": "Markeer elke dienst als nu beschikbaar of binnenkort, bewerk beschrijving en beeld, en zet de wachtlijst aan of uit."
+      }
+    }
+  },
+  "audience": {
+    "title": "Met wie ik werk",
+    "intro": "Niet alleen met grote bedrijven. Heb je een echt bedrijf of een echt project, groot of klein, dan kunnen we het bouwen.",
+    "companiesTitle": "Bedrijven",
+    "companiesBody": "Teams die een nieuw platform, een interne tool of een systeem nodig hebben dat spreadsheets vervangt.",
+    "smallTitle": "Kleine ondernemingen",
+    "smallBody": "Winkels, restaurants, cafés, praktijken en lokale diensten die gevonden willen worden en online bestellingen willen ontvangen.",
+    "startupsTitle": "Ondernemers en startups",
+    "startupsBody": "Een eerste versie om te lanceren, te testen met echte gebruikers en stap voor stap te laten groeien.",
+    "individualsTitle": "Mensen met een idee",
+    "individualsBody": "Je eigen idee voor een bedrijf, project of programma, ook als het nog pril is.",
+    "line": "Ik werk met bedrijven, kleine ondernemingen, ondernemers en startups, en met mensen met een idee voor een bedrijf, project of programma.",
+    "legit": "De diensten zijn bedoeld voor legitieme bedrijven en projecten."
   }
 }

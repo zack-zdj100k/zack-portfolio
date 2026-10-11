@@ -2,25 +2,25 @@ import "server-only";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/lib/i18n/locales";
 import { altFor } from "@/lib/media";
-import { getProfile, getSettings } from "@/server/services/content";
+import { getProfile, getSettings, getSkillGroups } from "@/server/services/content";
 import type { BadgeData } from "./IdBadge";
-
-const FAMILIES = ["frontend", "backend", "databases", "tools"] as const;
 
 /**
  * Everything the ID badge, the quick-facts list and the skills table need, from the profile.
  * Only facts the owner entered are included; empty ones are simply left out.
  */
 export async function profileBits(locale: Locale) {
-  const [t, tHome, profile, { settings }] = await Promise.all([
+  const [t, tHome, profile, { settings }, groups] = await Promise.all([
     getTranslations({ locale, namespace: "about" }),
     getTranslations({ locale, namespace: "home" }),
     getProfile(locale),
     getSettings(),
+    getSkillGroups(locale),
   ]);
   const name = profile?.fullName ?? profile?.publicName ?? "ZACK";
   const artwork = settings?.heroImage?.url ?? "/hero/face-1280.webp";
-  const topStack = FAMILIES.flatMap((f) => profile?.skills[f]?.slice(0, 1) ?? []).slice(0, 4);
+  // First skill of each of the owner's first groups, in the owner's order.
+  const topStack = groups.flatMap((g) => g.skills.slice(0, 1).map((s) => s.name)).slice(0, 4);
 
   const facts = [
     { label: t("role"), value: t("badge.role") },
@@ -40,17 +40,14 @@ export async function profileBits(locale: Locale) {
     lines: [profile?.location, t("facts.focusValue")].filter((l): l is string => !!l),
   };
 
-  const skillGroups = FAMILIES.filter((f) => (profile?.skills[f]?.length ?? 0) > 0).map((f) => ({
-    family: f,
-    label: t(`skills.${f}`),
-    skills: profile!.skills[f]!,
-  }));
+  const skillGroups = groups.map((g) => ({ label: g.name, skills: g.skills.map((s) => ({ name: s.name, symbol: s.symbol })) }));
 
   return {
     profile,
     facts,
     badge,
     skillGroups,
+    skillUsage: groups,
     stackLabels: { title: t("stack.title"), intro: t("stack.intro"), all: t("stack.all") },
     factsTitle: t("facts.title"),
   };

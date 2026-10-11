@@ -5,10 +5,12 @@ import { getFormatter, getTranslations, setRequestLocale } from "next-intl/serve
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/ui/Reveal";
+import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import { ExternalLink, PrimaryLink } from "@/components/ui/buttons";
 import { ProjectTags } from "@/components/projects/labels";
 import { DashboardTour } from "@/components/projects/DashboardTour";
-import type { Locale } from "@/lib/i18n/locales";
+import { ArchitectureFlow } from "@/components/projects/ArchitectureFlow";
+import { dir, type Locale } from "@/lib/i18n/locales";
 import { altFor } from "@/lib/media";
 import { pageMetadata, siteUrl } from "@/lib/seo";
 import { getProjectBySlug } from "@/server/services/content";
@@ -33,7 +35,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
   setRequestLocale(locale);
   const data = await getProjectBySlug(slug, locale);
   if (!data) notFound();
-  const { project, next, dashboard, testimonials } = data;
+  const { project, next, dashboard, architecture, testimonials } = data;
   const [t, tHome, tCommon, format] = await Promise.all([
     getTranslations("projects"),
     getTranslations("home"),
@@ -51,6 +53,9 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
     ["challenge", d?.challenge],
     ["outcome", d?.outcome],
   ].filter((x): x is [string, string] => !!x[1]);
+  // Address bar text: the project's own live domain when it has one, else its name (never someone else's site).
+  const live = project.links.find((l) => l.type === "LIVE")?.url;
+  const address = live ? live.replace(/^https?:\/\//, "").replace(/\/$/, "") : title;
   const linkLabel = { LIVE: t("detail.live"), DEMO: t("detail.demo"), REPO: t("detail.repo") } as const;
 
   const jsonLd = {
@@ -92,27 +97,47 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
         )}
       </header>
 
-      {/* Gallery: wide screenshots, then phone-sized captures side by side */}
+      {/* Gallery: wide screenshots in a Mac-style window (the first on a laptop), then phone captures */}
       {project.images.length > 0 && (
-        <section aria-label={t("detail.gallery")} className="container-page flex flex-col gap-4 md:gap-6">
+        <section aria-label={t("detail.gallery")} className="container-page flex flex-col gap-8 md:gap-14">
           {wide.map((img, i) => (
             <Reveal key={img.id} delay={0.04 * i}>
-              <figure className="flex flex-col gap-2">
-                <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] bg-ink-3 md:rounded-[40px]">
-                  <Image src={img.media.url} alt={altFor(img.media.alt, locale)} fill priority={i === 0} sizes="(min-width: 1400px) 1340px, 100vw" className="object-cover object-top" />
-                </div>
-                {img.kind !== "REAL" && <figcaption className="px-2 text-sm text-mist/60">{t(`imageKind.${img.kind}`)}</figcaption>}
+              <figure>
+                <DeviceFrame
+                  variant={i === 0 ? "laptop" : "browser"}
+                  address={address}
+                  badge={img.kind !== "REAL" ? t(`imageKind.${img.kind}`) : null}
+                  className={i === 0 ? "md:px-[3%]" : ""}
+                >
+                  <Image
+                    src={img.media.url}
+                    alt={altFor(img.media.alt, locale)}
+                    width={img.media.width ?? 1600}
+                    height={img.media.height ?? 1000}
+                    priority={i === 0}
+                    sizes="(min-width: 1400px) 1340px, 100vw"
+                    className="block h-auto w-full"
+                  />
+                </DeviceFrame>
               </figure>
             </Reveal>
           ))}
           {tall.length > 0 && (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4">
+            <div className="flex flex-wrap justify-center gap-6 md:gap-10">
               {tall.map((img) => (
-                <figure key={img.id} className="flex flex-col gap-2">
-                  <div className="relative aspect-[390/844] overflow-hidden rounded-[24px] border border-line bg-ink-3">
-                    <Image src={img.media.url} alt={altFor(img.media.alt, locale)} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover object-top" />
+                <figure key={img.id} className="flex w-[min(78vw,300px)] flex-col items-center gap-3">
+                  <div className="relative w-full overflow-hidden rounded-[38px] border-[7px] border-[#1d2024] bg-ink-3 shadow-[0_30px_60px_-30px_rgb(0_0_0/0.8)] ring-1 ring-white/10">
+                    <span aria-hidden className="absolute left-1/2 top-2 z-10 h-4 w-[30%] -translate-x-1/2 rounded-full bg-[#0b0c0d]" />
+                    <Image
+                      src={img.media.url}
+                      alt={altFor(img.media.alt, locale)}
+                      width={img.media.width ?? 780}
+                      height={img.media.height ?? 1688}
+                      sizes="300px"
+                      className="block h-auto w-full"
+                    />
                   </div>
-                  {img.kind !== "REAL" && <figcaption className="px-1 text-sm text-mist/60">{t(`imageKind.${img.kind}`)}</figcaption>}
+                  {img.kind !== "REAL" && <figcaption className="text-sm text-mist/60">{t(`imageKind.${img.kind}`)}</figcaption>}
                 </figure>
               ))}
             </div>
@@ -179,6 +204,61 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
         </div>
       </section>
 
+      {/* How it's built: plain-language architecture + request-flow graph */}
+      {architecture && (architecture.chain.length > 0 || architecture.frontend || architecture.backend || architecture.database || architecture.flow) && (
+        <section aria-labelledby="arch-title" className="border-t border-line py-20 md:py-28">
+          <div className="container-page flex flex-col gap-10 md:gap-14">
+            <Reveal className="flex flex-col gap-5">
+              <h2 id="arch-title" className="text-[clamp(2.2rem,6vw,5rem)] font-black uppercase leading-[0.95] tracking-tight display-gradient">
+                {t("arch.title")}
+              </h2>
+              <p className="max-w-2xl text-lg leading-relaxed text-mist/75">{t("arch.intro")}</p>
+              {architecture.proposed && (
+                <p className="flex max-w-2xl flex-col gap-1 rounded-2xl border border-ice/30 bg-ice/5 px-5 py-4 text-sm text-mist/80">
+                  <span className="font-bold uppercase tracking-wider text-ice">{t("arch.proposed")}</span>
+                  {t("arch.proposedNote")}
+                </p>
+              )}
+            </Reveal>
+            {architecture.chain.length > 0 && (
+              <ArchitectureFlow
+                chain={architecture.chain}
+                rtl={dir(locale) === "rtl"}
+                labels={{
+                  graph: t("arch.graph"),
+                  branchOf: t("arch.branches"),
+                  kinds: {
+                    CLIENT: t("arch.kinds.CLIENT"),
+                    FRONTEND: t("arch.kinds.FRONTEND"),
+                    API: t("arch.kinds.API"),
+                    BACKEND: t("arch.kinds.BACKEND"),
+                    DATABASE: t("arch.kinds.DATABASE"),
+                    EXTERNAL: t("arch.kinds.EXTERNAL"),
+                  },
+                }}
+              />
+            )}
+            <dl className="grid gap-x-12 gap-y-10 md:grid-cols-2">
+              {(
+                [
+                  ["frontend", architecture.frontend],
+                  ["backend", architecture.backend],
+                  ["database", architecture.database],
+                  ["flow", architecture.flow],
+                ] as const
+              )
+                .filter(([, text]) => text)
+                .map(([key, text]) => (
+                  <Reveal key={key} className="flex flex-col gap-3 border-t border-line pt-5">
+                    <dt className="text-sm uppercase tracking-widest text-mist/60">{t(`arch.${key}`)}</dt>
+                    <dd className="whitespace-pre-line text-lg leading-relaxed text-mist/85">{text}</dd>
+                  </Reveal>
+                ))}
+            </dl>
+          </div>
+        </section>
+      )}
+
       {/* The admin dashboard, icon by icon */}
       {dashboard.length > 0 && (
         <section aria-labelledby="dashboard-title" className="border-t border-line py-20 md:py-28">
@@ -191,7 +271,12 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
             </Reveal>
             <DashboardTour
               screens={dashboard}
-              labels={{ screens: t("detail.screens"), demoNote: t("imageNote.DEMO"), conceptNote: t("imageNote.CONCEPT") }}
+              labels={{
+                screens: t("detail.screens"),
+                address: `${title} · admin`,
+                kinds: { CONCEPT: t("imageKind.CONCEPT"), DEMO: t("imageKind.DEMO"), VISUAL_EXPLORATION: t("imageKind.VISUAL_EXPLORATION") },
+                notes: { CONCEPT: t("imageNote.CONCEPT"), DEMO: t("imageNote.DEMO"), VISUAL_EXPLORATION: t("imageNote.VISUAL_EXPLORATION") },
+              }}
             />
           </div>
         </section>

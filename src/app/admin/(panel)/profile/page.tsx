@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { prisma } from "@/server/db";
 import { removePortrait, saveExperience, deleteExperience, saveProfile, saveProfileTranslation, uploadPortrait } from "@/server/actions/profile";
 import { Card, Checkbox, Flash, Input, LocaleTabs, PageTitle, Textarea, StatusBadge } from "@/components/admin/ui";
@@ -16,7 +17,6 @@ export default async function ProfileAdmin({ searchParams }: PageProps<"/admin/p
   const experience = await prisma.experienceItem.findMany({ orderBy: [{ sortOrder: "asc" }, { startDate: "desc" }], include: { translations: true } });
   const tr = profile.translations.find((t) => t.locale === locale);
   const en = profile.translations.find((t) => t.locale === "en");
-  const skills = (profile.skills ?? {}) as Record<string, string[]>;
 
   return (
     <div className="flex flex-col gap-8">
@@ -37,9 +37,13 @@ export default async function ProfileAdmin({ searchParams }: PageProps<"/admin/p
             className="md:col-span-2"
             hint="Comma-separated, e.g. Arabic, French, English. Leave empty to hide."
           />
-          {(["frontend", "backend", "databases", "tools"] as const).map((g) => (
-            <Input key={g} label={`Skills: ${g}`} name={`skills.${g}`} defaultValue={(skills[g] ?? []).join(", ")} hint="Comma-separated." />
-          ))}
+          <p className="text-sm text-mist/60 md:col-span-2">
+            Skills and how you use them are edited in{" "}
+            <Link href="/admin/skills" className="text-mist underline decoration-ice/50 underline-offset-4">
+              Skills
+            </Link>
+            .
+          </p>
           <div className="md:col-span-2">
             <SubmitButton>Save identity</SubmitButton>
           </div>

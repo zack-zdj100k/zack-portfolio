@@ -31,7 +31,7 @@
     "privacy": "Privacy"
   },
   "home": {
-    "metaDescription": "Software engineer building websites, apps and desktop software for businesses. See the projects, services and prices, then discuss your project.",
+    "metaDescription": "Software engineer building websites, apps and desktop software for companies, small businesses, startups and people with a project idea. See the projects, services and prices, then discuss your project.",
     "hero": {
       "greeting": "Hi, I'm",
       "ctaPrimary": "Discuss a project",
@@ -58,12 +58,12 @@
     },
     "referral": {
       "title": "Bring a project. Share the reward.",
-      "body": "Know a business that needs a website, an app or desktop software? Introduce us. When the project goes ahead under the offer terms, you get a reward.",
+      "body": "Know a business, a startup or someone with a project who needs a website, an app or desktop software? Introduce us. When the project goes ahead under the offer terms, you get a reward.",
       "cta": "See the referral offer"
     },
     "contact": {
       "title": "Let's scale your business, or build one.",
-      "body": "Tell me what your business needs. I'll reply with questions, a plan and an estimate."
+      "body": "Tell me what your business or project needs. I'll reply with questions, a plan and an estimate."
     }
   },
   "about": {
@@ -82,7 +82,7 @@
       "appsBody": "Web and mobile-friendly applications for shops, companies and restaurants, built around the tasks your customers and team repeat every day.",
       "softwareTitle": "Desktop software",
       "softwareBody": "Programs for shops, cafés, restaurants and offices: sales, stock, orders and the daily records your business runs on.",
-      "intro": "Planned around how your business works, and built to be easy to run."
+      "intro": "Planned around how your business or project works, and built to be easy to run."
     },
     "experience": {
       "title": "Experience",
@@ -91,7 +91,7 @@
     "howIWork": {
       "title": "How I work",
       "understandTitle": "Understand",
-      "understandBody": "We talk about your business, your customers and the problem you want solved.",
+      "understandBody": "We talk about your business or idea, the people it serves and the problem you want solved.",
       "planTitle": "Plan",
       "planBody": "You get a written scope: features, timeline and price, before any work starts.",
       "buildTitle": "Build",
@@ -121,7 +121,7 @@
     "facts": {
       "title": "Quick facts",
       "focus": "Focus",
-      "focusValue": "Software for businesses",
+      "focusValue": "Software for businesses and projects",
       "stack": "Main stack"
     },
     "badge": {
@@ -132,6 +132,11 @@
       "title": "My stack, as a periodic table.",
       "intro": "Hover or tap a tile to see it. Pick a family to light it up.",
       "all": "All"
+    },
+    "usage": {
+      "title": "How I use my technologies",
+      "intro": "What each tool is for in my work, in my own words, and the projects where you can see it.",
+      "shownIn": "Shown in"
     }
   },
   "projects": {
@@ -161,12 +166,14 @@
     },
     "imageNote": {
       "CONCEPT": "Images marked as concept are visual explorations, not final screenshots.",
-      "DEMO": "Images show a demo build, not the live product."
+      "DEMO": "Images show a demo build, not the live product.",
+      "VISUAL_EXPLORATION": "Images marked as visual exploration are design studies, not screenshots of the finished product."
     },
     "imageKind": {
       "REAL": "Screenshot",
       "CONCEPT": "Concept visual",
-      "DEMO": "Demo build"
+      "DEMO": "Demo build",
+      "VISUAL_EXPLORATION": "Visual exploration"
     },
     "detail": {
       "back": "All projects",
@@ -192,13 +199,33 @@
       "dashboardTitle": "The dashboard behind it",
       "dashboardIntro": "Every icon has a job. Hover or tap a number to see what it does for the business.",
       "screens": "Dashboard screens"
+    },
+    "arch": {
+      "title": "How it's built",
+      "intro": "What you see, what happens behind it, and where the information is kept, in plain words.",
+      "proposed": "Concept / proposed architecture",
+      "proposedNote": "This overview is drafted from the project's technology list and hasn't been confirmed in detail yet. The real setup may differ.",
+      "graph": "How a request travels, step by step",
+      "branches": "Connected services",
+      "frontend": "Frontend: what users see and use",
+      "backend": "Backend and server: requests and business logic",
+      "database": "Database: what is stored",
+      "flow": "How a request flows",
+      "kinds": {
+        "CLIENT": "Visitor",
+        "FRONTEND": "Website",
+        "API": "API",
+        "BACKEND": "Server",
+        "DATABASE": "Database",
+        "EXTERNAL": "External service"
+      }
     }
   },
   "pricing": {
     "metaTitle": "Services & Pricing",
-    "metaDescription": "Websites, apps and desktop software for businesses, with starting prices, what's included, and how domain, hosting and maintenance work.",
+    "metaDescription": "Websites, apps and desktop software for companies, small businesses, startups and individual projects, with starting prices, what's included, and how domain, hosting and maintenance work.",
     "title": "Services & Pricing",
-    "intro": "Every project is planned around your business and its scope. These are the services, followed by how pricing works.",
+    "intro": "Every project is planned around your business or idea and its scope. These are the services, followed by how pricing works.",
     "servicesTitle": "Services",
     "pricingTitle": "Pricing",
     "pricingIntro": "Prices are starting points. The final quote depends on scope, features, integrations, design and timeline, and you get it in writing before work starts.",
@@ -222,7 +249,7 @@
       "maintenanceTitle": "Maintenance",
       "maintenanceBody": "Bugs in the delivered scope are fixed. New features or changes to the scope are estimated separately.",
       "goalTitle": "The goal",
-      "goalBody": "Software that makes your work easier and helps your business grow. Results depend on many things, so no specific sales figures are promised."
+      "goalBody": "Software that makes your work easier and helps your business or project grow. Results depend on many things, so no specific sales figures are promised."
     },
     "estimator": {
       "title": "Set your budget",
@@ -250,7 +277,7 @@
     "metaTitle": "Referral offer",
     "metaDescription": "Refer a business that needs a website, app or desktop software and receive a reward when the project goes ahead under the offer terms.",
     "title": "Bring a project. Share the reward.",
-    "intro": "Know a business that needs a website, an app or desktop software? Introduce them. If the project goes ahead and meets the conditions below, you receive a reward.",
+    "intro": "Know a business, a startup or someone with a project who needs a website, an app or desktop software? Introduce them. If the project goes ahead and meets the conditions below, you receive a reward.",
     "howTitle": "How it works",
     "step1Title": "Introduce",
     "step1Body": "Send the business's details with the form below, with their permission.",
@@ -260,7 +287,7 @@
     "step3Body": "When the conditions of the offer are met, your reward is paid.",
     "countryLabel": "Your country",
     "countryPlaceholder": "Select your country",
-    "countryHint": "Rewards depend on your country.",
+    "countryHint": "Offers are set per country. Pick yours to see the one that applies.",
     "rewardHeadline": "Your reward: {amount}",
     "rewardPerProject": "for each referred project that meets the conditions",
     "rewardFor": "Applies to: {category}",
@@ -286,7 +313,8 @@
     "consent": "I confirm the business agreed to be contacted, and I accept that my details are stored to process this referral.",
     "submit": "Send referral",
     "successTitle": "Referral received. Thank you!",
-    "successBody": "I'll contact the business and keep you informed about the status."
+    "successBody": "I'll contact the business and keep you informed about the status.",
+    "eligibility": "Who can take part"
   },
   "contact": {
     "metaTitle": "Contact",
@@ -333,7 +361,8 @@
     "generic": "Something went wrong. Please try again, or use another contact option.",
     "network": "The message couldn't be sent. Check your connection and try again.",
     "sending": "Sending...",
-    "fixErrors": "Please correct the highlighted fields."
+    "fixErrors": "Please correct the highlighted fields.",
+    "notEligible": "The referral offer for your country doesn't cover this type of project."
   },
   "privacy": {
     "metaTitle": "Privacy",
@@ -349,5 +378,87 @@
     "rightsBody": "You can ask to see, correct or delete your details at any time through the contact page.",
     "cookiesTitle": "Cookies",
     "cookiesBody": "The site uses no tracking or advertising cookies. One cookie remembers your language choice when you change it."
+  },
+  "ai": {
+    "title": "AI services",
+    "intro": "AI that does real work for your business or project, built around how you already operate. What is available today is marked clearly; the rest is on its way.",
+    "available": "Available now",
+    "availableBadge": "Available now",
+    "comingSoon": "Coming soon",
+    "comingSoonBadge": "Coming soon",
+    "notYetAvailable": "Not available yet. No start date is promised.",
+    "cta": "Talk about it",
+    "waitlistCta": "Join the waitlist",
+    "waitlistIntro": "Leave your email and you will hear when this becomes available. Nothing else.",
+    "waitlistConsent": "I agree that my name, email and country are stored to tell me when this service is available.",
+    "waitlistSubmit": "Join",
+    "waitlistSuccessTitle": "You are on the list.",
+    "waitlistSuccessBody": "You will get one message when this service becomes available.",
+    "financialNote": "Software only. This is not financial or investment advice, and no returns, profits or results are promised.",
+    "aboutService": "About: {service}"
+  },
+  "showcase": {
+    "title": "Run your site yourself",
+    "intro": "This is what the dashboard behind this website can do. A project of yours can have one too, so you update content, prices and offers without waiting for a developer.",
+    "note": "The screens are a demo with made-up data. The real dashboard is private and protected.",
+    "demo": "Demo data",
+    "address": "admin · demo",
+    "screenOf": "Demo screen",
+    "features": {
+      "projects": {
+        "title": "Projects",
+        "body": "Add a project, write its story in every language, upload screenshots and choose Draft or Published. Nothing goes live until you say so."
+      },
+      "uploads": {
+        "title": "Image uploads",
+        "body": "Drop in screenshots and photos. They are resized automatically, labelled Real, Concept or Demo, and can be reused anywhere on the site."
+      },
+      "pricing": {
+        "title": "Pricing",
+        "body": "Packages per country and currency, with the range for the price slider, delivery times and what is included."
+      },
+      "referral": {
+        "title": "Referral offers",
+        "body": "Choose exactly which countries can take part, then set each one's currency, reward, covered projects and conditions. Incoming referrals are tracked until the reward is paid."
+      },
+      "inquiries": {
+        "title": "Inquiries",
+        "body": "Every message from the contact form and the waitlists in one private inbox, with a status, notes and a quick email or WhatsApp reply."
+      },
+      "translations": {
+        "title": "Translations",
+        "body": "Every public text in 13 languages, with a marker showing what has been reviewed. Change any sentence without touching code."
+      },
+      "profile": {
+        "title": "Profile",
+        "body": "Name, title, photo, introduction, languages and experience. The About page updates as soon as you save."
+      },
+      "process": {
+        "title": "How I work",
+        "body": "Add, reorder, hide or rewrite the steps of the process, with an icon or an image for each one."
+      },
+      "skills": {
+        "title": "Skills",
+        "body": "Group the technologies, explain how each one is used and link the projects that show it."
+      },
+      "ai": {
+        "title": "AI services",
+        "body": "Mark each service as Available now or Coming soon, edit its description and visual, and switch its waitlist on or off."
+      }
+    }
+  },
+  "audience": {
+    "title": "Who I work with",
+    "intro": "Not only large companies. If you have a real business or a real project, big or small, we can build it.",
+    "companiesTitle": "Companies",
+    "companiesBody": "Teams that need a new platform, an internal tool or a system that replaces spreadsheets.",
+    "smallTitle": "Small businesses",
+    "smallBody": "Shops, restaurants, cafés, clinics and local services that want to be found and take orders online.",
+    "startupsTitle": "Entrepreneurs and startups",
+    "startupsBody": "A first version to launch, test with real users and grow step by step.",
+    "individualsTitle": "Individuals with an idea",
+    "individualsBody": "A business, project or software idea of your own, even if it is still early.",
+    "line": "I work with companies, small businesses, entrepreneurs and startups, and individuals with a business, project or software idea.",
+    "legit": "Services are for legitimate businesses and projects."
   }
 }

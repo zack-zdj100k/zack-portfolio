@@ -31,7 +31,7 @@
     "privacy": "Confidentialité"
   },
   "home": {
-    "metaDescription": "Ingénieur logiciel qui crée des sites web, des applications et des logiciels de bureau pour les entreprises. Projets, services et tarifs, puis parlons de votre projet.",
+    "metaDescription": "Ingénieur logiciel : sites web, applications et logiciels de bureau pour les entreprises, les petites entreprises, les startups et les porteurs de projet. Découvrez les projets, les services et les prix, puis parlons de votre projet.",
     "hero": {
       "greeting": "Salut, je suis",
       "ctaPrimary": "Parler d'un projet",
@@ -58,12 +58,12 @@
     },
     "referral": {
       "title": "Apportez un projet. Partagez la récompense.",
-      "body": "Vous connaissez une entreprise qui a besoin d'un site, d'une application ou d'un logiciel ? Présentez-nous. Si le projet se fait selon les conditions de l'offre, vous recevez une récompense.",
+      "body": "Vous connaissez une entreprise, une startup ou une personne avec un projet qui a besoin d'un site web, d'une application ou d'un logiciel de bureau ? Mettez-nous en relation. Si le projet se fait selon les conditions de l'offre, vous recevez une récompense.",
       "cta": "Voir l'offre de parrainage"
     },
     "contact": {
       "title": "Développons votre entreprise, ou créons-la.",
-      "body": "Dites-moi ce dont votre entreprise a besoin. Je réponds avec des questions, un plan et une estimation."
+      "body": "Dites-moi ce dont votre entreprise ou votre projet a besoin. Je réponds avec des questions, un plan et une estimation."
     }
   },
   "about": {
@@ -82,7 +82,7 @@
       "appsBody": "Applications web et mobiles pour boutiques, entreprises et restaurants, pensées pour les tâches que vos clients et votre équipe répètent chaque jour.",
       "softwareTitle": "Logiciels de bureau",
       "softwareBody": "Programmes pour boutiques, cafés, restaurants et bureaux : ventes, stock, commandes et le suivi quotidien de votre activité.",
-      "intro": "Pensé autour du fonctionnement de votre entreprise, et simple à utiliser au quotidien."
+      "intro": "Pensé selon le fonctionnement de votre entreprise ou de votre projet, et simple à utiliser au quotidien."
     },
     "experience": {
       "title": "Expérience",
@@ -91,7 +91,7 @@
     "howIWork": {
       "title": "Ma méthode",
       "understandTitle": "Comprendre",
-      "understandBody": "On parle de votre activité, de vos clients et du problème à résoudre.",
+      "understandBody": "Nous parlons de votre activité ou de votre idée, des personnes à qui elle s'adresse et du problème à résoudre.",
       "planTitle": "Planifier",
       "planBody": "Vous recevez un périmètre écrit : fonctionnalités, délais et prix, avant tout début de travail.",
       "buildTitle": "Construire",
@@ -121,7 +121,7 @@
     "facts": {
       "title": "En bref",
       "focus": "Spécialité",
-      "focusValue": "Logiciels pour les entreprises",
+      "focusValue": "Logiciels pour entreprises et projets",
       "stack": "Stack principale"
     },
     "badge": {
@@ -132,6 +132,11 @@
       "title": "Ma stack, en tableau périodique.",
       "intro": "Survolez ou touchez une case pour la voir. Choisissez une famille pour l'éclairer.",
       "all": "Tout"
+    },
+    "usage": {
+      "title": "Comment j'utilise mes technologies",
+      "intro": "À quoi sert chaque outil dans mon travail, avec mes propres mots, et les projets où vous pouvez le voir.",
+      "shownIn": "Visible dans"
     }
   },
   "projects": {
@@ -161,12 +166,14 @@
     },
     "imageNote": {
       "CONCEPT": "Les images marquées « concept » sont des explorations visuelles, pas des captures finales.",
-      "DEMO": "Les images montrent une version de démonstration, pas le produit en ligne."
+      "DEMO": "Les images montrent une version de démonstration, pas le produit en ligne.",
+      "VISUAL_EXPLORATION": "Les images marquées « exploration visuelle » sont des études de design, pas des captures du produit final."
     },
     "imageKind": {
       "REAL": "Capture d'écran",
       "CONCEPT": "Visuel de concept",
-      "DEMO": "Version de démo"
+      "DEMO": "Version de démo",
+      "VISUAL_EXPLORATION": "Exploration visuelle"
     },
     "detail": {
       "back": "Tous les projets",
@@ -192,13 +199,33 @@
       "dashboardTitle": "Le tableau de bord derrière",
       "dashboardIntro": "Chaque icône a un rôle. Survolez ou touchez un numéro pour voir ce qu'elle apporte à l'entreprise.",
       "screens": "Écrans du tableau de bord"
+    },
+    "arch": {
+      "title": "Comment c'est construit",
+      "intro": "Ce que vous voyez, ce qui se passe derrière et où les informations sont conservées, en termes simples.",
+      "proposed": "Concept / architecture proposée",
+      "proposedNote": "Cette vue d'ensemble est rédigée à partir de la liste des technologies du projet et n'a pas encore été confirmée en détail. L'installation réelle peut différer.",
+      "graph": "Le parcours d'une requête, étape par étape",
+      "branches": "Services connectés",
+      "frontend": "Frontend : ce que les utilisateurs voient et utilisent",
+      "backend": "Backend et serveur : requêtes et logique métier",
+      "database": "Base de données : ce qui est enregistré",
+      "flow": "Le parcours d'une requête",
+      "kinds": {
+        "CLIENT": "Visiteur",
+        "FRONTEND": "Site web",
+        "API": "API",
+        "BACKEND": "Serveur",
+        "DATABASE": "Base de données",
+        "EXTERNAL": "Service externe"
+      }
     }
   },
   "pricing": {
     "metaTitle": "Services & Tarifs",
-    "metaDescription": "Sites web, applications et logiciels de bureau pour les entreprises, avec prix de départ, contenu inclus et fonctionnement du domaine, de l'hébergement et de la maintenance.",
+    "metaDescription": "Sites web, applications et logiciels de bureau pour les entreprises, les petites entreprises, les startups et les projets individuels : prix de départ, ce qui est inclus, et fonctionnement du domaine, de l'hébergement et de la maintenance.",
     "title": "Services & Tarifs",
-    "intro": "Chaque projet est planifié selon votre activité et son périmètre. Voici les services, puis le fonctionnement des tarifs.",
+    "intro": "Chaque projet est planifié selon votre activité ou votre idée et son périmètre. Voici les services, puis le fonctionnement des prix.",
     "servicesTitle": "Services",
     "pricingTitle": "Tarifs",
     "pricingIntro": "Les prix sont des points de départ. Le devis final dépend du périmètre, des fonctionnalités, des intégrations, du design et des délais, et vous le recevez par écrit avant le début du travail.",
@@ -222,7 +249,7 @@
       "maintenanceTitle": "Maintenance",
       "maintenanceBody": "Les bugs du périmètre livré sont corrigés. Les nouvelles fonctionnalités ou changements de périmètre font l'objet d'un devis séparé.",
       "goalTitle": "L'objectif",
-      "goalBody": "Un logiciel qui simplifie votre travail et aide votre entreprise à se développer. Les résultats dépendent de nombreux facteurs : aucun chiffre de ventes n'est promis."
+      "goalBody": "Un logiciel qui facilite votre travail et aide votre entreprise ou votre projet à grandir. Les résultats dépendent de nombreux facteurs : aucun chiffre de ventes n'est promis."
     },
     "estimator": {
       "title": "Fixez votre budget",
@@ -250,7 +277,7 @@
     "metaTitle": "Offre de parrainage",
     "metaDescription": "Recommandez une entreprise qui a besoin d'un site, d'une application ou d'un logiciel et recevez une récompense si le projet se fait selon les conditions de l'offre.",
     "title": "Apportez un projet. Partagez la récompense.",
-    "intro": "Vous connaissez une entreprise qui a besoin d'un site, d'une application ou d'un logiciel de bureau ? Présentez-la. Si le projet se fait et remplit les conditions ci-dessous, vous recevez une récompense.",
+    "intro": "Vous connaissez une entreprise, une startup ou une personne avec un projet qui a besoin d'un site web, d'une application ou d'un logiciel de bureau ? Présentez-la. Si le projet se fait et respecte les conditions ci-dessous, vous recevez une récompense.",
     "howTitle": "Comment ça marche",
     "step1Title": "Présentez",
     "step1Body": "Envoyez les coordonnées de l'entreprise avec le formulaire ci-dessous, avec son accord.",
@@ -260,7 +287,7 @@
     "step3Body": "Quand les conditions de l'offre sont remplies, votre récompense est versée.",
     "countryLabel": "Votre pays",
     "countryPlaceholder": "Choisissez votre pays",
-    "countryHint": "La récompense dépend de votre pays.",
+    "countryHint": "Les offres sont définies pays par pays. Choisissez le vôtre pour voir celle qui s'applique.",
     "rewardHeadline": "Votre récompense : {amount}",
     "rewardPerProject": "pour chaque projet recommandé qui remplit les conditions",
     "rewardFor": "Concerne : {category}",
@@ -286,7 +313,8 @@
     "consent": "Je confirme que l'entreprise accepte d'être contactée et j'accepte que mes coordonnées soient conservées pour traiter cette recommandation.",
     "submit": "Envoyer la recommandation",
     "successTitle": "Recommandation reçue. Merci !",
-    "successBody": "Je vais contacter l'entreprise et vous tenir informé de la suite."
+    "successBody": "Je vais contacter l'entreprise et vous tenir informé de la suite.",
+    "eligibility": "Qui peut participer"
   },
   "contact": {
     "metaTitle": "Contact",
@@ -333,7 +361,8 @@
     "generic": "Un problème est survenu. Réessayez ou utilisez un autre moyen de contact.",
     "network": "Le message n'a pas pu être envoyé. Vérifiez votre connexion et réessayez.",
     "sending": "Envoi...",
-    "fixErrors": "Merci de corriger les champs signalés."
+    "fixErrors": "Merci de corriger les champs signalés.",
+    "notEligible": "L'offre de parrainage de votre pays ne couvre pas ce type de projet."
   },
   "privacy": {
     "metaTitle": "Confidentialité",
@@ -349,5 +378,87 @@
     "rightsBody": "Vous pouvez demander à consulter, corriger ou supprimer vos données à tout moment via la page contact.",
     "cookiesTitle": "Cookies",
     "cookiesBody": "Le site ne dépose aucun cookie de suivi. Un cookie mémorise votre choix de langue quand vous la changez."
+  },
+  "ai": {
+    "title": "Services d'IA",
+    "intro": "Une IA qui fait un vrai travail pour votre entreprise ou votre projet, construite autour de votre façon de faire. Ce qui est disponible aujourd'hui est clairement indiqué ; le reste arrive.",
+    "available": "Disponible maintenant",
+    "availableBadge": "Disponible maintenant",
+    "comingSoon": "Bientôt",
+    "comingSoonBadge": "Bientôt",
+    "notYetAvailable": "Pas encore disponible. Aucune date n'est promise.",
+    "cta": "En parler",
+    "waitlistCta": "Rejoindre la liste d'attente",
+    "waitlistIntro": "Laissez votre e-mail et vous serez prévenu quand ce service sera disponible. Rien d'autre.",
+    "waitlistConsent": "J'accepte que mon nom, mon e-mail et mon pays soient enregistrés pour être prévenu de la disponibilité de ce service.",
+    "waitlistSubmit": "M'inscrire",
+    "waitlistSuccessTitle": "Vous êtes sur la liste.",
+    "waitlistSuccessBody": "Vous recevrez un seul message quand ce service sera disponible.",
+    "financialNote": "Il s'agit uniquement de logiciels. Ce n'est pas un conseil financier ou en investissement, et aucun rendement, profit ou résultat n'est promis.",
+    "aboutService": "Au sujet de : {service}"
+  },
+  "showcase": {
+    "title": "Gérez votre site vous-même",
+    "intro": "Voici ce que permet le tableau de bord derrière ce site. Votre projet peut en avoir un aussi, pour mettre à jour contenus, prix et offres sans attendre un développeur.",
+    "note": "Les écrans sont une démo avec des données fictives. Le vrai tableau de bord est privé et protégé.",
+    "demo": "Données de démo",
+    "address": "admin · démo",
+    "screenOf": "Écran de démo",
+    "features": {
+      "projects": {
+        "title": "Projets",
+        "body": "Ajoutez un projet, racontez-le dans chaque langue, ajoutez des captures et choisissez brouillon ou publié. Rien n'est en ligne tant que vous ne le décidez pas."
+      },
+      "uploads": {
+        "title": "Envoi d'images",
+        "body": "Déposez captures et photos. Elles sont redimensionnées automatiquement, marquées réelles, concept ou démo, et réutilisables partout sur le site."
+      },
+      "pricing": {
+        "title": "Prix",
+        "body": "Des formules par pays et par devise, avec la fourchette du curseur de prix, les délais et ce qui est inclus."
+      },
+      "referral": {
+        "title": "Offres de parrainage",
+        "body": "Choisissez exactement les pays qui peuvent participer, puis réglez pour chacun la devise, la récompense, les projets couverts et les conditions. Les parrainages reçus sont suivis jusqu'au paiement."
+      },
+      "inquiries": {
+        "title": "Demandes",
+        "body": "Tous les messages du formulaire de contact et des listes d'attente dans une boîte privée, avec un statut, des notes et une réponse rapide par e-mail ou WhatsApp."
+      },
+      "translations": {
+        "title": "Traductions",
+        "body": "Chaque texte public en 13 langues, avec un repère pour ce qui a été relu. Modifiez n'importe quelle phrase sans toucher au code."
+      },
+      "profile": {
+        "title": "Profil",
+        "body": "Nom, titre, photo, présentation, langues et expérience. La page À propos se met à jour dès l'enregistrement."
+      },
+      "process": {
+        "title": "Ma méthode",
+        "body": "Ajoutez, réordonnez, masquez ou réécrivez les étapes de la méthode, avec une icône ou une image pour chacune."
+      },
+      "skills": {
+        "title": "Compétences",
+        "body": "Regroupez les technologies, expliquez l'usage de chacune et reliez les projets qui la montrent."
+      },
+      "ai": {
+        "title": "Services d'IA",
+        "body": "Indiquez pour chaque service « disponible maintenant » ou « bientôt », modifiez sa description et son visuel, et activez ou non sa liste d'attente."
+      }
+    }
+  },
+  "audience": {
+    "title": "Avec qui je travaille",
+    "intro": "Pas seulement les grandes entreprises. Si vous avez une vraie activité ou un vrai projet, grand ou petit, on peut le construire.",
+    "companiesTitle": "Entreprises",
+    "companiesBody": "Des équipes qui ont besoin d'une nouvelle plateforme, d'un outil interne ou d'un système qui remplace les tableurs.",
+    "smallTitle": "Petites entreprises",
+    "smallBody": "Boutiques, restaurants, cafés, cabinets et services de proximité qui veulent être trouvés et prendre des commandes en ligne.",
+    "startupsTitle": "Entrepreneurs et startups",
+    "startupsBody": "Une première version à lancer, à tester avec de vrais utilisateurs et à faire grandir pas à pas.",
+    "individualsTitle": "Particuliers avec une idée",
+    "individualsBody": "Votre propre idée d'activité, de projet ou de logiciel, même à un stade précoce.",
+    "line": "Je travaille avec des entreprises, des petites entreprises, des entrepreneurs et des startups, et des particuliers qui ont une idée d'activité, de projet ou de logiciel.",
+    "legit": "Les services sont réservés aux activités et projets légitimes."
   }
 }

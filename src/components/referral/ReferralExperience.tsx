@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useReduceMotion } from "@/components/ui/motion";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -10,23 +10,22 @@ import { FormStatus } from "@/components/forms/FormStatus";
 import { usePublicForm } from "@/components/forms/usePublicForm";
 import { formatMoney } from "@/lib/money";
 
+type Category = "WEBSITE" | "APP" | "SOFTWARE";
+const CATEGORIES: Category[] = ["WEBSITE", "APP", "SOFTWARE"];
+
 export type PublicOffer = {
   id: string;
   status: "DRAFT" | "PUBLISHED";
-  market: string;
+  country: string;
   currency: string;
   reward: number;
-  category: "WEBSITE" | "APP" | "SOFTWARE" | null;
+  /** Empty = every project category. */
+  categories: Category[];
   minProjectValue: number | null;
-  whenEarned: string;
+  eligibility: string;
+  payoutConditions: string;
   terms: string;
 };
-
-/** Offers that apply to a country: its own offers, otherwise the "*" (everyone else) offers. */
-function offersFor(country: string, offers: PublicOffer[]) {
-  const own = offers.filter((o) => o.market === country);
-  return own.length ? own : offers.filter((o) => o.market === "*");
-}
 
 export function ReferralExperience({
   offers,
@@ -44,7 +43,12 @@ export function ReferralExperience({
   const locale = useLocale();
   const reduce = useReduceMotion();
   const [country, setCountry] = useState(countries.some((c) => c.code === defaultCountry) ? defaultCountry! : "");
-  const applicable = useMemo(() => (country ? offersFor(country, offers) : []), [country, offers]);
+  // Only the offers configured for this exact country; there is no "everyone else" fallback.
+  const applicable = useMemo(() => (country ? offers.filter((o) => o.country === country) : []), [country, offers]);
+  const covered = useMemo(
+    () => (applicable.some((o) => o.categories.length === 0) ? CATEGORIES : CATEGORIES.filter((c) => applicable.some((o) => o.categories.includes(c)))),
+    [applicable],
+  );
   const { status, errors, formError, onSubmit, sendingLabel } = usePublicForm("/api/referrals", { emailOrPhone: ["referrerEmail", "referrerPhone"] });
 
   return (
@@ -90,20 +94,28 @@ export function ReferralExperience({
                       </p>
                       <p className="mt-3 text-lg text-ink/75">{t("rewardPerProject")}</p>
                       <p className="mt-1 text-ink/75">
-                        {t("rewardFor", { category: o.category ? tp(`category.${o.category}`) : t("anyProject") })}
+                        {t("rewardFor", {
+                          category: o.categories.length ? o.categories.map((c) => tp(`category.${c}`)).join(" · ") : t("anyProject"),
+                        })}
                       </p>
                       {o.minProjectValue !== null && (
                         <p className="mt-1 text-ink/75">{t("minValue", { amount: formatMoney(o.minProjectValue, o.currency, locale) })}</p>
                       )}
-                      <div className="mt-8 grid gap-8 border-t border-ink/15 pt-8 md:grid-cols-2">
-                        <div>
-                          <h3 className="mb-2 font-bold uppercase">{t("whenEarned")}</h3>
-                          <p className="whitespace-pre-line leading-relaxed text-ink/80">{o.whenEarned}</p>
-                        </div>
-                        <div>
-                          <h3 className="mb-2 font-bold uppercase">{t("terms")}</h3>
-                          <p className="whitespace-pre-line leading-relaxed text-ink/80">{o.terms}</p>
-                        </div>
+                      <div className="mt-8 grid gap-8 border-t border-ink/15 pt-8 md:grid-cols-3">
+                        {(
+                          [
+                            ["eligibility", o.eligibility],
+                            ["whenEarned", o.payoutConditions],
+                            ["terms", o.terms],
+                          ] as const
+                        )
+                          .filter(([, text]) => text)
+                          .map(([key, text]) => (
+                            <div key={key}>
+                              <h3 className="mb-2 font-bold uppercase">{t(key)}</h3>
+                              <p className="whitespace-pre-line leading-relaxed text-ink/80">{text}</p>
+                            </div>
+                          ))}
                       </div>
                       <p className="mt-8 text-sm text-ink/65">{t("notGuaranteed")}</p>
                     </div>
@@ -153,7 +165,7 @@ export function ReferralExperience({
                 label={t("projectCategory")}
                 required
                 placeholder="-"
-                options={(["WEBSITE", "APP", "SOFTWARE"] as const).map((c) => ({ value: c, label: tp(`category.${c}`) }))}
+                options={covered.map((c) => ({ value: c, label: tp(`category.${c}`) }))}
                 error={errors.projectCategory}
               />
             </div>

@@ -10,19 +10,21 @@
  * - Translations other than English are machine drafts (reviewed = false).
  */
 import "dotenv/config";
+import { readFileSync } from "node:fs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, type ImageKind, type Prisma } from "../src/server/generated/prisma/client";
-import { locales } from "../src/lib/i18n/locales";
+import { fallbackChain, locales, type Locale } from "../src/lib/i18n/locales";
 import { translations } from "./seed-i18n";
 import manifest from "../public/hero/manifest.json";
 import { DASHBOARD_TOURS } from "./data/dashboard-tours";
 import { defaultAddOns } from "./data/package-add-ons";
+import { AI_SERVICES, ARCHITECTURE, PROCESS_STEPS, REFERRAL_TEXT, SKILL_GROUPS } from "./data/round6";
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
 
 const EN = {
   profile: {
-    title: "Software engineer building websites, apps and desktop software for businesses.",
+    title: "Software engineer building websites, apps and desktop software for businesses, startups and new projects.",
     intro:
       "I plan and build software around the way your business works: websites that bring customers in, apps they use every day, and desktop tools your team relies on. Each project starts from your needs and its scope.",
     bio: "I'm Zack, a software engineer. I design and build websites, online shops, web platforms, apps and desktop software for businesses. I take a project from the first conversation to launch, explain the choices along the way, and keep the scope and price clear in writing.",
@@ -236,13 +238,6 @@ async function main() {
       publicName: "ZACK",
       portraitId: portrait.id,
       languages: [],
-      skills: {
-        // Taken from the stacks of the owner's own projects; edit in Admin → Profile.
-        frontend: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-        backend: ["Node.js", "NestJS", "REST APIs"],
-        databases: ["PostgreSQL", "Prisma", "Drizzle ORM"],
-        tools: ["Git", "Playwright", "Vitest", "Cloudinary"],
-      },
     },
   });
   for (const locale of locales) {
@@ -312,17 +307,34 @@ async function main() {
     }
   }
 
-  // Referral offers: DRAFT until the owner approves the terms.
-  if ((await prisma.countryOffer.count()) === 0) {
+  // Referral offers: DRAFT until the owner approves the terms. Only explicitly listed countries are
+  // eligible; the second programme starts with no countries until the owner picks them.
+  if ((await prisma.referralOffer.count()) === 0) {
     for (const [i, o] of EN.offers.entries()) {
-      const offer = await prisma.countryOffer.create({
-        data: { market: o.market, currency: o.currency, rewardMinor: BigInt(o.reward * 100), status: "DRAFT", sortOrder: i },
+      const offer = await prisma.referralOffer.create({
+        data: {
+          name: o.market === "*" ? "Other countries (choose the eligible countries)" : `Offer ${o.market}`,
+          status: "DRAFT",
+          sortOrder: i,
+          countries:
+            o.market === "*"
+              ? undefined
+              : { create: { country: o.market, currency: o.currency, rewardMinor: BigInt(o.reward * 100), status: "DRAFT" } },
+        },
       });
       for (const locale of locales) {
         const t = locale === "en" ? o : translations[locale]?.offers[i];
         if (!t) continue;
-        await prisma.countryOfferTranslation.create({
-          data: { offerId: offer.id, locale, whenEarned: t.whenEarned, terms: t.terms, reviewed: locale === "en" },
+        const split = REFERRAL_TEXT[locale];
+        await prisma.referralOfferTranslation.create({
+          data: {
+            offerId: offer.id,
+            locale,
+            eligibility: split?.eligibility ?? "",
+            payoutConditions: split?.payoutConditions ?? t.whenEarned,
+            terms: split?.terms ?? t.terms,
+            reviewed: locale === "en",
+          },
         });
       }
     }
@@ -374,7 +386,129 @@ async function main() {
   await backfillTranslations();
   await seedDashboardTours();
   await backfillAddOns();
+  await seedSkills();
+  await seedProcessSteps();
+  await seedAiServices();
+  await seedArchitecture();
+  await upgradeProfileTitles();
   console.log("Seed complete.");
+}
+
+/**
+ * Round 6 wording (not only large companies): replaces the profile title only where it is still the
+ * old seeded default, so anything the owner wrote stays as it is.
+ */
+const OLD_PROFILE_TITLES: Partial<Record<Locale, string>> = {
+  "fr": "Ingénieur logiciel : sites web, applications et logiciels de bureau pour les entreprises.",
+  "ar": "مهندس برمجيات يطوّر مواقع وتطبيقات وبرامج مكتبية للشركات.",
+  "it": "Ingegnere del software: siti web, app e software desktop per le aziende.",
+  "tr": "İşletmeler için web siteleri, uygulamalar ve masaüstü yazılımlar geliştiren yazılım mühendisi.",
+  "es": "Ingeniero de software: sitios web, apps y software de escritorio para empresas.",
+  "pt-BR": "Engenheiro de software: sites, aplicativos e softwares desktop para empresas.",
+  "ru": "Инженер-программист: сайты, приложения и программы для ПК для бизнеса.",
+  "uk": "Інженер-програміст: сайти, застосунки та програми для ПК для бізнесу.",
+  "nb": "Programvareutvikler som lager nettsider, apper og skrivebordsprogrammer for bedrifter.",
+  "nl": "Software engineer die websites, apps en desktopsoftware bouwt voor bedrijven.",
+  "en": "Software engineer building websites, apps and desktop software for businesses."
+};
+
+async function upgradeProfileTitles() {
+  for (const [locale, oldTitle] of Object.entries(OLD_PROFILE_TITLES)) {
+    const next = locale === "en" ? EN.profile.title : translations[locale as Locale]?.profile.title;
+    if (!next || !oldTitle) continue;
+    await prisma.profileTranslation.updateMany({ where: { profileId: 1, locale, title: oldTitle }, data: { title: next } });
+  }
+}
+
+/** Skill groups from the owner's list. Groups that already exist (by key) are left as they are. */
+async function seedSkills() {
+  for (const [i, g] of SKILL_GROUPS.entries()) {
+    if (await prisma.skillGroup.findUnique({ where: { key: g.key } })) continue;
+    await prisma.skillGroup.create({
+      data: {
+        key: g.key,
+        sortOrder: i,
+        translations: {
+          create: Object.entries(g.name).map(([locale, name]) => ({ locale, name: name!, reviewed: locale === "en" })),
+        },
+        skills: { create: g.skills.map((name, k) => ({ name, sortOrder: k })) },
+      },
+    });
+  }
+}
+
+type Messages = { [k: string]: string | Messages };
+const messageCache = new Map<string, Messages>();
+function messages(locale: Locale): Messages {
+  if (!messageCache.has(locale)) {
+    messageCache.set(locale, JSON.parse(readFileSync(new URL(`../src/messages/${locale}.json`, import.meta.url), "utf8")) as Messages);
+  }
+  return messageCache.get(locale)!;
+}
+/** A message along the fallback chain (es-CO → es → en), like the site does. */
+function message(locale: Locale, path: string): string | null {
+  for (const l of fallbackChain(locale)) {
+    let node: string | Messages | undefined = messages(l);
+    for (const part of path.split(".")) node = typeof node === "object" ? node[part] : undefined;
+    if (typeof node === "string") return node;
+  }
+  return null;
+}
+
+/** How I Work, moved from the message files into the database (same texts, every language). */
+async function seedProcessSteps() {
+  if ((await prisma.processStep.count()) > 0) return;
+  for (const [i, step] of PROCESS_STEPS.entries()) {
+    const translations = locales.flatMap((locale) => {
+      const title = message(locale, `about.howIWork.${step.key}Title`);
+      const description = message(locale, `about.howIWork.${step.key}Body`);
+      return title && description ? [{ locale, title, description, reviewed: locale === "en" }] : [];
+    });
+    await prisma.processStep.create({ data: { icon: step.icon, sortOrder: i, translations: { create: translations } } });
+  }
+}
+
+async function seedAiServices() {
+  for (const [i, s] of AI_SERVICES.entries()) {
+    if (await prisma.aiService.findUnique({ where: { key: s.key } })) continue;
+    await prisma.aiService.create({
+      data: {
+        key: s.key,
+        status: s.status,
+        publishStatus: s.publish,
+        cta: s.cta,
+        financial: s.financial,
+        icon: s.icon,
+        sortOrder: i,
+        translations: {
+          create: Object.keys(s.title).map((locale) => ({
+            locale,
+            title: s.title[locale as Locale]!,
+            description: s.description[locale as Locale] ?? "",
+            reviewed: locale === "en",
+          })),
+        },
+      },
+    });
+  }
+}
+
+/** Draft architecture (PROPOSED) for projects that have no graph yet. */
+async function seedArchitecture() {
+  for (const [slug, arch] of Object.entries(ARCHITECTURE)) {
+    const project = await prisma.project.findUnique({ where: { slug }, include: { _count: { select: { architectureNodes: true } } } });
+    if (!project || project._count.architectureNodes > 0) continue;
+    for (const [i, n] of arch.nodes.entries()) {
+      await prisma.architectureNode.create({ data: { projectId: project.id, kind: n.kind, technology: n.technology ?? null, label: n.label, sortOrder: i } });
+    }
+    for (const [locale, t] of Object.entries(arch.text)) {
+      await prisma.projectTranslation.updateMany({
+        where: { projectId: project.id, locale, frontendText: null },
+        data: { frontendText: t.frontend, backendText: t.backend, databaseText: t.database, flowText: t.flow },
+      });
+    }
+    if (project.architectureStatus === "HIDDEN") await prisma.project.update({ where: { id: project.id }, data: { architectureStatus: "PROPOSED" } });
+  }
 }
 
 /**
@@ -420,7 +554,7 @@ async function seedDashboardTours() {
 async function backfillTranslations() {
   const services = await prisma.service.findMany({ orderBy: { sortOrder: "asc" }, include: { examples: { orderBy: { sortOrder: "asc" } } } });
   const packages = await prisma.pricingPackage.findMany({ orderBy: { sortOrder: "asc" } });
-  const offers = await prisma.countryOffer.findMany({ orderBy: { sortOrder: "asc" } });
+  const offers = await prisma.referralOffer.findMany({ orderBy: { sortOrder: "asc" } });
   for (const locale of locales) {
     const t = translations[locale];
     if (!t) continue;
@@ -450,10 +584,10 @@ async function backfillTranslations() {
     }
     for (const [i, o] of offers.slice(0, EN.offers.length).entries()) {
       const tr = t.offers[i];
-      await prisma.countryOfferTranslation.upsert({
+      await prisma.referralOfferTranslation.upsert({
         where: { offerId_locale: { offerId: o.id, locale } },
         update: {},
-        create: { offerId: o.id, locale, whenEarned: tr.whenEarned, terms: tr.terms, reviewed: false },
+        create: { offerId: o.id, locale, eligibility: "", payoutConditions: tr.whenEarned, terms: tr.terms, reviewed: false },
       });
     }
     for (const [i, def] of PROJECTS.entries()) {

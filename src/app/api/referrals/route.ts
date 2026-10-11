@@ -16,22 +16,25 @@ export async function POST(request: Request) {
   const data = parsed.data;
 
   try {
-    // Snapshot the published offer that applies right now: country + category first, then the
-    // country's general offer, then the rest-of-world offer.
-    const offers = await prisma.countryOffer.findMany({
-      where: { status: "PUBLISHED", market: { in: [data.referrerCountry, "*"] } },
-      orderBy: { sortOrder: "asc" },
+    // Only countries the owner listed in a published offer are eligible, and only for the project
+    // categories that offer covers (empty = every category). The reward is snapshotted now.
+    const offers = await prisma.referralOfferCountry.findMany({
+      where: { country: data.referrerCountry, status: "PUBLISHED", available: true, offer: { status: "PUBLISHED" } },
+      orderBy: { offer: { sortOrder: "asc" } },
     });
-    const rank = (o: (typeof offers)[number]) =>
-      (o.market === data.referrerCountry ? 0 : 2) + (o.category === data.projectCategory ? 0 : o.category === null ? 1 : 9);
-    const offer = offers.filter((o) => o.category === null || o.category === data.projectCategory).sort((a, b) => rank(a) - rank(b))[0];
+    const offer =
+      offers.find((o) => o.categories.includes(data.projectCategory)) ?? offers.find((o) => o.categories.length === 0);
+    if (!offer) {
+      const fields: Record<string, string> = offers.length > 0 ? { projectCategory: "notEligible" } : { referrerCountry: "notEligible" };
+      return Response.json({ ok: false, error: "validation", fields } satisfies FormFailure, { status: 422 });
+    }
 
     await prisma.referral.create({
       data: {
         ...data,
-        offerId: offer?.id ?? null,
-        rewardMinorSnapshot: offer?.rewardMinor ?? null,
-        rewardCurrencySnapshot: offer?.currency ?? null,
+        offerId: offer.id,
+        rewardMinorSnapshot: offer.rewardMinor,
+        rewardCurrencySnapshot: offer.currency,
       },
     });
     return Response.json({ ok: true }, { status: 201 });

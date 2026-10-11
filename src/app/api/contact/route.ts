@@ -15,7 +15,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    await prisma.contactInquiry.create({ data: parsed.data });
+    // Only link a service that is really offered right now; anything else is dropped silently.
+    const { aiServiceId, ...data } = parsed.data;
+    const service = aiServiceId
+      ? await prisma.aiService.findFirst({ where: { id: aiServiceId, status: "AVAILABLE", publishStatus: "PUBLISHED" }, select: { id: true } })
+      : null;
+    await prisma.contactInquiry.create({ data: { ...data, aiServiceId: service?.id ?? null } });
     return Response.json({ ok: true }, { status: 201 });
   } catch (e) {
     // Log the failure type only: never the submitted personal data.

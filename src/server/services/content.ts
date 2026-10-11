@@ -23,6 +23,15 @@ async function visible(): Promise<{ in: PublishStatus[] }> {
   return { in: (await isPreview()) ? ["PUBLISHED", "DRAFT"] : ["PUBLISHED"] };
 }
 
+/** First non-empty value of one field along the fallback chain, so a half-translated row never hides English text. */
+export function pickField<T extends { locale: string }, K extends keyof T>(rows: T[], locale: Locale, field: K): string | null {
+  for (const l of fallbackChain(locale)) {
+    const v = rows.find((r) => r.locale === l)?.[field];
+    if (typeof v === "string" && v.trim()) return v;
+  }
+  return null;
+}
+
 /** Best translation for `locale` along its fallback chain (es-MX → es → en), else the first row. */
 export function pick<T extends { locale: string }>(rows: T[], locale: Locale): T | undefined {
   for (const l of fallbackChain(locale)) {
@@ -53,13 +62,11 @@ export const getProfile = cache(async (locale: Locale) => {
   const profile = await prisma.profile.findUnique({ where: { id: 1 }, include: { translations: true, portrait: true } });
   if (!profile) return null;
   const t = pick(profile.translations, locale);
-  const skills = (profile.skills ?? {}) as Partial<Record<"frontend" | "backend" | "databases" | "tools", string[]>>;
   return {
     publicName: profile.publicName,
     fullName: profile.showFullName ? profile.fullName : null,
     portrait: profile.portrait,
     languages: profile.languages,
-    skills,
     title: t?.title ?? "",
     intro: t?.intro ?? "",
     bio: t?.bio ?? null,
@@ -101,7 +108,7 @@ export const getProjectBySlug = cache(async (slug: string, locale: Locale) => {
   if (index === -1) return null;
   const project = all[index];
   const next = all.length > 1 ? all[(index + 1) % all.length] : null;
-  const [testimonials, screens] = await Promise.all([
+  const [testimonials, screens, nodes] = await Promise.all([
     prisma.testimonial.findMany({
       where: { projectId: project.id, status: "PUBLISHED", clientApproved: true },
       include: { translations: true },
@@ -112,7 +119,29 @@ export const getProjectBySlug = cache(async (slug: string, locale: Locale) => {
       orderBy: { sortOrder: "asc" },
       include: { media: true, hotspots: { orderBy: { sortOrder: "asc" } } },
     }),
+    project.architectureStatus === "HIDDEN" ? [] : prisma.architectureNode.findMany({ where: { projectId: project.id }, orderBy: { sortOrder: "asc" } }),
   ]);
+  // "How it's built": texts per field along the fallback chain, nodes as a main chain + branches.
+  const archNode = (n: (typeof nodes)[number]) => ({
+    id: n.id,
+    kind: n.kind,
+    technology: n.technology,
+    label: altFor(n.label, locale) || null,
+    body: altFor(n.body, locale) || null,
+  });
+  const architecture =
+    project.architectureStatus === "HIDDEN"
+      ? null
+      : {
+          proposed: project.architectureStatus === "PROPOSED",
+          frontend: pickField(project.translations, locale, "frontendText"),
+          backend: pickField(project.translations, locale, "backendText"),
+          database: pickField(project.translations, locale, "databaseText"),
+          flow: pickField(project.translations, locale, "flowText"),
+          chain: nodes
+            .filter((n) => !n.parentId)
+            .map((n) => ({ ...archNode(n), branches: nodes.filter((b) => b.parentId === n.id).map(archNode) })),
+        };
   // Dashboard tour: each screen with its markers, texts resolved along the language fallback chain.
   const dashboard = screens.map((s) => ({
     id: s.id,
@@ -124,7 +153,7 @@ export const getProjectBySlug = cache(async (slug: string, locale: Locale) => {
     title: altFor(s.title, locale),
     hotspots: s.hotspots.map((h) => ({ id: h.id, x: h.x, y: h.y, icon: h.icon, label: altFor(h.label, locale), body: altFor(h.body, locale) })),
   }));
-  return { project, next, dashboard, testimonials: testimonials.map((x) => ({ ...x, t: pick(x.translations, locale) })) };
+  return { project, next, dashboard, architecture, testimonials: testimonials.map((x) => ({ ...x, t: pick(x.translations, locale) })) };
 });
 
 export const getServices = cache(async (locale: Locale) => {
@@ -165,21 +194,104 @@ export const getPackages = cache(async (locale: Locale) => {
   }));
 });
 
+export type PublicOffer = Awaited<ReturnType<typeof getOffers>>[number];
+
+/**
+ * Referral offers, one entry per eligible country. Only countries the owner listed are returned
+ * (there is no "every other country" offer). Both the programme and the country must be published,
+ * and the country marked available.
+ */
 export const getOffers = cache(async (locale: Locale) => {
-  const rows = await prisma.countryOffer.findMany({
-    where: { status: await visible() },
-    orderBy: { sortOrder: "asc" },
-    include: { translations: true },
+  const statuses = await visible();
+  const rows = await prisma.referralOfferCountry.findMany({
+    where: { status: statuses, available: true, offer: { status: statuses } },
+    orderBy: [{ offer: { sortOrder: "asc" } }, { country: "asc" }],
+    include: { translations: true, offer: { include: { translations: true } } },
   });
-  return rows.map((o) => ({
-    id: o.id,
-    status: o.status,
-    market: o.market,
-    currency: o.currency,
-    reward: Number(o.rewardMinor),
-    category: o.category,
-    minProjectValue: o.minProjectValueMinor === null ? null : Number(o.minProjectValueMinor),
-    t: pick(o.translations, locale),
+  return rows.map((c) => {
+    const text = (field: "eligibility" | "payoutConditions" | "terms") => pickField(c.translations, locale, field) ?? pickField(c.offer.translations, locale, field) ?? "";
+    return {
+      id: c.id,
+      status: c.status === "PUBLISHED" && c.offer.status === "PUBLISHED" ? ("PUBLISHED" as const) : ("DRAFT" as const),
+      country: c.country,
+      currency: c.currency,
+      reward: Number(c.rewardMinor),
+      categories: c.categories,
+      minProjectValue: c.minProjectValueMinor === null ? null : Number(c.minProjectValueMinor),
+      eligibility: text("eligibility"),
+      payoutConditions: text("payoutConditions"),
+      terms: text("terms"),
+    };
+  });
+});
+
+/** Skill groups with their visible skills, "How I use it" text and the projects that show it. */
+export const getSkillGroups = cache(async (locale: Locale) => {
+  const groups = await prisma.skillGroup.findMany({
+    where: { visible: true },
+    orderBy: { sortOrder: "asc" },
+    include: {
+      translations: true,
+      skills: {
+        where: { visible: true },
+        orderBy: { sortOrder: "asc" },
+        include: { translations: true, projects: { include: { project: { include: { translations: true } } } } },
+      },
+    },
+  });
+  const statuses = (await visible()).in;
+  return groups
+    .map((g) => ({
+      key: g.key,
+      name: pickField(g.translations, locale, "name") ?? g.key,
+      skills: g.skills.map((s) => ({
+        id: s.id,
+        name: s.name,
+        symbol: s.symbol,
+        usage: pickField(s.translations, locale, "usage"),
+        projects: s.projects
+          .filter((sp) => statuses.includes(sp.project.status))
+          .sort((a, b) => a.project.sortOrder - b.project.sortOrder)
+          .map((sp) => ({ slug: sp.project.slug, title: pickField(sp.project.translations, locale, "title") ?? sp.project.slug })),
+      })),
+    }))
+    .filter((g) => g.skills.length > 0);
+});
+
+export const getProcessSteps = cache(async (locale: Locale) => {
+  const steps = await prisma.processStep.findMany({ where: { visible: true }, orderBy: { sortOrder: "asc" }, include: { translations: true, media: true } });
+  return steps
+    .map((s) => ({
+      id: s.id,
+      icon: s.icon,
+      image: s.media ? { src: s.media.url, width: s.media.width ?? 800, height: s.media.height ?? 600, alt: altFor(s.media.alt, locale) } : null,
+      title: pickField(s.translations, locale, "title") ?? "",
+      description: pickField(s.translations, locale, "description") ?? "",
+    }))
+    .filter((s) => s.title);
+});
+
+export type PublicAiService = Awaited<ReturnType<typeof getAiServices>>[number];
+
+export const getAiServices = cache(async (locale: Locale) => {
+  const rows = await prisma.aiService.findMany({
+    where: { status: { not: "HIDDEN" }, publishStatus: await visible() },
+    orderBy: { sortOrder: "asc" },
+    include: { translations: true, media: true },
+  });
+  return rows.map((s) => ({
+    id: s.id,
+    key: s.key,
+    status: s.status as "AVAILABLE" | "COMING_SOON",
+    draft: s.publishStatus === "DRAFT",
+    cta: s.cta,
+    waitlistEnabled: s.status === "COMING_SOON" && s.waitlistEnabled,
+    financial: s.financial,
+    icon: s.icon,
+    image: s.media ? { src: s.media.url, width: s.media.width ?? 800, height: s.media.height ?? 600, alt: altFor(s.media.alt, locale) } : null,
+    title: pickField(s.translations, locale, "title") ?? s.key,
+    description: pickField(s.translations, locale, "description") ?? "",
+    ctaLabel: pickField(s.translations, locale, "ctaLabel"),
   }));
 });
 

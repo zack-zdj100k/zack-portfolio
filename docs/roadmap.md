@@ -14,7 +14,7 @@ Last updated: 2026-10-11
 | 5. Backend + admin | ✅ | Auth, dashboard + launch checklist, profile, hero, projects, services/pricing, referral offers + workflow, inquiries, testimonials, page text, languages, media, settings | Owner sets the admin access code (`npm run admin:code`) |
 | 6. Integration + content | 🟡 | Real screenshots of KING 253, Boulboul Art Wall, ZODIC CAR; machine-drafted translations for all languages; prices and referral offers seeded as **drafts** | Confirm prices and referral terms, then publish; review translations; contact details; project types/status |
 | 7. Review + handoff | ✅ | Playwright/Chromium at 390, 768, 1024, 1440 px (LTR + RTL), 29 end-to-end checks, typecheck + lint clean, `README.md`, `/impeccable critique` (23/32) + fixes | Choose hosting |
-| 8. Round 6 requirements | ⏳ | Plan, content model, admin schema and acceptance checklist in [round-6-requirements.md](round-6-requirements.md): grouped skills + "How I Use My Technologies", per-project architecture + flow graph, editable How I Work, per-country referral offers (no wildcard), inclusive audience copy, AI services (available / Coming Soon), Mac-style screenshot frames, public Admin Dashboard Preview. Screenshot fixes 1, 3, 4, 5 done | Personal information (owner-information.md, "Round 6") and explicit approval to implement |
+| 8. Round 6 | 🟡 | Built and verified, see [round-6-requirements.md](round-6-requirements.md): grouped skills + "How I Use My Technologies", per-project architecture + animated flow graph, editable How I Work, per-country referral offers (no wildcard), inclusive audience copy (13 languages), AI services (Available now / Coming soon + waitlist), Mac-style screenshot frames, public Admin Dashboard Preview. Screenshot fixes 1, 3, 4, 5 | Skill descriptions, confirmed architecture, referral countries, AI service descriptions (owner-information.md, "Round 6") |
 
 ## Phase 0 audit (2026-10-10)
 
@@ -77,7 +77,8 @@ the "3D creator" and "five years of experience" copy, and the purple-orange butt
   `prisma/data/dashboard-tours.ts`, `prisma/data/package-add-ons.ts`.
 
 - **Round 6 (owner, 2026-10-11):** requirements added (see the Phase 8 row and
-  [round-6-requirements.md](round-6-requirements.md)); implementation waits for owner approval.
+  [round-6-requirements.md](round-6-requirements.md)); the owner approved implementation the same
+  day and it was built. Run `npm run db:deploy` (or `db:migrate`) and `npm run db:seed` after pulling.
   Fixed from the owner's error screenshots: the dashboard-tour "Remove" button (React dropped its
   `name`/`value`, so it saved instead of removing and blanked the English alt text), the profile
   photo blocked by `images.localPatterns`, and the half-cut heading at the bottom of the Boulboul Art

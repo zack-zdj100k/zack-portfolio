@@ -69,7 +69,7 @@ export default async function ServicesPricingPage({ params, searchParams }: Page
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist/75">{t("pricingIntro")}</p>
 
-          <PricingBlock locale={locale} marketParam={typeof query.market === "string" ? query.market : null} basePath="/services-pricing" />
+          <PricingBlock locale={locale} marketParam={typeof query.market === "string" ? query.market : null} />
 
           <div className="mt-20 md:mt-28">
             <h2 className="mb-8 text-[clamp(1.8rem,4vw,3.2rem)] font-black uppercase leading-none text-mist">{t("notes.title")}</h2>

@@ -25,7 +25,7 @@ export const SKILL_GROUPS: { key: string; name: Tr; skills: string[] }[] = [
   },
   {
     key: "web",
-    skills: ["HTML", "CSS"],
+    skills: ["HTML", "CSS", "React", "Tailwind CSS", "TypeScript", "Next.js"],
     name: {
       en: "Web foundations",
       fr: "Bases du web",
@@ -59,7 +59,7 @@ export const SKILL_GROUPS: { key: string; name: Tr; skills: string[] }[] = [
   },
   {
     key: "database",
-    skills: ["SQLite"],
+    skills: ["SQLite", "MySQL", "Prisma ORM", "Prisma Migrate"],
     name: {
       en: "Database",
       fr: "Base de données",
@@ -76,7 +76,7 @@ export const SKILL_GROUPS: { key: string; name: Tr; skills: string[] }[] = [
   },
   {
     key: "data",
-    skills: ["Power BI"],
+    skills: ["Python", "Power BI", "SQL", "R"],
     name: {
       en: "Data and reporting",
       fr: "Données et rapports",
@@ -116,7 +116,7 @@ export const SKILL_GROUPS: { key: string; name: Tr; skills: string[] }[] = [
  */
 export const EARLIER_SKILL_GROUPS: { key: "frontend" | "backend" | "databases" | "tools"; skills: string[] }[] = [
   { key: "frontend", skills: ["Next.js", "React", "TypeScript", "Tailwind CSS"] },
-  { key: "backend", skills: ["Node.js", "NestJS", "REST APIs"] },
+  { key: "backend", skills: ["TypeScript", "Next.js", "REST APIs", "Node.js", "NestJS"] },
   { key: "databases", skills: ["PostgreSQL", "Prisma", "Drizzle ORM"] },
   { key: "tools", skills: ["Git", "Playwright", "Vitest", "Cloudinary"] },
 ];

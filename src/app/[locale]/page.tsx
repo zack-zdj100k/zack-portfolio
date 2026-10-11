@@ -236,7 +236,7 @@ export default async function HomePage({ params, searchParams }: PageProps<"/[lo
             </h2>
           </Reveal>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist/75">{tPricing("pricingIntro")}</p>
-          <PricingBlock locale={locale} marketParam={typeof query.market === "string" ? query.market : null} basePath="/" />
+          <PricingBlock locale={locale} marketParam={typeof query.market === "string" ? query.market : null} />
           <div className="mt-20 md:mt-28">
             <h3 className="mb-8 text-[clamp(1.8rem,4vw,3.2rem)] font-black uppercase leading-none text-mist">{tPricing("notes.title")}</h3>
             <GoodToKnow scope={note("scope")} hosting={note("hosting")} maintenance={note("maintenance")} goal={note("goal")} cta={tPricing("quoteCta")} />

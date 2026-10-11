@@ -306,6 +306,8 @@ Log for this round (owner screenshots of 2026-10-11):
 | Device frames | `DeviceFrame` (project gallery, dashboard tour, preview) |
 | Admin Dashboard Preview | `AdminPreview` / `AdminShowcase` / `MockScreens` (Home, Services); registry `src/lib/admin-showcase.ts` typed against `src/components/admin/nav-items.ts` |
 | Project dashboard run | `DashboardRun` (laptop / tablet / phone frames). Each feature can have its own screenshot (Admin → Projects → Dashboard, per marker; migration `20261011180000_hotspot_screenshot`); the seed fills them from `public/projects/<slug>/features/` (`FEATURE_SHOTS` in `prisma/data/dashboard-tours.ts`). No numbered markers |
+| Skill families | A skill can be in several families (add it to each in Admin → Skills); the periodic table shows it once and lights it for each. Migration `20261011200000_skill_families` adds the owner's lists: Web foundations + React, Tailwind CSS, TypeScript, Next.js; Backend + TypeScript, Next.js; Database + MySQL, Prisma ORM, Prisma Migrate; Data and reporting + Python, SQL, R |
+| Price country picker | `MarketTabs`: every market's prices are on the page, so switching is instant; `?market=` follows in the address bar |
 | Roadmap diagrams | `src/lib/roadmaps.ts` (layout + text per language), `FlowGraph` and `SequenceDiagram`, under "How it's built". ZODIC CAR: use cases + request sequence. KING 253: sitemap + cash-on-delivery order flow. Boulboul Art Wall: waiting for its diagram. Laptop: animated diagram; narrower screens: the same content as a list |
 
 Scrolling: the sticky header and the floating menu button no longer blur what is behind them

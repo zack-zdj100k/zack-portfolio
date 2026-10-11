@@ -5,12 +5,13 @@ import { AnimatePresence, motion } from "motion/react";
 import { stackIcon, stackSymbol } from "@/lib/stack";
 import { tint } from "./skill-tints";
 
-/** family = index of the skill's group. */
-type Element = { n: number; name: string; symbol: string; family: number };
+/** family = index of the skill's first group (its colour); families = every group it is in. */
+type Element = { n: number; name: string; symbol: string; family: number; families: number[] };
 
 /**
  * "Periodic table of my stack": each skill is an element tile coloured by family. Picking a family
  * lights its tiles up and dims the rest; hovering, focusing or tapping a tile shows its logo.
+ * A skill listed in several families (TypeScript in web and backend) is one tile, lit by each.
  */
 export function SkillsTable({
   groups,
@@ -20,8 +21,19 @@ export function SkillsTable({
   labels: { title: string; intro: string; all: string };
 }) {
   const elements = useMemo<Element[]>(() => {
-    let n = 0;
-    return groups.flatMap((g, gi) => g.skills.map((s) => ({ n: ++n, name: s.name, symbol: s.symbol || stackSymbol(s.name), family: gi })));
+    const byName = new Map<string, Element>();
+    groups.forEach((g, gi) =>
+      g.skills.forEach((s) => {
+        const key = s.name.trim().toLowerCase();
+        const seen = byName.get(key);
+        if (seen) {
+          if (!seen.families.includes(gi)) seen.families.push(gi);
+        } else {
+          byName.set(key, { n: byName.size + 1, name: s.name, symbol: s.symbol || stackSymbol(s.name), family: gi, families: [gi] });
+        }
+      }),
+    );
+    return [...byName.values()];
   }, [groups]);
   const [family, setFamily] = useState<number | null>(null);
   const [active, setActive] = useState<Element | null>(elements[0] ?? null);
@@ -55,8 +67,9 @@ export function SkillsTable({
 
         <ul className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(78px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(92px,1fr))]">
           {elements.map((el) => {
-            const dim = family !== null && el.family !== family;
-            const style = tint(el.family);
+            const dim = family !== null && !el.families.includes(family);
+            // A lit tile takes the picked family's colour (a skill can be in several families).
+            const style = tint(family !== null && !dim ? family : el.family);
             return (
               <li key={el.n}>
                 <button
@@ -64,7 +77,7 @@ export function SkillsTable({
                   onMouseEnter={() => setActive(el)}
                   onFocus={() => setActive(el)}
                   onClick={() => setActive(el)}
-                  aria-label={`${el.name}, ${familyLabel(el.family)}`}
+                  aria-label={`${el.name}, ${el.families.map(familyLabel).join(", ")}`}
                   className={`group relative flex aspect-square w-full flex-col justify-between rounded-xl p-2.5 text-start transition-[opacity,transform] duration-300 hover:-translate-y-0.5 ${style.tile} ${style.text} ${
                     dim ? "opacity-20" : "opacity-100"
                   } ${shown.n === el.n ? "outline outline-2 outline-offset-2 outline-ice" : ""}`}
@@ -100,7 +113,7 @@ export function SkillsTable({
               </span>
             )}
             <span className="text-xl font-bold text-mist">{shown.name}</span>
-            <span className="text-sm uppercase tracking-widest text-mist/60">{familyLabel(shown.family)}</span>
+            <span className="text-sm uppercase tracking-widest text-mist/60">{shown.families.map(familyLabel).join(" · ")}</span>
           </motion.div>
         </AnimatePresence>
       </div>

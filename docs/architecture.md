@@ -163,8 +163,22 @@ erDiagram
   PricingPackage ||--o{ PricingPackageTranslation : "per locale"
   PricingPackage ||--o{ PackagePrice : "price per market"
 
-  CountryOffer ||--o{ CountryOfferTranslation : "terms per locale"
-  CountryOffer |o--o{ Referral : "applied to"
+  ReferralOffer ||--o{ ReferralOfferTranslation : "default texts per locale"
+  ReferralOffer ||--o{ ReferralOfferCountry : "eligible countries (explicit)"
+  ReferralOfferCountry ||--o{ ReferralOfferCountryTranslation : "own texts per locale"
+  ReferralOfferCountry |o--o{ Referral : "applied to"
+
+  SkillGroup ||--o{ SkillGroupTranslation : "name per locale"
+  SkillGroup ||--o{ Skill : contains
+  Skill ||--o{ SkillTranslation : "how I use it, per locale"
+  Skill }o--o{ Project : "shown in (SkillProject)"
+  ProcessStep ||--o{ ProcessStepTranslation : "per locale"
+  ProcessStep }o--o| MediaAsset : image
+  Project ||--o{ ArchitectureNode : "flow graph"
+  ArchitectureNode |o--o{ ArchitectureNode : branches
+  AiService ||--o{ AiServiceTranslation : "per locale"
+  AiService }o--o| MediaAsset : visual
+  AiService |o--o{ ContactInquiry : "inquiry / waitlist"
 
   AdminUser {
     uuid id PK
@@ -196,7 +210,6 @@ erDiagram
     string publicName
     string fullName "hidden unless showFullName"
     string[] languages
-    json skills
   }
   Project {
     uuid id PK
@@ -207,9 +220,16 @@ erDiagram
     enum status "DRAFT | PUBLISHED"
     bool featured
     int sortOrder
+    enum architectureStatus "HIDDEN | PROPOSED | CONFIRMED"
+  }
+  ArchitectureNode {
+    enum kind "CLIENT | FRONTEND | API | BACKEND | DATABASE | EXTERNAL"
+    string technology
+    uuid parentId "null = main chain"
+    json label "per locale"
   }
   ProjectImage {
-    enum kind "REAL | CONCEPT | DEMO"
+    enum kind "REAL | CONCEPT | DEMO | VISUAL_EXPLORATION"
     int sortOrder
   }
   PackagePrice {
@@ -218,13 +238,20 @@ erDiagram
     bigint minMinor
     bigint maxMinor "null = from"
   }
-  CountryOffer {
-    string market "DZ... or *"
+  ReferralOfferCountry {
+    string country "ISO 3166, chosen explicitly (no wildcard)"
+    bool available
     string currency
     bigint rewardMinor
-    enum category "null = any"
+    enum[] categories "empty = any"
     bigint minProjectValueMinor
     enum status
+  }
+  AiService {
+    enum status "AVAILABLE | COMING_SOON | HIDDEN"
+    enum publishStatus
+    bool waitlistEnabled
+    bool financial "adds the no-advice note"
   }
   Referral {
     enum status "NEW | CONTACTED | QUALIFIED | WON | NOT_ELIGIBLE | REWARD_DUE | PAID"
@@ -234,6 +261,7 @@ erDiagram
     datetime archivedAt
   }
   ContactInquiry {
+    enum kind "INQUIRY | WAITLIST"
     enum status "NEW | IN_PROGRESS | REPLIED | CLOSED"
     datetime archivedAt
     bool consent

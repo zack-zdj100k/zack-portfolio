@@ -5,12 +5,14 @@ import { Reveal } from "@/components/ui/Reveal";
 import { GhostLink, PrimaryLink } from "@/components/ui/buttons";
 import { IdBadge } from "@/components/about/IdBadge";
 import { SkillsTable } from "@/components/about/SkillsTable";
+import { SkillUsage } from "@/components/about/SkillUsage";
 import { WhatIBuild } from "@/components/about/WhatIBuild";
+import { WhoIWorkWith } from "@/components/about/WhoIWorkWith";
 import { HowItWorks } from "@/components/about/HowItWorks";
 import { profileBits } from "@/components/about/profile-bits";
 import type { Locale } from "@/lib/i18n/locales";
 import { pageMetadata } from "@/lib/seo";
-import { getExperience } from "@/server/services/content";
+import { getExperience, getProcessSteps } from "@/server/services/content";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/about">): Promise<Metadata> {
   const locale = (await params).locale as Locale;
@@ -19,17 +21,17 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/about">)
 }
 
 const BUILD = ["websites", "apps", "software"] as const;
-const STEPS = ["understand", "plan", "build", "review", "improve"] as const;
 
 export default async function AboutPage({ params }: PageProps<"/[locale]/about">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
-  const [t, tHome, format, experience, bits] = await Promise.all([
+  const [t, tHome, format, experience, bits, steps] = await Promise.all([
     getTranslations("about"),
     getTranslations("home"),
     getFormatter(),
     getExperience(locale),
     profileBits(locale),
+    getProcessSteps(locale),
   ]);
   const { profile } = bits;
   if (!profile) return null;
@@ -72,15 +74,21 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         items={BUILD.map((key) => ({ title: t(`whatIBuild.${key}Title`), body: t(`whatIBuild.${key}Body`) }))}
       />
 
-      {/* How I work: pinned notes */}
+      <section className="container-page pt-20 md:pt-28">
+        <WhoIWorkWith />
+      </section>
+
+      {/* How I work: pinned notes (steps are edited in Admin → How I work) */}
+      {steps.length > 0 && (
       <section aria-labelledby="work-title" className="py-20 md:py-28">
         <div className="container-page">
           <h2 id="work-title" className="text-[clamp(2.4rem,7vw,6rem)] font-black uppercase leading-none tracking-tight display-gradient">
             {t("howIWork.title")}
           </h2>
-          <HowItWorks steps={STEPS.map((s) => ({ title: t(`howIWork.${s}Title`), description: t(`howIWork.${s}Body`) }))} />
+          <HowItWorks steps={steps} />
         </div>
       </section>
+      )}
 
       {/* Skills: periodic table */}
       {bits.skillGroups.length > 0 && (
@@ -88,6 +96,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
           <SkillsTable groups={bits.skillGroups} labels={bits.stackLabels} />
         </section>
       )}
+      <SkillUsage groups={bits.skillUsage} labels={{ title: t("usage.title"), intro: t("usage.intro"), shownIn: t("usage.shownIn") }} />
 
       {/* Experience: only owner-provided entries */}
       {experience.length > 0 && (

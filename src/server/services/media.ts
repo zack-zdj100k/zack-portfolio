@@ -92,11 +92,13 @@ export async function deleteMedia(id: string) {
 
 /** How many places still use a media asset (so the library can block deleting it). */
 export async function mediaUsage(id: string) {
-  const [projects, frames, profile, settings] = await Promise.all([
+  const [projects, frames, profile, settings, steps, ai] = await Promise.all([
     prisma.projectImage.count({ where: { mediaId: id } }),
     prisma.heroFrame.count({ where: { mediaId: id } }),
     prisma.profile.count({ where: { portraitId: id } }),
     prisma.siteSettings.count({ where: { OR: [{ heroImageId: id }, { heroDepthId: id }, { heroModelId: id }, { ogImageId: id }] } }),
+    prisma.processStep.count({ where: { mediaId: id } }),
+    prisma.aiService.count({ where: { mediaId: id } }),
   ]);
-  return projects + frames + profile + settings;
+  return projects + frames + profile + settings + steps + ai;
 }

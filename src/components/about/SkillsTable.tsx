@@ -3,18 +3,10 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { stackIcon, stackSymbol } from "@/lib/stack";
+import { tint } from "./skill-tints";
 
-type Family = "frontend" | "backend" | "databases" | "tools";
-
-// One tint per family, all from the site palette (ice → steel → slate → outline).
-const FAMILY_STYLE: Record<Family, { tile: string; text: string; swatch: string }> = {
-  frontend: { tile: "bg-ice", text: "text-ink", swatch: "bg-ice" },
-  backend: { tile: "bg-steel", text: "text-mist", swatch: "bg-steel" },
-  databases: { tile: "bg-[#2E3A46]", text: "text-mist", swatch: "bg-[#2E3A46]" },
-  tools: { tile: "bg-ink-3 ring-1 ring-inset ring-line", text: "text-mist", swatch: "bg-ink-3 ring-1 ring-line" },
-};
-
-type Element = { n: number; name: string; symbol: string; family: Family };
+/** family = index of the skill's group. */
+type Element = { n: number; name: string; symbol: string; family: number };
 
 /**
  * "Periodic table of my stack": each skill is an element tile coloured by family. Picking a family
@@ -24,19 +16,19 @@ export function SkillsTable({
   groups,
   labels,
 }: {
-  groups: { family: Family; label: string; skills: string[] }[];
+  groups: { label: string; skills: { name: string; symbol?: string | null }[] }[];
   labels: { title: string; intro: string; all: string };
 }) {
   const elements = useMemo<Element[]>(() => {
     let n = 0;
-    return groups.flatMap((g) => g.skills.map((name) => ({ n: ++n, name, symbol: stackSymbol(name), family: g.family })));
+    return groups.flatMap((g, gi) => g.skills.map((s) => ({ n: ++n, name: s.name, symbol: s.symbol || stackSymbol(s.name), family: gi })));
   }, [groups]);
-  const [family, setFamily] = useState<Family | null>(null);
+  const [family, setFamily] = useState<number | null>(null);
   const [active, setActive] = useState<Element | null>(elements[0] ?? null);
   if (elements.length === 0) return null;
   const shown = active ?? elements[0];
   const icon = stackIcon(shown.name);
-  const familyLabel = (f: Family) => groups.find((g) => g.family === f)?.label ?? f;
+  const familyLabel = (f: number) => groups[f]?.label ?? "";
 
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start">
@@ -45,7 +37,7 @@ export function SkillsTable({
         <p className="mt-5 max-w-xl text-mist/70">{labels.intro}</p>
 
         <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label={labels.title}>
-          {[null, ...groups.map((g) => g.family)].map((f) => (
+          {[null, ...groups.map((_, gi) => gi)].map((f) => (
             <button
               key={f ?? "all"}
               type="button"
@@ -55,8 +47,8 @@ export function SkillsTable({
                 family === f ? "border-mist bg-mist text-ink" : "border-line text-mist/80 hover:border-ice/60"
               }`}
             >
-              {f && <span aria-hidden className={`size-2.5 rounded-sm ${FAMILY_STYLE[f].swatch}`} />}
-              {f ? familyLabel(f) : labels.all}
+              {f !== null && <span aria-hidden className={`size-2.5 rounded-sm ${tint(f).swatch}`} />}
+              {f !== null ? familyLabel(f) : labels.all}
             </button>
           ))}
         </div>
@@ -64,7 +56,7 @@ export function SkillsTable({
         <ul className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(78px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(92px,1fr))]">
           {elements.map((el) => {
             const dim = family !== null && el.family !== family;
-            const style = FAMILY_STYLE[el.family];
+            const style = tint(el.family);
             return (
               <li key={el.n}>
                 <button
@@ -103,7 +95,7 @@ export function SkillsTable({
                 <path d={icon.path} />
               </svg>
             ) : (
-              <span className={`flex size-24 items-center justify-center rounded-2xl text-4xl font-bold ${FAMILY_STYLE[shown.family].tile} ${FAMILY_STYLE[shown.family].text}`}>
+              <span className={`flex size-24 items-center justify-center rounded-2xl text-4xl font-bold ${tint(shown.family).tile} ${tint(shown.family).text}`}>
                 {shown.symbol}
               </span>
             )}

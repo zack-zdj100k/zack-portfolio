@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [{ protocol: "https", hostname: "res.cloudinary.com" }],
-    localPatterns: [{ pathname: "/hero/**" }, { pathname: "/media/**" }, { pathname: "/projects/**" }],
+    localPatterns: [{ pathname: "/hero/**" }, { pathname: "/media/**" }, { pathname: "/profile/**" }, { pathname: "/projects/**" }],
   },
   experimental: {
     serverActions: { bodySizeLimit: "26mb" },

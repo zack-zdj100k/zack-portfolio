@@ -32,6 +32,6 @@ export async function ProjectTags({
 export async function ImageKindNote({ kinds }: { kinds: ImageKind[] }) {
   const t = await getTranslations("projects");
   if (kinds.every((k) => k === "REAL")) return null;
-  const kind = kinds.includes("CONCEPT") ? "CONCEPT" : "DEMO";
+  const kind = kinds.includes("CONCEPT") ? "CONCEPT" : kinds.includes("VISUAL_EXPLORATION") ? "VISUAL_EXPLORATION" : "DEMO";
   return <p className="text-sm text-mist/60">{t(`imageNote.${kind}`)}</p>;
 }

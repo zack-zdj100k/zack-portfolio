@@ -14,7 +14,7 @@ export type SeedTranslation = {
 export const translations: Partial<Record<Locale, SeedTranslation>> = {
   fr: {
     profile: {
-      title: "Ingénieur logiciel : sites web, applications et logiciels de bureau pour les entreprises.",
+      title: "Ingénieur logiciel : sites web, applications et logiciels de bureau pour les entreprises, les startups et les nouveaux projets.",
       intro:
         "Je conçois et développe des logiciels adaptés au fonctionnement de votre entreprise : des sites qui attirent des clients, des applications qu'ils utilisent chaque jour et des outils de bureau sur lesquels votre équipe s'appuie. Chaque projet part de vos besoins et de son périmètre.",
       bio: "Je suis Zack, ingénieur logiciel. Je conçois et développe des sites web, des boutiques en ligne, des plateformes, des applications et des logiciels de bureau pour les entreprises. J'accompagne chaque projet du premier échange jusqu'à la mise en ligne, j'explique les choix en chemin et je garde le périmètre et le prix clairs, par écrit.",
@@ -61,7 +61,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   ar: {
     profile: {
-      title: "مهندس برمجيات يطوّر مواقع وتطبيقات وبرامج مكتبية للشركات.",
+      title: "مهندس برمجيات يطوّر مواقع وتطبيقات وبرامج مكتبية للشركات والشركات الناشئة والمشاريع الجديدة.",
       intro:
         "أخطط وأبني برامج تناسب طريقة عمل شركتك: مواقع تجذب العملاء، وتطبيقات يستخدمونها كل يوم، وأدوات مكتبية يعتمد عليها فريقك. كل مشروع يبدأ من احتياجاتك ونطاقه.",
       bio: "أنا زاك، مهندس برمجيات. أصمم وأطوّر مواقع ويب ومتاجر إلكترونية ومنصات وتطبيقات وبرامج مكتبية للشركات. أرافق المشروع من أول محادثة حتى الإطلاق، وأشرح الخيارات خلال العمل، وأحافظ على وضوح النطاق والسعر كتابيًا.",
@@ -107,7 +107,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   it: {
     profile: {
-      title: "Ingegnere del software: siti web, app e software desktop per le aziende.",
+      title: "Ingegnere del software: siti web, app e software desktop per aziende, startup e nuovi progetti.",
       intro:
         "Progetto e sviluppo software attorno al modo in cui lavora la tua azienda: siti che portano clienti, app che usano ogni giorno e strumenti desktop su cui il tuo team fa affidamento. Ogni progetto parte dalle tue esigenze e dal suo perimetro.",
       bio: "Sono Zack, ingegnere del software. Progetto e sviluppo siti web, negozi online, piattaforme, app e software desktop per le aziende. Seguo ogni progetto dalla prima conversazione al lancio, spiego le scelte lungo il percorso e tengo perimetro e prezzo chiari, per iscritto.",
@@ -153,7 +153,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   tr: {
     profile: {
-      title: "İşletmeler için web siteleri, uygulamalar ve masaüstü yazılımlar geliştiren yazılım mühendisi.",
+      title: "İşletmeler, girişimler ve yeni projeler için web siteleri, uygulamalar ve masaüstü yazılımlar geliştiren yazılım mühendisi.",
       intro:
         "İşletmenizin çalışma şekline uygun yazılımlar planlar ve geliştiririm: müşteri getiren web siteleri, her gün kullandıkları uygulamalar ve ekibinizin güvendiği masaüstü araçlar. Her proje ihtiyaçlarınızdan ve kapsamından başlar.",
       bio: "Ben Zack, yazılım mühendisiyim. İşletmeler için web siteleri, online mağazalar, platformlar, uygulamalar ve masaüstü yazılımlar tasarlayıp geliştiriyorum. Projeyi ilk görüşmeden yayına kadar yürütür, seçimleri yol boyunca açıklar, kapsamı ve fiyatı yazılı olarak net tutarım.",
@@ -199,7 +199,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   es: {
     profile: {
-      title: "Ingeniero de software: sitios web, apps y software de escritorio para empresas.",
+      title: "Ingeniero de software: sitios web, apps y software de escritorio para empresas, startups y nuevos proyectos.",
       intro:
         "Planifico y desarrollo software según cómo funciona tu negocio: sitios web que atraen clientes, apps que usan cada día y herramientas de escritorio en las que confía tu equipo. Cada proyecto parte de tus necesidades y de su alcance.",
       bio: "Soy Zack, ingeniero de software. Diseño y desarrollo sitios web, tiendas online, plataformas, apps y software de escritorio para empresas. Acompaño cada proyecto desde la primera conversación hasta el lanzamiento, explico las decisiones por el camino y mantengo el alcance y el precio claros, por escrito.",
@@ -245,7 +245,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   "pt-BR": {
     profile: {
-      title: "Engenheiro de software: sites, aplicativos e softwares desktop para empresas.",
+      title: "Engenheiro de software: sites, aplicativos e softwares desktop para empresas, startups e novos projetos.",
       intro:
         "Planejo e desenvolvo software de acordo com o jeito que a sua empresa funciona: sites que trazem clientes, aplicativos que eles usam todo dia e ferramentas desktop em que a sua equipe confia. Cada projeto começa pelas suas necessidades e pelo escopo.",
       bio: "Sou o Zack, engenheiro de software. Crio e desenvolvo sites, lojas virtuais, plataformas, aplicativos e softwares desktop para empresas. Acompanho cada projeto da primeira conversa até o lançamento, explico as decisões no caminho e mantenho escopo e preço claros, por escrito.",
@@ -291,7 +291,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   ru: {
     profile: {
-      title: "Инженер-программист: сайты, приложения и программы для ПК для бизнеса.",
+      title: "Инженер-программист: сайты, приложения и программы для ПК для бизнеса, стартапов и новых проектов.",
       intro:
         "Я планирую и создаю программы под то, как работает ваш бизнес: сайты, которые приводят клиентов, приложения, которыми пользуются каждый день, и программы для ПК, на которые опирается ваша команда. Каждый проект начинается с ваших задач и его объёма.",
       bio: "Меня зовут Зак, я инженер-программист. Проектирую и разрабатываю сайты, интернет-магазины, платформы, приложения и программы для ПК для бизнеса. Веду проект от первого разговора до запуска, объясняю решения по ходу работы и фиксирую объём и цену письменно.",
@@ -337,7 +337,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   uk: {
     profile: {
-      title: "Інженер-програміст: сайти, застосунки та програми для ПК для бізнесу.",
+      title: "Інженер-програміст: сайти, застосунки та програми для ПК для бізнесу, стартапів і нових проєктів.",
       intro:
         "Я планую та створюю програми під те, як працює ваш бізнес: сайти, що приводять клієнтів, застосунки, якими користуються щодня, і програми для ПК, на які спирається ваша команда. Кожен проєкт починається з ваших потреб і його обсягу.",
       bio: "Мене звати Зак, я інженер-програміст. Проєктую та розробляю сайти, інтернет-магазини, платформи, застосунки й програми для ПК для бізнесу. Веду проєкт від першої розмови до запуску, пояснюю рішення в процесі та фіксую обсяг і ціну письмово.",
@@ -383,7 +383,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   nb: {
     profile: {
-      title: "Programvareutvikler som lager nettsider, apper og skrivebordsprogrammer for bedrifter.",
+      title: "Programvareutvikler som lager nettsider, apper og skrivebordsprogrammer for bedrifter, oppstartsselskaper og nye prosjekter.",
       intro:
         "Jeg planlegger og bygger programvare rundt måten bedriften din jobber på: nettsider som gir kunder, apper de bruker hver dag, og skrivebordsverktøy teamet ditt stoler på. Hvert prosjekt starter med dine behov og omfanget.",
       bio: "Jeg er Zack, programvareutvikler. Jeg designer og bygger nettsider, nettbutikker, plattformer, apper og skrivebordsprogrammer for bedrifter. Jeg følger prosjektet fra første samtale til lansering, forklarer valgene underveis og holder omfang og pris tydelig, skriftlig.",
@@ -429,7 +429,7 @@ export const translations: Partial<Record<Locale, SeedTranslation>> = {
   },
   nl: {
     profile: {
-      title: "Software engineer die websites, apps en desktopsoftware bouwt voor bedrijven.",
+      title: "Software engineer die websites, apps en desktopsoftware bouwt voor bedrijven, startups en nieuwe projecten.",
       intro:
         "Ik plan en bouw software rond de manier waarop jouw bedrijf werkt: websites die klanten opleveren, apps die ze elke dag gebruiken en desktoptools waar je team op vertrouwt. Elk project begint bij jouw behoeften en de scope.",
       bio: "Ik ben Zack, software engineer. Ik ontwerp en bouw websites, webshops, platforms, apps en desktopsoftware voor bedrijven. Ik begeleid elk project van het eerste gesprek tot de lancering, leg keuzes onderweg uit en houd scope en prijs helder, op papier.",

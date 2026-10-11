@@ -93,17 +93,21 @@ Test a restore once before launch.
 
 | I want to... | Go to |
 | --- | --- |
-| Change my name, title, introduction, bio, skills, photo | Admin → Profile (texts per language, tab per language) |
+| Change my name, title, introduction, bio, photo | Admin → Profile (texts per language, tab per language) |
+| Group my technologies, say how I use each one, link the projects that show it | Admin → Skills |
+| Add, reorder, hide or rewrite the How I Work steps (icon, image, text per language) | Admin → How I work |
 | Choose hero option A, B or C, or replace the artwork / frames / 3D model | Admin → Hero 3D (each option has a preview link) |
 | Add, edit, reorder, publish or delete a project, its images and links | Admin → Projects |
+| Explain how a project is built (frontend, server, database, request flow) and edit its flow graph | Admin → Projects → (project) → How it's built (status Proposed shows a “Concept / proposed architecture” label) |
+| Mark AI services Available now / Coming soon, edit text and visual, switch the waitlist on or off | Admin → AI services (waitlist sign-ups arrive in Inquiries → Waitlist) |
 | Edit services, examples, packages and prices per country (minimum, maximum and slider step for the budget slider) | Admin → Services & pricing |
-| Set referral rewards per country and their terms | Admin → Referral offers |
+| Choose the eligible countries of each referral offer, and per country the currency, reward, project categories, conditions and status | Admin → Referral offers (a country that isn't listed sees “no offer in your country yet”) |
 | Follow up inquiries and referrals (status, notes, archive, delete) | Admin → Inquiries / Referrals |
 | Change any heading, button or message on the site | Admin → Page text |
 | Hide a language, or remove the "translated automatically" note | Admin → Languages |
 | Contact email, phone, WhatsApp, GitHub/LinkedIn/Indeed links | Admin → Settings (adding a WhatsApp number and ticking "show" also turns on the floating WhatsApp button on phones) |
 
-Drafts: prices, referral offers, experience entries, testimonials and projects can be **Draft**
+Drafts: prices, referral offers (and each of their countries), AI services, experience entries, testimonials and projects can be **Draft**
 (hidden). In the admin sidebar, **Drafts preview: ON** shows them on the live site to you only,
 with a banner.
 

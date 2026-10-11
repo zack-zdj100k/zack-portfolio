@@ -15,7 +15,7 @@ export const metadata: Metadata = { title: "Inquiry" };
 export default async function InquiryDetail({ params, searchParams }: PageProps<"/admin/inquiries/[id]">) {
   const { id } = await params;
   const sp = await searchParams;
-  const q = await prisma.contactInquiry.findUnique({ where: { id } });
+  const q = await prisma.contactInquiry.findUnique({ where: { id }, include: { aiService: { include: { translations: { where: { locale: "en" } } } } } });
   if (!q) notFound();
 
   const rows: [string, React.ReactNode][] = [
@@ -37,6 +37,8 @@ export default async function InquiryDetail({ params, searchParams }: PageProps<
       ),
     ],
     ["Country", countryName(q.country, "en")],
+    ["Kind", q.kind === "WAITLIST" ? "Coming Soon waitlist" : "Inquiry"],
+    ...(q.aiService ? ([["AI service", q.aiService.translations[0]?.title ?? q.aiService.key]] as [string, React.ReactNode][]) : []),
     ["Project type", q.projectCategory?.toLowerCase() ?? "Not sure yet"],
     ["Budget", q.budget ?? "-"],
     ["Timeline", q.timeline ?? "-"],

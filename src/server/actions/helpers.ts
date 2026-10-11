@@ -116,3 +116,26 @@ export function safeBack(fd: FormData, fallback: string) {
 export function isRedirect(e: unknown) {
   return e && typeof e === "object" && "digest" in e && String((e as { digest: unknown }).digest).startsWith("NEXT_REDIRECT");
 }
+
+/**
+ * Moves `id` one place up or down among its siblings (already sorted) and renumbers them 0..n.
+ * `update` returns the Prisma write for one row so the whole move runs in one transaction.
+ */
+export function reorderWrites<T extends { id: string }, W>(siblings: T[], id: string, op: string, update: (id: string, sortOrder: number) => W): W[] {
+  const i = siblings.findIndex((s) => s.id === id);
+  const j = op === "up" ? i - 1 : op === "down" ? i + 1 : -1;
+  if (i === -1 || j < 0 || j >= siblings.length) return [];
+  const next = [...siblings];
+  [next[i], next[j]] = [next[j], next[i]];
+  return next.map((s, k) => update(s.id, k));
+}
+
+/** Every value of a repeated field (checkbox groups). */
+export function all(fd: FormData, key: string, maxItems = 100, maxLen = 60): string[] {
+  return fd
+    .getAll(key)
+    .filter((v): v is string => typeof v === "string")
+    .map((v) => v.trim().slice(0, maxLen))
+    .filter(Boolean)
+    .slice(0, maxItems);
+}

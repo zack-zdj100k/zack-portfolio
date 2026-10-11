@@ -16,12 +16,6 @@ export async function saveProfile(fd: FormData) {
         fullName: optStr(fd, "fullName", 120),
         showFullName: bool(fd, "showFullName"),
         languages: list(fd, "languages", 12, 40),
-        skills: {
-          frontend: list(fd, "skills.frontend"),
-          backend: list(fd, "skills.backend"),
-          databases: list(fd, "skills.databases"),
-          tools: list(fd, "skills.tools"),
-        },
       },
     });
     return "1";

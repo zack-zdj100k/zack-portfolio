@@ -4,10 +4,11 @@ import { useId, useRef, useState } from "react";
 import Image from "next/image";
 import { Circle } from "lucide-react";
 import { DASHBOARD_ICONS } from "./dashboard-icons";
+import { DeviceFrame } from "@/components/ui/DeviceFrame";
 
 export type TourScreen = {
   id: string;
-  kind: "REAL" | "CONCEPT" | "DEMO";
+  kind: "REAL" | "CONCEPT" | "DEMO" | "VISUAL_EXPLORATION";
   src: string;
   width: number;
   height: number;
@@ -26,7 +27,13 @@ export function DashboardTour({
   labels,
 }: {
   screens: TourScreen[];
-  labels: { screens: string; demoNote: string; conceptNote: string };
+  labels: {
+    screens: string;
+    /** Address-bar text of the window frame (the project's name). */
+    address: string;
+    kinds: Record<"CONCEPT" | "DEMO" | "VISUAL_EXPLORATION", string>;
+    notes: Record<"CONCEPT" | "DEMO" | "VISUAL_EXPLORATION", string>;
+  };
 }) {
   const [screenIndex, setScreenIndex] = useState(0);
   const [active, setActive] = useState<string | null>(null);
@@ -84,7 +91,8 @@ export function DashboardTour({
       >
         <figure className="flex min-w-0 flex-col gap-3 lg:sticky lg:top-24">
           {/* Phones: the screen keeps a readable size and pans sideways, so markers never pile up. */}
-          <div ref={frame} dir="ltr" className="overflow-x-auto rounded-[20px] border border-line bg-ink-3 md:overflow-hidden md:rounded-[28px]">
+          <DeviceFrame address={labels.address} badge={screen.kind !== "REAL" ? labels.kinds[screen.kind] : null}>
+          <div ref={frame} dir="ltr" className="overflow-x-auto bg-ink-3 md:overflow-hidden">
             <div className="relative min-w-[760px] md:min-w-0">
               <Image
                 key={screen.src}
@@ -123,8 +131,9 @@ export function DashboardTour({
               })}
             </div>
           </div>
+          </DeviceFrame>
           {screen.kind !== "REAL" && (
-            <figcaption className="px-1 text-sm text-mist/60">{screen.kind === "DEMO" ? labels.demoNote : labels.conceptNote}</figcaption>
+            <figcaption className="px-1 text-sm text-mist/60">{labels.notes[screen.kind]}</figcaption>
           )}
         </figure>
 

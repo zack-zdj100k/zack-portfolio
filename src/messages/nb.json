@@ -31,7 +31,7 @@
     "privacy": "Personvern"
   },
   "home": {
-    "metaDescription": "Programvareutvikler som lager nettsider, apper og skrivebordsprogrammer for bedrifter. Se prosjekter, tjenester og priser, og la oss snakke om prosjektet ditt.",
+    "metaDescription": "Programvareutvikler som lager nettsider, apper og skrivebordsprogrammer for bedrifter, småbedrifter, oppstartsselskaper og folk med en prosjektidé. Se prosjektene, tjenestene og prisene, og la oss snakke om prosjektet ditt.",
     "hero": {
       "greeting": "Hei, jeg er",
       "ctaPrimary": "Snakk om et prosjekt",
@@ -58,12 +58,12 @@
     },
     "referral": {
       "title": "Ta med et prosjekt. Del belønningen.",
-      "body": "Kjenner du en bedrift som trenger en nettside, en app eller et skrivebordsprogram? Sett oss i kontakt. Blir prosjektet noe etter tilbudets vilkår, får du en belønning.",
+      "body": "Kjenner du en bedrift, et oppstartsselskap eller noen med et prosjekt som trenger en nettside, en app eller et skrivebordsprogram? Sett oss i kontakt. Blir prosjektet noe på tilbudets vilkår, får du en belønning.",
       "cta": "Se henvisningstilbudet"
     },
     "contact": {
       "title": "La oss skalere bedriften din, eller bygge den.",
-      "body": "Fortell hva bedriften din trenger. Jeg svarer med spørsmål, en plan og et prisanslag."
+      "body": "Fortell hva bedriften eller prosjektet ditt trenger. Jeg svarer med spørsmål, en plan og et prisanslag."
     }
   },
   "about": {
@@ -82,7 +82,7 @@
       "appsBody": "Nett- og mobilapper for butikker, bedrifter og restauranter, bygget rundt oppgavene kundene og teamet ditt gjør hver dag.",
       "softwareTitle": "Skrivebordsprogrammer",
       "softwareBody": "Programmer for butikker, kafeer, restauranter og kontorer: salg, lager, bestillinger og den daglige oversikten bedriften din trenger.",
-      "intro": "Planlagt etter hvordan bedriften din fungerer, og enkel å bruke hver dag."
+      "intro": "Planlagt etter hvordan bedriften eller prosjektet ditt fungerer, og enkelt å bruke hver dag."
     },
     "experience": {
       "title": "Erfaring",
@@ -91,7 +91,7 @@
     "howIWork": {
       "title": "Slik jobber jeg",
       "understandTitle": "Forstå",
-      "understandBody": "Vi snakker om virksomheten din, kundene dine og problemet du vil løse.",
+      "understandBody": "Vi snakker om virksomheten eller idéen din, hvem den er for, og problemet du vil løse.",
       "planTitle": "Planlegge",
       "planBody": "Du får et skriftlig omfang: funksjoner, tidsplan og pris, før noe arbeid starter.",
       "buildTitle": "Bygge",
@@ -121,7 +121,7 @@
     "facts": {
       "title": "Kort fortalt",
       "focus": "Fokus",
-      "focusValue": "Programvare for bedrifter",
+      "focusValue": "Programvare for bedrifter og prosjekter",
       "stack": "Hovedverktøy"
     },
     "badge": {
@@ -132,6 +132,11 @@
       "title": "Verktøyene mine, som et periodesystem.",
       "intro": "Hold over eller trykk på en rute for å se den. Velg en familie for å lyse den opp.",
       "all": "Alle"
+    },
+    "usage": {
+      "title": "Slik bruker jeg teknologiene mine",
+      "intro": "Hva hvert verktøy brukes til i arbeidet mitt, med mine egne ord, og prosjektene der du kan se det.",
+      "shownIn": "Vises i"
     }
   },
   "projects": {
@@ -161,12 +166,14 @@
     },
     "imageNote": {
       "CONCEPT": "Bilder merket som konsept er visuelle utkast, ikke endelige skjermbilder.",
-      "DEMO": "Bildene viser en demoversjon, ikke det lanserte produktet."
+      "DEMO": "Bildene viser en demoversjon, ikke det lanserte produktet.",
+      "VISUAL_EXPLORATION": "Bilder merket som visuell utforsking er designstudier, ikke skjermbilder av det ferdige produktet."
     },
     "imageKind": {
       "REAL": "Skjermbilde",
       "CONCEPT": "Konseptbilde",
-      "DEMO": "Demoversjon"
+      "DEMO": "Demoversjon",
+      "VISUAL_EXPLORATION": "Visuell utforsking"
     },
     "detail": {
       "back": "Alle prosjekter",
@@ -192,13 +199,33 @@
       "dashboardTitle": "Dashbordet bak",
       "dashboardIntro": "Hvert ikon har en jobb. Hold over eller trykk på et tall for å se hva det gjør for bedriften.",
       "screens": "Dashbordskjermer"
+    },
+    "arch": {
+      "title": "Slik er det bygd",
+      "intro": "Hva du ser, hva som skjer bak og hvor informasjonen lagres, med enkle ord.",
+      "proposed": "Konsept / foreslått arkitektur",
+      "proposedNote": "Denne oversikten er skrevet ut fra prosjektets teknologiliste og er ikke bekreftet i detalj ennå. Det virkelige oppsettet kan være annerledes.",
+      "graph": "Veien til en forespørsel, steg for steg",
+      "branches": "Tilkoblede tjenester",
+      "frontend": "Frontend: det brukerne ser og bruker",
+      "backend": "Backend og server: forespørsler og forretningslogikk",
+      "database": "Database: hva som lagres",
+      "flow": "Slik går en forespørsel",
+      "kinds": {
+        "CLIENT": "Besøkende",
+        "FRONTEND": "Nettside",
+        "API": "API",
+        "BACKEND": "Server",
+        "DATABASE": "Database",
+        "EXTERNAL": "Ekstern tjeneste"
+      }
     }
   },
   "pricing": {
     "metaTitle": "Tjenester og priser",
-    "metaDescription": "Nettsider, apper og skrivebordsprogrammer for bedrifter, med startpriser, hva som er inkludert og hvordan domene, hosting og vedlikehold fungerer.",
+    "metaDescription": "Nettsider, apper og skrivebordsprogrammer for bedrifter, småbedrifter, oppstartsselskaper og egne prosjekter: startpriser, hva som er inkludert, og hvordan domene, hosting og vedlikehold fungerer.",
     "title": "Tjenester og priser",
-    "intro": "Hvert prosjekt planlegges etter virksomheten din og omfanget. Først tjenestene, deretter hvordan prisingen fungerer.",
+    "intro": "Hvert prosjekt planlegges etter virksomheten eller idéen din og omfanget. Her er tjenestene, og deretter hvordan prisene fungerer.",
     "servicesTitle": "Tjenester",
     "pricingTitle": "Priser",
     "pricingIntro": "Prisene er utgangspunkter. Endelig tilbud avhenger av omfang, funksjoner, integrasjoner, design og tidsplan, og du får det skriftlig før arbeidet starter.",
@@ -222,7 +249,7 @@
       "maintenanceTitle": "Vedlikehold",
       "maintenanceBody": "Feil i det leverte omfanget rettes. Nye funksjoner eller endringer i omfanget prises separat.",
       "goalTitle": "Målet",
-      "goalBody": "Programvare som gjør arbeidet enklere og hjelper bedriften å vokse. Resultater avhenger av mange forhold, så ingen salgstall loves."
+      "goalBody": "Programvare som gjør arbeidet enklere og hjelper bedriften eller prosjektet ditt å vokse. Resultatene avhenger av mye, så ingen salgstall loves."
     },
     "estimator": {
       "title": "Sett budsjettet ditt",
@@ -250,7 +277,7 @@
     "metaTitle": "Henvisningstilbud",
     "metaDescription": "Henvis en bedrift som trenger en nettside, en app eller et skrivebordsprogram, og få en belønning når prosjektet blir noe etter tilbudets vilkår.",
     "title": "Ta med et prosjekt. Del belønningen.",
-    "intro": "Kjenner du en bedrift som trenger en nettside, en app eller et skrivebordsprogram? Sett oss i kontakt. Blir prosjektet noe og oppfyller vilkårene nedenfor, får du en belønning.",
+    "intro": "Kjenner du en bedrift, et oppstartsselskap eller noen med et prosjekt som trenger en nettside, en app eller et skrivebordsprogram? Introduser dem. Blir prosjektet noe og oppfyller vilkårene under, får du en belønning.",
     "howTitle": "Slik fungerer det",
     "step1Title": "Sett i kontakt",
     "step1Body": "Send bedriftens opplysninger med skjemaet nedenfor, med deres samtykke.",
@@ -260,7 +287,7 @@
     "step3Body": "Når vilkårene i tilbudet er oppfylt, utbetales belønningen.",
     "countryLabel": "Ditt land",
     "countryPlaceholder": "Velg landet ditt",
-    "countryHint": "Belønningen avhenger av landet ditt.",
+    "countryHint": "Tilbudene settes per land. Velg ditt for å se det som gjelder.",
     "rewardHeadline": "Din belønning: {amount}",
     "rewardPerProject": "for hvert henviste prosjekt som oppfyller vilkårene",
     "rewardFor": "Gjelder for: {category}",
@@ -286,7 +313,8 @@
     "consent": "Jeg bekrefter at bedriften har sagt ja til å bli kontaktet, og godtar at opplysningene mine lagres for å behandle denne henvisningen.",
     "submit": "Send henvisning",
     "successTitle": "Henvisningen er mottatt. Takk!",
-    "successBody": "Jeg kontakter bedriften og holder deg oppdatert."
+    "successBody": "Jeg kontakter bedriften og holder deg oppdatert.",
+    "eligibility": "Hvem kan delta"
   },
   "contact": {
     "metaTitle": "Kontakt",
@@ -333,7 +361,8 @@
     "generic": "Noe gikk galt. Prøv igjen, eller bruk en annen kontaktmåte.",
     "network": "Meldingen kunne ikke sendes. Sjekk tilkoblingen og prøv igjen.",
     "sending": "Sender...",
-    "fixErrors": "Rett feltene som er merket."
+    "fixErrors": "Rett feltene som er merket.",
+    "notEligible": "Henvisningstilbudet i landet ditt dekker ikke denne typen prosjekt."
   },
   "privacy": {
     "metaTitle": "Personvern",
@@ -349,5 +378,87 @@
     "rightsBody": "Du kan når som helst be om å se, rette eller slette opplysningene dine via kontaktsiden.",
     "cookiesTitle": "Informasjonskapsler",
     "cookiesBody": "Siden bruker ingen sporingskapsler. En informasjonskapsel husker språkvalget ditt når du bytter språk."
+  },
+  "ai": {
+    "title": "KI-tjenester",
+    "intro": "KI som gjør ekte arbeid for bedriften eller prosjektet ditt, bygd rundt hvordan du allerede jobber. Det som er tilgjengelig i dag er tydelig merket; resten er på vei.",
+    "available": "Tilgjengelig nå",
+    "availableBadge": "Tilgjengelig nå",
+    "comingSoon": "Kommer snart",
+    "comingSoonBadge": "Kommer snart",
+    "notYetAvailable": "Ikke tilgjengelig ennå. Ingen startdato er lovet.",
+    "cta": "La oss snakke",
+    "waitlistCta": "Bli med på ventelisten",
+    "waitlistIntro": "Legg igjen e-posten din, så får du vite når dette blir tilgjengelig. Ikke noe annet.",
+    "waitlistConsent": "Jeg godtar at navn, e-post og land lagres for å gi meg beskjed når denne tjenesten blir tilgjengelig.",
+    "waitlistSubmit": "Bli med",
+    "waitlistSuccessTitle": "Du står på listen.",
+    "waitlistSuccessBody": "Du får én melding når denne tjenesten blir tilgjengelig.",
+    "financialNote": "Kun programvare. Dette er ikke finansiell rådgivning eller investeringsråd, og ingen avkastning, fortjeneste eller resultater loves.",
+    "aboutService": "Gjelder: {service}"
+  },
+  "showcase": {
+    "title": "Styr nettsiden selv",
+    "intro": "Dette er hva dashbordet bak denne nettsiden kan gjøre. Prosjektet ditt kan også få et, så du oppdaterer innhold, priser og tilbud uten å vente på en utvikler.",
+    "note": "Skjermbildene er en demo med oppdiktede data. Det ekte dashbordet er privat og beskyttet.",
+    "demo": "Demodata",
+    "address": "admin · demo",
+    "screenOf": "Demoskjerm",
+    "features": {
+      "projects": {
+        "title": "Prosjekter",
+        "body": "Legg til et prosjekt, skriv historien på hvert språk, last opp skjermbilder og velg utkast eller publisert. Ingenting går live før du bestemmer det."
+      },
+      "uploads": {
+        "title": "Bildeopplasting",
+        "body": "Slipp inn skjermbilder og bilder. De skaleres automatisk, merkes som ekte, konsept eller demo, og kan brukes hvor som helst på siden."
+      },
+      "pricing": {
+        "title": "Priser",
+        "body": "Pakker per land og valuta, med spennet for prisglidebryteren, leveringstider og hva som er inkludert."
+      },
+      "referral": {
+        "title": "Henvisningstilbud",
+        "body": "Velg nøyaktig hvilke land som kan delta, og sett valuta, belønning, prosjekter som dekkes og vilkår for hvert av dem. Innkomne henvisninger følges opp til belønningen er betalt."
+      },
+      "inquiries": {
+        "title": "Henvendelser",
+        "body": "Alle meldinger fra kontaktskjemaet og ventelistene i én privat innboks, med status, notater og raskt svar på e-post eller WhatsApp."
+      },
+      "translations": {
+        "title": "Oversettelser",
+        "body": "All offentlig tekst på 13 språk, med en markering av hva som er gjennomgått. Endre hvilken som helst setning uten å røre koden."
+      },
+      "profile": {
+        "title": "Profil",
+        "body": "Navn, tittel, bilde, introduksjon, språk og erfaring. Om meg-siden oppdateres så snart du lagrer."
+      },
+      "process": {
+        "title": "Slik jobber jeg",
+        "body": "Legg til, sorter, skjul eller skriv om stegene i prosessen, med et ikon eller et bilde for hvert."
+      },
+      "skills": {
+        "title": "Ferdigheter",
+        "body": "Grupper teknologiene, forklar hvordan hver brukes, og koble til prosjektene som viser den."
+      },
+      "ai": {
+        "title": "KI-tjenester",
+        "body": "Merk hver tjeneste som tilgjengelig nå eller kommer snart, rediger beskrivelse og bilde, og slå ventelisten av eller på."
+      }
+    }
+  },
+  "audience": {
+    "title": "Hvem jeg jobber med",
+    "intro": "Ikke bare store selskaper. Har du en ekte virksomhet eller et ekte prosjekt, stort eller lite, kan vi bygge det.",
+    "companiesTitle": "Bedrifter",
+    "companiesBody": "Team som trenger en ny plattform, et internt verktøy eller et system som erstatter regneark.",
+    "smallTitle": "Småbedrifter",
+    "smallBody": "Butikker, restauranter, kafeer, klinikker og lokale tjenester som vil bli funnet og ta imot bestillinger på nett.",
+    "startupsTitle": "Gründere og oppstartsselskaper",
+    "startupsBody": "En første versjon å lansere, teste med ekte brukere og bygge videre på steg for steg.",
+    "individualsTitle": "Folk med en idé",
+    "individualsBody": "Din egen idé til en virksomhet, et prosjekt eller et program, selv om den er i startfasen.",
+    "line": "Jeg jobber med bedrifter, småbedrifter, gründere og oppstartsselskaper, og med folk som har en idé til en virksomhet, et prosjekt eller et program.",
+    "legit": "Tjenestene er for lovlige virksomheter og prosjekter."
   }
 }

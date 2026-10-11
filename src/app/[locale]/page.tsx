@@ -20,7 +20,10 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { sortedCountries } from "@/lib/countries";
 import type { Locale } from "@/lib/i18n/locales";
 import { pageMetadata } from "@/lib/seo";
-import { getOffers, getProfile, getProjects, getServices, getSettings, visitorCountry } from "@/server/services/content";
+import { AiServices } from "@/components/ai/AiServices";
+import { AdminPreview } from "@/components/showcase/AdminPreview";
+import { WhoIWorkWith } from "@/components/about/WhoIWorkWith";
+import { getAiServices, getOffers, getProcessSteps, getProfile, getProjects, getServices, getSettings, visitorCountry } from "@/server/services/content";
 import heroManifest from "../../../public/hero/manifest.json";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
@@ -35,14 +38,13 @@ export async function generateMetadata({ params }: PageProps<"/[locale]">): Prom
 }
 
 const HERO_MODES: HeroMode[] = ["DEPTH", "SEQUENCE", "MODEL"];
-const STEPS = ["understand", "plan", "build", "review", "improve"] as const;
 
 export default async function HomePage({ params, searchParams }: PageProps<"/[locale]">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
   const query = await searchParams;
 
-  const [t, tAbout, tPricing, tContact, profile, { settings }, projects, services, offers, bits, country] = await Promise.all([
+  const [t, tAbout, tPricing, tContact, profile, { settings }, projects, services, offers, bits, country, steps, ai] = await Promise.all([
     getTranslations("home"),
     getTranslations("about"),
     getTranslations("pricing"),
@@ -54,6 +56,8 @@ export default async function HomePage({ params, searchParams }: PageProps<"/[lo
     getOffers(locale),
     profileBits(locale),
     visitorCountry(),
+    getProcessSteps(locale),
+    getAiServices(locale),
   ]);
   const note = (k: "scope" | "hosting" | "maintenance" | "goal") => ({ title: tPricing(`notes.${k}Title`), body: tPricing(`notes.${k}Body`) });
   const name = profile?.publicName ?? "ZACK";
@@ -132,6 +136,11 @@ export default async function HomePage({ params, searchParams }: PageProps<"/[lo
         </LampAbout>
       </section>
 
+      {/* Who the services are for: companies, small businesses, startups, individuals */}
+      <section className="container-page pb-24 md:pb-32">
+        <WhoIWorkWith />
+      </section>
+
       {/* Skills as a periodic table */}
       {bits.skillGroups.length > 0 && (
         <section className="container-page pb-24 md:pb-32">
@@ -139,15 +148,17 @@ export default async function HomePage({ params, searchParams }: PageProps<"/[lo
         </section>
       )}
 
-      {/* How I work: the process, as pinned notes */}
+      {/* How I work: the process, as pinned notes (steps are edited in Admin → How I work) */}
+      {steps.length > 0 && (
       <section aria-labelledby="work-title" className="container-page pb-24 md:pb-32">
         <Reveal>
           <h2 id="work-title" className="text-[clamp(2.4rem,7vw,6rem)] font-black uppercase leading-none tracking-tight display-gradient">
             {tAbout("howIWork.title")}
           </h2>
         </Reveal>
-        <HowItWorks steps={STEPS.map((k) => ({ title: tAbout(`howIWork.${k}Title`), description: tAbout(`howIWork.${k}Body`) }))} />
+        <HowItWorks steps={steps} />
       </section>
+      )}
 
       {/* Selected projects */}
       {featured.length > 0 && (
@@ -174,6 +185,13 @@ export default async function HomePage({ params, searchParams }: PageProps<"/[lo
         </section>
       )}
 
+      {/* Admin Dashboard Preview: a demo with made-up data, synced to the feature being read */}
+      <section aria-labelledby="showcase-title" className="relative z-10 bg-ink pb-24 pt-12 md:pb-32 md:pt-20">
+        <div className="container-page">
+          <AdminPreview />
+        </div>
+      </section>
+
       {/* Services: the one light surface on the page */}
       {services.length > 0 && (
         <section
@@ -196,11 +214,20 @@ export default async function HomePage({ params, searchParams }: PageProps<"/[lo
         </section>
       )}
 
+      {/* AI services: available now vs coming soon (edited in Admin → AI services) */}
+      {ai.length > 0 && (
+        <section aria-labelledby="ai-title" className="relative z-[25] -mt-10 rounded-t-[40px] bg-ink pb-24 pt-20 sm:rounded-t-[50px] md:rounded-t-[60px] md:pb-32 md:pt-28">
+          <div className="container-page">
+            <AiServices services={ai} countries={sortedCountries(locale)} defaultCountry={country} />
+          </div>
+        </section>
+      )}
+
       {/* Pricing: market, budget slider and packages, then what every project includes */}
       <section
         id="pricing"
         aria-labelledby="pricing-title"
-        className="relative z-30 -mt-10 rounded-t-[40px] bg-ink py-20 sm:rounded-t-[50px] md:rounded-t-[60px] md:py-28"
+        className={`relative z-30 rounded-t-[40px] bg-ink py-20 sm:rounded-t-[50px] md:rounded-t-[60px] md:py-28 ${ai.length > 0 ? "border-t border-line" : "-mt-10"}`}
       >
         <div className="container-page">
           <Reveal>

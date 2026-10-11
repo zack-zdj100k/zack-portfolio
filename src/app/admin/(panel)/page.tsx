@@ -8,23 +8,29 @@ export const metadata: Metadata = { title: "Dashboard" };
 
 export default async function Dashboard({ searchParams }: PageProps<"/admin">) {
   const sp = await searchParams;
-  const [inquiries, referrals, draftPackages, draftOffers, unreviewed, projects, settings, recentInq, recentRef] = await Promise.all([
+  const [inquiries, referrals, draftPackages, draftOffers, unreviewed, projects, settings, recentInq, recentRef, aiDrafts, emptySkills, proposedArch] = await Promise.all([
     prisma.contactInquiry.count({ where: { status: "NEW", archivedAt: null } }),
     prisma.referral.count({ where: { status: "NEW", archivedAt: null } }),
     prisma.pricingPackage.count({ where: { status: "DRAFT" } }),
-    prisma.countryOffer.count({ where: { status: "DRAFT" } }),
+    prisma.referralOffer.count({ where: { status: "DRAFT" } }),
     prisma.localeSetting.findMany({ where: { reviewed: false, enabled: true }, select: { code: true } }),
     prisma.project.findMany({ select: { status: true, stage: true, origin: true } }),
     prisma.siteSettings.findUnique({ where: { id: 1 }, select: { contactEmail: true, whatsapp: true, showWhatsapp: true, heroMode: true, heroModelId: true } }),
     prisma.contactInquiry.findMany({ where: { archivedAt: null }, orderBy: { createdAt: "desc" }, take: 5 }),
     prisma.referral.findMany({ where: { archivedAt: null }, orderBy: { createdAt: "desc" }, take: 5 }),
+    prisma.aiService.count({ where: { status: "AVAILABLE", publishStatus: "DRAFT" } }),
+    prisma.skill.count({ where: { visible: true, group: { visible: true }, translations: { none: { locale: "en", usage: { not: "" } } } } }),
+    prisma.project.count({ where: { status: "PUBLISHED", architectureStatus: "PROPOSED" } }),
   ]);
   const profile = await prisma.profile.findUnique({ where: { id: 1 }, select: { portraitId: true, languages: true } });
 
   // What still needs the owner before launch.
   const todo = [
     draftPackages > 0 && { href: "/admin/services", text: `${draftPackages} pricing package(s) are drafts. Confirm the prices and publish them.` },
-    draftOffers > 0 && { href: "/admin/referral", text: `${draftOffers} referral offer(s) are drafts. Approve the terms and publish.` },
+    draftOffers > 0 && { href: "/admin/referral", text: `${draftOffers} referral offer(s) are drafts. Choose the eligible countries, approve the terms and publish.` },
+    aiDrafts > 0 && { href: "/admin/ai-services", text: `${aiDrafts} available AI service(s) are drafts. Confirm their descriptions and publish.` },
+    emptySkills > 0 && { href: "/admin/skills", text: `${emptySkills} skill(s) have no "How I use it" text yet (only the name is shown).` },
+    proposedArch > 0 && { href: "/admin/projects", text: `${proposedArch} project(s) show a "proposed architecture" label. Confirm or correct how each one is built.` },
     unreviewed.length > 0 && {
       href: "/admin/languages",
       text: `${unreviewed.length} language(s) show "translated automatically": ${unreviewed.map((u) => u.code).join(", ")}.`,

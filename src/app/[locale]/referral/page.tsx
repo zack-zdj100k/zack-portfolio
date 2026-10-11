@@ -65,17 +65,7 @@ export default async function ReferralPage({ params }: PageProps<"/[locale]/refe
           <ReferralExperience
             countries={sortedCountries(locale)}
             defaultCountry={country}
-            offers={offers.map((o) => ({
-              id: o.id,
-              status: o.status,
-              market: o.market,
-              currency: o.currency,
-              reward: o.reward,
-              category: o.category,
-              minProjectValue: o.minProjectValue,
-              whenEarned: o.t?.whenEarned ?? "",
-              terms: o.t?.terms ?? "",
-            }))}
+            offers={offers}
           />
         )}
       </section>

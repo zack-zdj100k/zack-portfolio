@@ -11,6 +11,25 @@ editable later in the admin dashboard. Nothing here will be invented.
 - [x] **Hero 3D:** all three built (A active, B and C one click away in Admin → Hero 3D)
 - [x] **Media storage:** Cloudinary supported (`STORAGE_DRIVER=cloudinary`). Hosting itself still to choose: see README section 3
 
+## Round 6 (needed before implementation starts)
+- [ ] **Approval** to implement [round-6-requirements.md](round-6-requirements.md)
+- [ ] **Skills:** for each of Python, Java, C++, SQL, JavaScript, Dart, HTML, CSS, Flutter, SQLite,
+      Power BI, Prisma ORM, Prisma Migrate: how you use it (1–3 sentences) and which project shows it
+      (or "none yet")
+- [ ] **Skills already on the site** (taken from your project repositories: Next.js, React,
+      TypeScript, Tailwind CSS, Node.js, NestJS, REST APIs, PostgreSQL, Drizzle ORM, Git, Playwright,
+      Vitest, Cloudinary): keep which ones, remove which ones?
+- [ ] **Architecture per project** (KING 253, Boulboul Art Wall, ZODIC CAR): confirm or correct the
+      frontend, backend/server, database, what the database stores, and external services (payments,
+      image storage, email...). Until confirmed, graphs show "Concept / proposed architecture"
+- [ ] **How I Work:** keep the current steps or send your own (title + short description each)
+- [ ] **Referral countries:** the exact list of eligible countries; per country: currency, reward,
+      project categories covered, payout conditions. Note: the old "outside Algeria: 100 EUR" draft
+      covered every country; it is now empty until you pick countries
+- [ ] **AI agents / AI automations:** a description you stand behind for each (what you build, for
+      whom, example use); a waitlist for the Coming Soon items: yes/no
+- [ ] **Screenshots:** real screenshots for any project still using concept visuals
+
 ## Still open
 - [ ] **Hosting:** Vercel + Neon/Supabase + Cloudinary, or a VPS
 

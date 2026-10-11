@@ -140,6 +140,15 @@ export async function updateProjectImage(fd: FormData) {
   });
 }
 
+/**
+ * Removes a project image from a form whose own submit saves something else. A button with a
+ * function formAction can't carry name/value (React overrides them), so the op is set here.
+ */
+export async function removeProjectImage(fd: FormData) {
+  fd.set("op", "remove");
+  await updateProjectImage(fd);
+}
+
 export async function saveProjectLinks(fd: FormData) {
   const id = str(fd, "id", 60);
   await adminAction(fd, { back: `/admin/projects/${id}`, entity: "ProjectLink", action: "update", success: "Links saved." }, async () => {

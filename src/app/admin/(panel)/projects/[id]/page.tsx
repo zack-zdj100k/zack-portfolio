@@ -8,6 +8,7 @@ import {
   addDashboardScreens,
   addProjectImages,
   deleteHotspot,
+  removeProjectImage,
   saveDashboardScreen,
   saveHotspot,
   saveProject,
@@ -206,7 +207,7 @@ export default async function ProjectEditor({ params, searchParams }: PageProps<
                   <Select label="Label on the site" name="kind" options={KIND_OPTIONS.filter((k) => k.value !== "CONCEPT")} defaultValue={screen.kind} />
                   <div className="flex flex-wrap gap-2">
                     <SubmitButton variant="secondary">Save</SubmitButton>
-                    <SubmitButton variant="danger" formAction={updateProjectImage} name="op" value="remove" confirm="Remove this screen and its markers?">
+                    <SubmitButton variant="danger" formAction={removeProjectImage} confirm="Remove this screen and its markers?">
                       Remove
                     </SubmitButton>
                   </div>

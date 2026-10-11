@@ -18,7 +18,7 @@ import { translations } from "./seed-i18n";
 import manifest from "../public/hero/manifest.json";
 import { DASHBOARD_TOURS } from "./data/dashboard-tours";
 import { defaultAddOns } from "./data/package-add-ons";
-import { AI_SERVICES, ARCHITECTURE, PROCESS_STEPS, REFERRAL_TEXT, SKILL_GROUPS } from "./data/round6";
+import { AI_SERVICES, ARCHITECTURE, EARLIER_SKILL_GROUPS, PROCESS_STEPS, REFERRAL_TEXT, SKILL_GROUPS } from "./data/round6";
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
 
@@ -434,6 +434,29 @@ async function seedSkills() {
         skills: { create: g.skills.map((name, k) => ({ name, sortOrder: k })) },
       },
     });
+  }
+  // The earlier stack, after the new groups (names from the message files, every language).
+  for (const [i, g] of EARLIER_SKILL_GROUPS.entries()) {
+    const names = locales.flatMap((locale) => {
+      const name = message(locale, `about.skills.${g.key}`);
+      return name ? [{ locale, name, reviewed: locale === "en" }] : [];
+    });
+    const existing = await prisma.skillGroup.findUnique({ where: { key: g.key }, include: { translations: true } });
+    if (!existing) {
+      await prisma.skillGroup.create({
+        data: {
+          key: g.key,
+          sortOrder: SKILL_GROUPS.length + i,
+          translations: { create: names },
+          skills: { create: g.skills.map((name, k) => ({ name, sortOrder: k })) },
+        },
+      });
+      continue;
+    }
+    // Groups carried over by the migration only have an English name: add the other languages.
+    const have = new Set(existing.translations.map((t) => t.locale));
+    const missing = names.filter((n) => !have.has(n.locale));
+    if (missing.length) await prisma.skillGroupTranslation.createMany({ data: missing.map((n) => ({ ...n, groupId: existing.id })) });
   }
 }
 

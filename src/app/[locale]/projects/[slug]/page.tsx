@@ -13,7 +13,9 @@ import { ArchitectureFlow } from "@/components/projects/ArchitectureFlow";
 import { dir, type Locale } from "@/lib/i18n/locales";
 import { altFor } from "@/lib/media";
 import { pageMetadata, siteUrl } from "@/lib/seo";
-import { getProjectBySlug } from "@/server/services/content";
+import { getProjectBySlug, getSkillGroups } from "@/server/services/content";
+import { DashboardRun } from "@/components/projects/DashboardRun";
+import { TechTiles, techKey } from "@/components/projects/TechTiles";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/projects/[slug]">): Promise<Metadata> {
   const { locale, slug } = (await params) as { locale: Locale; slug: string };
@@ -36,6 +38,9 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
   const data = await getProjectBySlug(slug, locale);
   if (!data) notFound();
   const { project, next, dashboard, architecture, testimonials } = data;
+  // Technology tiles take the colour of the skill group they belong to.
+  const groupOf: Record<string, number> = {};
+  (await getSkillGroups(locale)).forEach((g, gi) => g.skills.forEach((s) => (groupOf[techKey(s.name)] ??= gi)));
   const [t, tHome, tCommon, format] = await Promise.all([
     getTranslations("projects"),
     getTranslations("home"),
@@ -56,6 +61,12 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
   // Address bar text: the project's own live domain when it has one, else its name (never someone else's site).
   const live = project.links.find((l) => l.type === "LIVE")?.url;
   const address = live ? live.replace(/^https?:\/\//, "").replace(/\/$/, "") : title;
+  const tourLabels = {
+    address: `${title} · admin`,
+    kinds: { CONCEPT: t("imageKind.CONCEPT"), DEMO: t("imageKind.DEMO"), VISUAL_EXPLORATION: t("imageKind.VISUAL_EXPLORATION") },
+    notes: { CONCEPT: t("imageNote.CONCEPT"), DEMO: t("imageNote.DEMO"), VISUAL_EXPLORATION: t("imageNote.VISUAL_EXPLORATION") },
+  };
+  const hasMarkers = dashboard.some((s) => s.hotspots.length > 0);
   const linkLabel = { LIVE: t("detail.live"), DEMO: t("detail.demo"), REPO: t("detail.repo") } as const;
 
   const jsonLd = {
@@ -155,13 +166,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
             <div className="flex flex-col gap-2">
               <dt className="text-sm uppercase tracking-widest text-mist/60">{t("detail.technologies")}</dt>
               <dd>
-                <ul className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
-                    <li key={tech} className="rounded-full border border-line px-3 py-1 text-sm text-mist/85">
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
+                <TechTiles technologies={project.technologies} groupOf={groupOf} label={t("detail.technologies")} />
               </dd>
             </div>
           )}
@@ -269,15 +274,15 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
               </h2>
               <p className="max-w-2xl text-lg leading-relaxed text-mist/75">{t("detail.dashboardIntro")}</p>
             </Reveal>
-            <DashboardTour
-              screens={dashboard}
-              labels={{
-                screens: t("detail.screens"),
-                address: `${title} · admin`,
-                kinds: { CONCEPT: t("imageKind.CONCEPT"), DEMO: t("imageKind.DEMO"), VISUAL_EXPLORATION: t("imageKind.VISUAL_EXPLORATION") },
-                notes: { CONCEPT: t("imageNote.CONCEPT"), DEMO: t("imageNote.DEMO"), VISUAL_EXPLORATION: t("imageNote.VISUAL_EXPLORATION") },
-              }}
-            />
+            {/* Wide screens with motion: the scroll-synced run. Phones and reduced motion: tabs + list. */}
+            {hasMarkers && (
+              <div className="hidden motion-safe:lg:block">
+                <DashboardRun screens={dashboard} labels={tourLabels} />
+              </div>
+            )}
+            <div className={hasMarkers ? "motion-safe:lg:hidden" : ""}>
+              <DashboardTour screens={dashboard} labels={{ ...tourLabels, screens: t("detail.screens") }} />
+            </div>
           </div>
         </section>
       )}

@@ -110,10 +110,21 @@ export const SKILL_GROUPS: { key: string; name: Tr; skills: string[] }[] = [
   },
 ];
 
+/**
+ * The earlier stack, taken from the owner's own projects. The owner asked to keep it next to the new
+ * groups. Group names come from the message files (about.skills.<key>) in every language.
+ */
+export const EARLIER_SKILL_GROUPS: { key: "frontend" | "backend" | "databases" | "tools"; skills: string[] }[] = [
+  { key: "frontend", skills: ["Next.js", "React", "TypeScript", "Tailwind CSS"] },
+  { key: "backend", skills: ["Node.js", "NestJS", "REST APIs"] },
+  { key: "databases", skills: ["PostgreSQL", "Prisma", "Drizzle ORM"] },
+  { key: "tools", skills: ["Git", "Playwright", "Vitest", "Cloudinary"] },
+];
+
 type AiSeed = {
   key: string;
   status: "AVAILABLE" | "COMING_SOON";
-  /** Available services stay drafts until the owner confirms the description. */
+  /** The owner asked (2026-10-11) for AI agents and automations to be shown as available now. */
   publish: "DRAFT" | "PUBLISHED";
   cta: "CONTACT" | "WAITLIST";
   financial: boolean;
@@ -126,7 +137,7 @@ export const AI_SERVICES: AiSeed[] = [
   {
     key: "ai-agents",
     status: "AVAILABLE",
-    publish: "DRAFT",
+    publish: "PUBLISHED",
     cta: "CONTACT",
     financial: false,
     icon: "bot",
@@ -144,7 +155,7 @@ export const AI_SERVICES: AiSeed[] = [
       nl: "AI-agents",
     },
     description: {
-      en: "Assistants that take on a defined task for your business, such as answering common questions or sorting incoming requests, and hand over to a person when needed.",
+      en: "I build AI agents that take on a defined task for your business, such as answering common questions or sorting incoming requests, and hand over to a person when needed.",
       fr: "Des assistants qui prennent en charge une tâche précise pour votre activité, comme répondre aux questions fréquentes ou trier les demandes entrantes, et passent la main à une personne si besoin.",
       ar: "مساعدون يتولّون مهمة محددة لنشاطك، مثل الرد على الأسئلة الشائعة أو فرز الطلبات الواردة، ويحيلون الأمر إلى شخص عند الحاجة.",
       it: "Assistenti che svolgono un compito preciso per la tua attività, come rispondere alle domande frequenti o smistare le richieste in arrivo, e passano la mano a una persona quando serve.",
@@ -160,12 +171,12 @@ export const AI_SERVICES: AiSeed[] = [
   {
     key: "ai-automations",
     status: "AVAILABLE",
-    publish: "DRAFT",
+    publish: "PUBLISHED",
     cta: "CONTACT",
     financial: false,
     icon: "workflow",
     title: {
-      en: "AI automations",
+      en: "AI automations and workflows",
       fr: "Automatisations IA",
       ar: "الأتمتة بالذكاء الاصطناعي",
       it: "Automazioni IA",
@@ -178,7 +189,7 @@ export const AI_SERVICES: AiSeed[] = [
       nl: "AI-automatiseringen",
     },
     description: {
-      en: "Automations that connect the tools you already use and take repetitive steps off your team, such as drafting replies, summarising messages or filling in records.",
+      en: "I build automation workflows that connect the tools you already use and take repetitive steps off your team, such as drafting replies, summarising messages or filling in records.",
       fr: "Des automatisations qui relient les outils que vous utilisez déjà et retirent les tâches répétitives à votre équipe : rédiger des réponses, résumer des messages ou remplir des fiches.",
       ar: "أتمتة تربط الأدوات التي تستخدمها بالفعل وتخفّف عن فريقك الخطوات المتكررة، مثل صياغة الردود أو تلخيص الرسائل أو تعبئة السجلات.",
       it: "Automazioni che collegano gli strumenti che usi già e tolgono al tuo team i passaggi ripetitivi, come preparare risposte, riassumere messaggi o compilare schede.",

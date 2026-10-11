@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import { useReduceMotion } from "@/components/ui/motion";
 import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import type { ShowcaseFeature } from "@/lib/admin-showcase";
 import { MockScreen } from "./MockScreens";
+import { layerClass } from "@/components/ui/layers";
 
 type Item = { key: ShowcaseFeature; title: string; body: string };
 
@@ -17,6 +17,7 @@ type Item = { key: ShowcaseFeature; title: string; body: string };
 export function AdminShowcase({ items, labels }: { items: Item[]; labels: { demo: string; address: string; screenOf: string } }) {
   const reduce = useReduceMotion();
   const [active, setActive] = useState(0);
+  const [shown, setShown] = useState(0);
   const refs = useRef<(HTMLLIElement | null)[]>([]);
 
   useEffect(() => {
@@ -73,17 +74,22 @@ export function AdminShowcase({ items, labels }: { items: Item[]; labels: { demo
           <div className="sticky top-[calc(50vh-250px)]">
             <DeviceFrame variant="laptop" address={labels.address} badge={labels.demo}>
               <div role="img" aria-label={`${labels.screenOf}: ${items[active]?.title}`} className="relative">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={items[active]?.key}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    {items[active] && <MockScreen feature={items[active].key} />}
-                  </motion.div>
-                </AnimatePresence>
+                {/* Every screen is rendered, stacked. The new one fades in on top of the last fully shown
+                    one, which stays opaque underneath until then: the frame is never blank or dimmed. */}
+                <div className="grid">
+                  {items.map((item, i) => (
+                    <div
+                      key={item.key}
+                      aria-hidden={i !== active}
+                      onTransitionEnd={(e) => {
+                        if (i === active && e.propertyName === "opacity") setShown(i);
+                      }}
+                      className={`[grid-area:1/1] ${layerClass(i, active, shown)}`}
+                    >
+                      <MockScreen feature={item.key} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </DeviceFrame>
             <div className="mt-6 flex justify-center gap-1.5" aria-hidden>

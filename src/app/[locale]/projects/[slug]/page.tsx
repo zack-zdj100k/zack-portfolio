@@ -274,13 +274,13 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
               </h2>
               <p className="max-w-2xl text-lg leading-relaxed text-mist/75">{t("detail.dashboardIntro")}</p>
             </Reveal>
-            {/* Wide screens with motion: the scroll-synced run. Phones and reduced motion: tabs + list. */}
+            {/* The scroll-synced run (laptop, tablet or phone frame by screen size). Reduced motion: tabs + list. */}
             {hasMarkers && (
-              <div className="hidden motion-safe:lg:block">
+              <div className="hidden motion-safe:block">
                 <DashboardRun screens={dashboard} labels={tourLabels} />
               </div>
             )}
-            <div className={hasMarkers ? "motion-safe:lg:hidden" : ""}>
+            <div className={hasMarkers ? "motion-safe:hidden" : ""}>
               <DashboardTour screens={dashboard} labels={{ ...tourLabels, screens: t("detail.screens") }} />
             </div>
           </div>

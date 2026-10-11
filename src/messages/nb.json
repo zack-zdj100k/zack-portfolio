@@ -1,0 +1,353 @@
+{
+  "common": {
+    "skipToContent": "Gå til innholdet",
+    "chooseLanguage": "Velg språk",
+    "machineTranslation": "Denne siden er maskinoversatt og blir gjennomgått. Den engelske versjonen er referansen.",
+    "previewBanner": "Forhåndsvisning av utkast: du ser upublisert innhold. Besøkende ser ikke dette.",
+    "newTab": "åpnes i en ny fane",
+    "notFoundTitle": "Fant ikke siden",
+    "notFoundBody": "Denne siden finnes ikke eller er flyttet.",
+    "notFoundCta": "Tilbake til forsiden",
+    "whatsappLabel": "Send melding til {name} på WhatsApp",
+    "whatsappMessage": "Hei {name}, jeg vil gjerne snakke om et prosjekt."
+  },
+  "nav": {
+    "home": "Hjem",
+    "about": "Om meg",
+    "projects": "Prosjekter",
+    "services": "Tjenester og priser",
+    "referral": "Henvisning",
+    "contact": "Kontakt",
+    "primary": "Hovedmeny",
+    "menu": "Meny",
+    "openMenu": "Åpne meny",
+    "closeMenu": "Lukk meny",
+    "homeLabel": "{name}, forside",
+    "dialHint": "Vri på hjulet for å bytte side"
+  },
+  "footer": {
+    "siteLinks": "Lenker på siden",
+    "startProject": "La oss skalere bedriften din, eller bygge den",
+    "privacy": "Personvern"
+  },
+  "home": {
+    "metaDescription": "Programvareutvikler som lager nettsider, apper og skrivebordsprogrammer for bedrifter. Se prosjekter, tjenester og priser, og la oss snakke om prosjektet ditt.",
+    "hero": {
+      "greeting": "Hei, jeg er",
+      "ctaPrimary": "Snakk om et prosjekt",
+      "ctaSecondary": "Se prosjekter",
+      "reveal1": "Nettsider.",
+      "reveal2": "Apper.",
+      "reveal3": "Skrivebordsprogrammer.",
+      "imageAlt": "3D-portrett av {name}"
+    },
+    "about": {
+      "title": "Om meg",
+      "cta": "Mer om meg",
+      "lampOn": "Slå på lyset",
+      "lampOff": "Slå av lyset",
+      "lampHint": "Trekk i snoren"
+    },
+    "projects": {
+      "title": "Ekte prosjekter. Ekte skjermbilder.",
+      "cta": "Alle prosjekter"
+    },
+    "services": {
+      "title": "Tjenester",
+      "cta": "Tjenester og priser"
+    },
+    "referral": {
+      "title": "Ta med et prosjekt. Del belønningen.",
+      "body": "Kjenner du en bedrift som trenger en nettside, en app eller et skrivebordsprogram? Sett oss i kontakt. Blir prosjektet noe etter tilbudets vilkår, får du en belønning.",
+      "cta": "Se henvisningstilbudet"
+    },
+    "contact": {
+      "title": "La oss skalere bedriften din, eller bygge den.",
+      "body": "Fortell hva bedriften din trenger. Jeg svarer med spørsmål, en plan og et prisanslag."
+    }
+  },
+  "about": {
+    "metaTitle": "Om meg",
+    "metaDescription": "Hvem som lager programvaren din: bakgrunn, ferdigheter og hvordan hvert prosjekt planlegges, bygges og gjennomgås.",
+    "title": "Om meg",
+    "portraitPending": "Bilde kommer snart",
+    "role": "Yrke",
+    "location": "Bosted",
+    "languages": "Språk",
+    "whatIBuild": {
+      "title": "Hva jeg lager",
+      "websitesTitle": "Nettsider",
+      "websitesBody": "Landingssider, bedriftsnettsider, nettbutikker og bookingplattformer. Raske, oversiktlige og enkle å oppdatere.",
+      "appsTitle": "Apper",
+      "appsBody": "Nett- og mobilapper for butikker, bedrifter og restauranter, bygget rundt oppgavene kundene og teamet ditt gjør hver dag.",
+      "softwareTitle": "Skrivebordsprogrammer",
+      "softwareBody": "Programmer for butikker, kafeer, restauranter og kontorer: salg, lager, bestillinger og den daglige oversikten bedriften din trenger.",
+      "intro": "Planlagt etter hvordan bedriften din fungerer, og enkel å bruke hver dag."
+    },
+    "experience": {
+      "title": "Erfaring",
+      "present": "Nå"
+    },
+    "howIWork": {
+      "title": "Slik jobber jeg",
+      "understandTitle": "Forstå",
+      "understandBody": "Vi snakker om virksomheten din, kundene dine og problemet du vil løse.",
+      "planTitle": "Planlegge",
+      "planBody": "Du får et skriftlig omfang: funksjoner, tidsplan og pris, før noe arbeid starter.",
+      "buildTitle": "Bygge",
+      "buildBody": "Jeg bygger i steg og viser fremgang du kan prøve selv, ikke bare skjermbilder.",
+      "reviewTitle": "Gjennomgå",
+      "reviewBody": "Vi tester sammen mot det avtalte omfanget, og jeg retter det som ikke stemmer.",
+      "improveTitle": "Forbedre",
+      "improveBody": "Etter lansering rettes feil i det leverte omfanget. Nye ideer får eget prisanslag."
+    },
+    "whyMe": {
+      "title": "Hvorfor jobbe med meg?"
+    },
+    "skills": {
+      "title": "Ferdigheter",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "databases": "Databaser",
+      "tools": "Verktøy"
+    },
+    "interest": {
+      "title": "Utenom koding"
+    },
+    "cta": {
+      "title": "La oss skalere bedriften din, eller bygge den.",
+      "projects": "Se prosjekter"
+    },
+    "facts": {
+      "title": "Kort fortalt",
+      "focus": "Fokus",
+      "focusValue": "Programvare for bedrifter",
+      "stack": "Hovedverktøy"
+    },
+    "badge": {
+      "header": "Utvikler-ID",
+      "role": "Programvareutvikler"
+    },
+    "stack": {
+      "title": "Verktøyene mine, som et periodesystem.",
+      "intro": "Hold over eller trykk på en rute for å se den. Velg en familie for å lyse den opp.",
+      "all": "Alle"
+    }
+  },
+  "projects": {
+    "metaTitle": "Prosjekter",
+    "metaDescription": "Nettsider, apper og skrivebordsprogrammer: hvert prosjekt med mål, funksjoner, teknologier og faktisk status.",
+    "title": "Prosjekter",
+    "intro": "Hvert prosjekt viser sin faktiske status. Konseptbilder er merket som konsept.",
+    "filterLabel": "Filtrer etter type",
+    "all": "Alle",
+    "empty": "Ingen prosjekter i denne kategorien ennå.",
+    "tagsLabel": "Prosjektdetaljer",
+    "viewProject": "Se prosjektet",
+    "category": {
+      "WEBSITE": "Nettside",
+      "APP": "App",
+      "SOFTWARE": "Programvare"
+    },
+    "origin": {
+      "CLIENT": "Kunde",
+      "PERSONAL": "Personlig",
+      "CONCEPT": "Konsept"
+    },
+    "stage": {
+      "CONCEPT": "Konsept",
+      "IN_PROGRESS": "Pågår",
+      "LAUNCHED": "Lansert"
+    },
+    "imageNote": {
+      "CONCEPT": "Bilder merket som konsept er visuelle utkast, ikke endelige skjermbilder.",
+      "DEMO": "Bildene viser en demoversjon, ikke det lanserte produktet."
+    },
+    "imageKind": {
+      "REAL": "Skjermbilde",
+      "CONCEPT": "Konseptbilde",
+      "DEMO": "Demoversjon"
+    },
+    "detail": {
+      "back": "Alle prosjekter",
+      "summary": "Oversikt",
+      "problem": "Målet",
+      "role": "Min rolle",
+      "solution": "Løsningen",
+      "features": "Funksjoner",
+      "technologies": "Teknologier",
+      "challenge": "Utfordringen",
+      "outcome": "Resultat",
+      "date": "Dato",
+      "status": "Status",
+      "type": "Type",
+      "links": "Lenker",
+      "live": "Nettsiden",
+      "demo": "Demo",
+      "repo": "Kildekode",
+      "gallery": "Galleri",
+      "feedback": "Tilbakemelding fra kunden",
+      "next": "Neste prosjekt",
+      "ctaTitle": "La oss skalere bedriften din, eller bygge den.",
+      "dashboardTitle": "Dashbordet bak",
+      "dashboardIntro": "Hvert ikon har en jobb. Hold over eller trykk på et tall for å se hva det gjør for bedriften.",
+      "screens": "Dashbordskjermer"
+    }
+  },
+  "pricing": {
+    "metaTitle": "Tjenester og priser",
+    "metaDescription": "Nettsider, apper og skrivebordsprogrammer for bedrifter, med startpriser, hva som er inkludert og hvordan domene, hosting og vedlikehold fungerer.",
+    "title": "Tjenester og priser",
+    "intro": "Hvert prosjekt planlegges etter virksomheten din og omfanget. Først tjenestene, deretter hvordan prisingen fungerer.",
+    "servicesTitle": "Tjenester",
+    "pricingTitle": "Priser",
+    "pricingIntro": "Prisene er utgangspunkter. Endelig tilbud avhenger av omfang, funksjoner, integrasjoner, design og tidsplan, og du får det skriftlig før arbeidet starter.",
+    "marketLabel": "Vis priser for",
+    "marketOther": "Andre land",
+    "from": "Fra {amount}",
+    "deliveryWeeks": "{min, plural, one {# uke} other {# uker}}",
+    "deliveryRange": "{min}-{max} uker",
+    "delivery": "Vanlig leveringstid",
+    "includes": "Inkluderer",
+    "pricesPending": "Prisene ferdigstilles. La oss snakke om prosjektet ditt, så får du et tilbud på akkurat det du trenger.",
+    "noMarketPrice": "Ingen oppført pris for dette landet ennå. Be om et tilbud.",
+    "draft": "Utkast",
+    "quoteCta": "Snakk om prosjektet ditt",
+    "notes": {
+      "title": "Greit å vite",
+      "scopeTitle": "Hva som bestemmer prisen",
+      "scopeBody": "Antall sider og funksjoner, integrasjoner som betaling eller levering, skreddersydd design, innhold og hvor raskt du trenger det.",
+      "hostingTitle": "Domene og hosting",
+      "hostingBody": "De første seks månedene med domene og hosting er inkludert. Deretter betaler du fornyelsene selv, til leverandørens pris.",
+      "maintenanceTitle": "Vedlikehold",
+      "maintenanceBody": "Feil i det leverte omfanget rettes. Nye funksjoner eller endringer i omfanget prises separat.",
+      "goalTitle": "Målet",
+      "goalBody": "Programvare som gjør arbeidet enklere og hjelper bedriften å vokse. Resultater avhenger av mange forhold, så ingen salgstall loves."
+    },
+    "estimator": {
+      "title": "Sett budsjettet ditt",
+      "intro": "Velg en prosjekttype og flytt glidebryteren etter omfanget du ser for deg.",
+      "type": "Prosjekttype",
+      "estimate": "Ditt anslag",
+      "less": "Enklere",
+      "more": "Flere funksjoner",
+      "minimum": "Minimum: {amount}",
+      "disclaimer": "Dette er et anslag, ikke et endelig tilbud. Den nøyaktige prisen bekreftes skriftlig etter at vi har snakket om prosjektet.",
+      "cta": "Be om tilbud med dette budsjettet",
+      "sliderLabel": "Budsjett for {name}"
+    },
+    "groups": {
+      "WEBSITE": "Nettsider",
+      "APP": "Mobilapper",
+      "SOFTWARE": "Programvare for PC",
+      "CUSTOM": "Skreddersydde plattformer"
+    },
+    "onRequest": "Pris på forespørsel",
+    "onRequestBody": "Ingen oppgitt pris for denne typen ennå. Beskriv prosjektet og få et skriftlig tilbud.",
+    "addOns": "Valgfrie tillegg (kan endre prisen)"
+  },
+  "referral": {
+    "metaTitle": "Henvisningstilbud",
+    "metaDescription": "Henvis en bedrift som trenger en nettside, en app eller et skrivebordsprogram, og få en belønning når prosjektet blir noe etter tilbudets vilkår.",
+    "title": "Ta med et prosjekt. Del belønningen.",
+    "intro": "Kjenner du en bedrift som trenger en nettside, en app eller et skrivebordsprogram? Sett oss i kontakt. Blir prosjektet noe og oppfyller vilkårene nedenfor, får du en belønning.",
+    "howTitle": "Slik fungerer det",
+    "step1Title": "Sett i kontakt",
+    "step1Body": "Send bedriftens opplysninger med skjemaet nedenfor, med deres samtykke.",
+    "step2Title": "Vi snakker sammen",
+    "step2Body": "Jeg kontakter dem, forstår prosjektet og sender et tilbud.",
+    "step3Title": "Du får belønning",
+    "step3Body": "Når vilkårene i tilbudet er oppfylt, utbetales belønningen.",
+    "countryLabel": "Ditt land",
+    "countryPlaceholder": "Velg landet ditt",
+    "countryHint": "Belønningen avhenger av landet ditt.",
+    "rewardHeadline": "Din belønning: {amount}",
+    "rewardPerProject": "for hvert henviste prosjekt som oppfyller vilkårene",
+    "rewardFor": "Gjelder for: {category}",
+    "anyProject": "nettsider, apper og skrivebordsprogrammer",
+    "minValue": "Minste prosjektverdi: {amount}",
+    "whenEarned": "Når belønningen er opptjent",
+    "terms": "Vilkår",
+    "noOffer": "Det finnes ikke noe henvisningstilbud for dette landet akkurat nå. Du kan likevel sette oss i kontakt med en bedrift via kontaktsiden.",
+    "pending": "Henvisningstilbudet ferdigstilles og vises her snart. Du kan likevel sette oss i kontakt med en bedrift via kontaktsiden.",
+    "notGuaranteed": "En henvisning gir ingen garanti for belønning. Den utbetales bare når vilkårene ovenfor er oppfylt.",
+    "formTitle": "Henvis en bedrift",
+    "you": "Om deg",
+    "them": "Om bedriften",
+    "referrerName": "Navnet ditt",
+    "referrerEmail": "E-posten din",
+    "referrerPhone": "Telefonnummeret ditt",
+    "contactHint": "Oppgi minst en e-post eller et telefonnummer.",
+    "clientName": "Bedriftens eller kontaktpersonens navn",
+    "clientContact": "Deres e-post eller telefon",
+    "clientCountry": "Deres land",
+    "projectCategory": "Hva de trenger",
+    "message": "Hva trenger de? (valgfritt)",
+    "consent": "Jeg bekrefter at bedriften har sagt ja til å bli kontaktet, og godtar at opplysningene mine lagres for å behandle denne henvisningen.",
+    "submit": "Send henvisning",
+    "successTitle": "Henvisningen er mottatt. Takk!",
+    "successBody": "Jeg kontakter bedriften og holder deg oppdatert."
+  },
+  "contact": {
+    "metaTitle": "Kontakt",
+    "metaDescription": "Fortell om prosjektet ditt: nettside, app eller skrivebordsprogram. Svar på e-post, telefon eller WhatsApp.",
+    "title": "La oss skalere bedriften din, eller bygge den.",
+    "intro": "Fyll ut skjemaet, eller bruk kanalen som passer deg. Spørsmål er velkomne, selv om ideen er helt ny.",
+    "channels": "Andre måter å nå meg på",
+    "email": "E-post",
+    "phone": "Telefon",
+    "whatsapp": "WhatsApp",
+    "formTitle": "Prosjektforespørsel",
+    "name": "Navn",
+    "emailLabel": "E-post",
+    "phoneLabel": "Telefon",
+    "contactHint": "Oppgi minst en e-post eller et telefonnummer.",
+    "country": "Land",
+    "countryPlaceholder": "Velg et land",
+    "category": "Prosjekttype",
+    "categoryPlaceholder": "Velg en type",
+    "categoryOther": "Vet ikke ennå",
+    "budget": "Budsjett (valgfritt)",
+    "budgetHint": "Et spenn holder, i hvilken som helst valuta.",
+    "timeline": "Tidsplan (valgfritt)",
+    "timelineHint": "For eksempel: innen to måneder.",
+    "message": "Fortell om prosjektet",
+    "consent": "Jeg godtar at opplysningene mine lagres for å svare på denne forespørselen. De deles eller selges aldri.",
+    "privacyLink": "Personvern",
+    "submit": "Send forespørsel",
+    "successTitle": "Takk, meldingen din er sendt.",
+    "successBody": "Du får svar i løpet av noen få virkedager.",
+    "groupYou": "Om deg",
+    "groupProject": "Prosjektet ditt",
+    "moreDetails": "Budsjett og tidsplan (valgfritt)",
+    "direct": "Kontakt meg direkte"
+  },
+  "forms": {
+    "required": "Dette feltet må fylles ut.",
+    "email": "Skriv inn en gyldig e-postadresse.",
+    "phone": "Skriv inn et gyldig telefonnummer.",
+    "contactRequired": "Oppgi en e-post eller et telefonnummer.",
+    "tooLong": "Teksten er for lang.",
+    "consent": "Bekreft for å fortsette.",
+    "rateLimited": "For mange forsøk. Vent noen minutter og prøv igjen.",
+    "generic": "Noe gikk galt. Prøv igjen, eller bruk en annen kontaktmåte.",
+    "network": "Meldingen kunne ikke sendes. Sjekk tilkoblingen og prøv igjen.",
+    "sending": "Sender...",
+    "fixErrors": "Rett feltene som er merket."
+  },
+  "privacy": {
+    "metaTitle": "Personvern",
+    "title": "Personvern",
+    "intro": "Denne siden samler bare inn det som trengs for å svare deg.",
+    "collectTitle": "Hva som samles inn",
+    "collectBody": "Når du sender kontakt- eller henvisningsskjemaet: opplysningene du skriver inn (navn, e-post eller telefon, land og meldingen din). Det brukes ingen sporingskapsler eller reklameverktøy.",
+    "useTitle": "Hvordan det brukes",
+    "useBody": "Bare for å svare på forespørselen din eller behandle henvisningen din. Opplysningene dine selges eller deles aldri til markedsføring.",
+    "keepTitle": "Hvor lenge det lagres",
+    "keepBody": "Forespørsler og henvisninger lagres mens de behandles, og arkiveres eller slettes deretter på forespørsel.",
+    "rightsTitle": "Dine valg",
+    "rightsBody": "Du kan når som helst be om å se, rette eller slette opplysningene dine via kontaktsiden.",
+    "cookiesTitle": "Informasjonskapsler",
+    "cookiesBody": "Siden bruker ingen sporingskapsler. En informasjonskapsel husker språkvalget ditt når du bytter språk."
+  }
+}

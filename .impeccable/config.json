@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-10-10T15:05:52.487Z",
+        "reason": "owner brief explicitly specifies .hero-heading gradient #646973->#BBCCD7 for display headings"
+      }
+    ]
+  }
+}

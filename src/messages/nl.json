@@ -1,0 +1,353 @@
+{
+  "common": {
+    "skipToContent": "Naar de inhoud",
+    "chooseLanguage": "Kies een taal",
+    "machineTranslation": "Deze pagina is automatisch vertaald en wordt nagekeken. De Engelse versie is leidend.",
+    "previewBanner": "Voorbeeld van concepten: je ziet niet-gepubliceerde inhoud. Bezoekers zien dit niet.",
+    "newTab": "opent in een nieuw tabblad",
+    "notFoundTitle": "Pagina niet gevonden",
+    "notFoundBody": "Deze pagina bestaat niet of is verplaatst.",
+    "notFoundCta": "Terug naar home",
+    "whatsappLabel": "Stuur {name} een bericht via WhatsApp",
+    "whatsappMessage": "Hoi {name}, ik wil graag een project bespreken."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "Over mij",
+    "projects": "Projecten",
+    "services": "Diensten en prijzen",
+    "referral": "Doorverwijzen",
+    "contact": "Contact",
+    "primary": "Hoofdnavigatie",
+    "menu": "Menu",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "homeLabel": "{name}, homepagina",
+    "dialHint": "Draai aan het wiel om van pagina te wisselen"
+  },
+  "footer": {
+    "siteLinks": "Links op de site",
+    "startProject": "Laten we je bedrijf laten groeien, of er een bouwen",
+    "privacy": "Privacy"
+  },
+  "home": {
+    "metaDescription": "Software engineer die websites, apps en desktopsoftware bouwt voor bedrijven. Bekijk projecten, diensten en prijzen, en laten we over je project praten.",
+    "hero": {
+      "greeting": "Hoi, ik ben",
+      "ctaPrimary": "Bespreek een project",
+      "ctaSecondary": "Bekijk projecten",
+      "reveal1": "Websites.",
+      "reveal2": "Apps.",
+      "reveal3": "Desktopsoftware.",
+      "imageAlt": "3D-portret van {name}"
+    },
+    "about": {
+      "title": "Over mij",
+      "cta": "Meer over mij",
+      "lampOn": "Licht aan",
+      "lampOff": "Licht uit",
+      "lampHint": "Trek aan het koord"
+    },
+    "projects": {
+      "title": "Echte projecten. Echte screenshots.",
+      "cta": "Alle projecten"
+    },
+    "services": {
+      "title": "Diensten",
+      "cta": "Diensten en prijzen"
+    },
+    "referral": {
+      "title": "Breng een project. Deel de beloning.",
+      "body": "Ken je een bedrijf dat een website, app of desktopsoftware nodig heeft? Stel ons aan elkaar voor. Gaat het project door volgens de voorwaarden, dan krijg je een beloning.",
+      "cta": "Bekijk het doorverwijsaanbod"
+    },
+    "contact": {
+      "title": "Laten we je bedrijf laten groeien, of er een bouwen.",
+      "body": "Vertel wat je bedrijf nodig heeft. Ik reageer met vragen, een plan en een inschatting."
+    }
+  },
+  "about": {
+    "metaTitle": "Over mij",
+    "metaDescription": "Wie je software bouwt: achtergrond, vaardigheden en hoe elk project wordt gepland, gebouwd en gecontroleerd.",
+    "title": "Over mij",
+    "portraitPending": "Foto volgt binnenkort",
+    "role": "Beroep",
+    "location": "Woonplaats",
+    "languages": "Talen",
+    "whatIBuild": {
+      "title": "Wat ik bouw",
+      "websitesTitle": "Websites",
+      "websitesBody": "Landingspagina's, bedrijfswebsites, webshops en reserveringsplatforms. Snel, duidelijk en makkelijk zelf bij te werken.",
+      "appsTitle": "Apps",
+      "appsBody": "Web- en mobiele apps voor winkels, bedrijven en restaurants, gebouwd rond de taken die je klanten en team elke dag doen.",
+      "softwareTitle": "Desktopsoftware",
+      "softwareBody": "Programma's voor winkels, cafés, restaurants en kantoren: verkoop, voorraad, bestellingen en de dagelijkse administratie van je bedrijf.",
+      "intro": "Gepland rond hoe je bedrijf werkt, en makkelijk in dagelijks gebruik."
+    },
+    "experience": {
+      "title": "Ervaring",
+      "present": "Heden"
+    },
+    "howIWork": {
+      "title": "Hoe ik werk",
+      "understandTitle": "Begrijpen",
+      "understandBody": "We praten over je bedrijf, je klanten en het probleem dat je wilt oplossen.",
+      "planTitle": "Plannen",
+      "planBody": "Je krijgt een schriftelijke scope: functies, planning en prijs, voordat er iets begint.",
+      "buildTitle": "Bouwen",
+      "buildBody": "Ik bouw in stappen en laat voortgang zien die je zelf kunt proberen, niet alleen screenshots.",
+      "reviewTitle": "Controleren",
+      "reviewBody": "We testen samen tegen de afgesproken scope en ik verbeter wat niet klopt.",
+      "improveTitle": "Verbeteren",
+      "improveBody": "Na de lancering worden bugs in de opgeleverde scope opgelost. Nieuwe ideeën krijgen een eigen offerte."
+    },
+    "whyMe": {
+      "title": "Waarom met mij werken?"
+    },
+    "skills": {
+      "title": "Vaardigheden",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "databases": "Databases",
+      "tools": "Tools"
+    },
+    "interest": {
+      "title": "Naast het programmeren"
+    },
+    "cta": {
+      "title": "Laten we je bedrijf laten groeien, of er een bouwen.",
+      "projects": "Bekijk projecten"
+    },
+    "facts": {
+      "title": "In het kort",
+      "focus": "Focus",
+      "focusValue": "Software voor bedrijven",
+      "stack": "Belangrijkste stack"
+    },
+    "badge": {
+      "header": "Developer-ID",
+      "role": "Software engineer"
+    },
+    "stack": {
+      "title": "Mijn stack, als periodiek systeem.",
+      "intro": "Beweeg over of tik op een vakje om het te zien. Kies een familie om die op te lichten.",
+      "all": "Alles"
+    }
+  },
+  "projects": {
+    "metaTitle": "Projecten",
+    "metaDescription": "Websites, apps en desktopsoftware: elk project met doel, functies, technologieën en echte status.",
+    "title": "Projecten",
+    "intro": "Elk project toont zijn echte status. Conceptbeelden zijn als concept gemarkeerd.",
+    "filterLabel": "Filter op type",
+    "all": "Alle",
+    "empty": "Nog geen projecten in deze categorie.",
+    "tagsLabel": "Projectgegevens",
+    "viewProject": "Bekijk project",
+    "category": {
+      "WEBSITE": "Website",
+      "APP": "App",
+      "SOFTWARE": "Software"
+    },
+    "origin": {
+      "CLIENT": "Klant",
+      "PERSONAL": "Persoonlijk",
+      "CONCEPT": "Concept"
+    },
+    "stage": {
+      "CONCEPT": "Concept",
+      "IN_PROGRESS": "In ontwikkeling",
+      "LAUNCHED": "Live"
+    },
+    "imageNote": {
+      "CONCEPT": "Beelden gemarkeerd als concept zijn visuele verkenningen, geen definitieve screenshots.",
+      "DEMO": "De beelden tonen een demoversie, niet het live product."
+    },
+    "imageKind": {
+      "REAL": "Screenshot",
+      "CONCEPT": "Conceptbeeld",
+      "DEMO": "Demoversie"
+    },
+    "detail": {
+      "back": "Alle projecten",
+      "summary": "Overzicht",
+      "problem": "Het doel",
+      "role": "Mijn rol",
+      "solution": "De oplossing",
+      "features": "Functies",
+      "technologies": "Technologieën",
+      "challenge": "De uitdaging",
+      "outcome": "Resultaat",
+      "date": "Datum",
+      "status": "Status",
+      "type": "Type",
+      "links": "Links",
+      "live": "Live website",
+      "demo": "Demo",
+      "repo": "Broncode",
+      "gallery": "Galerij",
+      "feedback": "Feedback van de klant",
+      "next": "Volgend project",
+      "ctaTitle": "Laten we je bedrijf laten groeien, of er een bouwen.",
+      "dashboardTitle": "Het dashboard erachter",
+      "dashboardIntro": "Elk icoon heeft een taak. Ga erover of tik op een nummer om te zien wat het voor het bedrijf doet.",
+      "screens": "Dashboardschermen"
+    }
+  },
+  "pricing": {
+    "metaTitle": "Diensten en prijzen",
+    "metaDescription": "Websites, apps en desktopsoftware voor bedrijven, met vanafprijzen, wat inbegrepen is en hoe domein, hosting en onderhoud werken.",
+    "title": "Diensten en prijzen",
+    "intro": "Elk project wordt gepland rond je bedrijf en de scope. Eerst de diensten, daarna hoe de prijzen werken.",
+    "servicesTitle": "Diensten",
+    "pricingTitle": "Prijzen",
+    "pricingIntro": "Prijzen zijn een vertrekpunt. De uiteindelijke offerte hangt af van scope, functies, koppelingen, ontwerp en planning, en je krijgt die schriftelijk voordat het werk begint.",
+    "marketLabel": "Prijzen tonen voor",
+    "marketOther": "Andere landen",
+    "from": "Vanaf {amount}",
+    "deliveryWeeks": "{min, plural, one {# week} other {# weken}}",
+    "deliveryRange": "{min}-{max} weken",
+    "delivery": "Gebruikelijke levertijd",
+    "includes": "Inclusief",
+    "pricesPending": "De prijzen worden afgerond. Laten we je project bespreken, dan krijg je een offerte voor precies wat je nodig hebt.",
+    "noMarketPrice": "Nog geen prijs voor dit land. Vraag een offerte aan.",
+    "draft": "Concept",
+    "quoteCta": "Bespreek je project",
+    "notes": {
+      "title": "Goed om te weten",
+      "scopeTitle": "Wat de prijs bepaalt",
+      "scopeBody": "Het aantal pagina's en functies, koppelingen zoals betalen of bezorgen, maatwerkontwerp, inhoud en hoe snel je het nodig hebt.",
+      "hostingTitle": "Domein en hosting",
+      "hostingBody": "De eerste zes maanden domein en hosting zijn inbegrepen. Daarna betaal je de verlengingen zelf, tegen de prijs van de provider.",
+      "maintenanceTitle": "Onderhoud",
+      "maintenanceBody": "Bugs in de opgeleverde scope worden opgelost. Nieuwe functies of wijzigingen in de scope krijgen een aparte offerte.",
+      "goalTitle": "Het doel",
+      "goalBody": "Software die je werk makkelijker maakt en je bedrijf helpt groeien. Resultaten hangen van veel factoren af, dus er worden geen verkoopcijfers beloofd."
+    },
+    "estimator": {
+      "title": "Bepaal je budget",
+      "intro": "Kies een type project en schuif de regelaar naar de omvang die je voor ogen hebt.",
+      "type": "Type project",
+      "estimate": "Jouw inschatting",
+      "less": "Eenvoudiger",
+      "more": "Meer functies",
+      "minimum": "Minimaal: {amount}",
+      "disclaimer": "Dit is een inschatting, geen definitieve offerte. De exacte prijs wordt schriftelijk bevestigd nadat we je project hebben besproken.",
+      "cta": "Offerte aanvragen met dit budget",
+      "sliderLabel": "Budget voor {name}"
+    },
+    "groups": {
+      "WEBSITE": "Websites",
+      "APP": "Mobiele apps",
+      "SOFTWARE": "Desktopsoftware",
+      "CUSTOM": "Maatwerkplatforms"
+    },
+    "onRequest": "Prijs op aanvraag",
+    "onRequestBody": "Nog geen prijs voor dit type. Beschrijf je project en je krijgt een schriftelijke offerte.",
+    "addOns": "Optionele extra's (kunnen de prijs veranderen)"
+  },
+  "referral": {
+    "metaTitle": "Doorverwijsaanbod",
+    "metaDescription": "Verwijs een bedrijf door dat een website, app of desktopsoftware nodig heeft en ontvang een beloning als het project doorgaat volgens de voorwaarden.",
+    "title": "Breng een project. Deel de beloning.",
+    "intro": "Ken je een bedrijf dat een website, app of desktopsoftware nodig heeft? Stel ze aan me voor. Gaat het project door en voldoet het aan de voorwaarden hieronder, dan krijg je een beloning.",
+    "howTitle": "Zo werkt het",
+    "step1Title": "Voorstellen",
+    "step1Body": "Stuur de gegevens van het bedrijf via het formulier hieronder, met hun toestemming.",
+    "step2Title": "We praten",
+    "step2Body": "Ik neem contact op, begrijp het project en stuur een offerte.",
+    "step3Title": "Je wordt beloond",
+    "step3Body": "Als aan de voorwaarden van het aanbod is voldaan, wordt je beloning uitbetaald.",
+    "countryLabel": "Jouw land",
+    "countryPlaceholder": "Kies je land",
+    "countryHint": "De beloning hangt af van je land.",
+    "rewardHeadline": "Jouw beloning: {amount}",
+    "rewardPerProject": "voor elk doorverwezen project dat aan de voorwaarden voldoet",
+    "rewardFor": "Geldt voor: {category}",
+    "anyProject": "websites, apps en desktopsoftware",
+    "minValue": "Minimale projectwaarde: {amount}",
+    "whenEarned": "Wanneer de beloning verdiend is",
+    "terms": "Voorwaarden",
+    "noOffer": "Er is momenteel geen doorverwijsaanbod voor dit land. Je kunt een bedrijf wel voorstellen via de contactpagina.",
+    "pending": "Het doorverwijsaanbod wordt afgerond en verschijnt hier binnenkort. Je kunt een bedrijf wel voorstellen via de contactpagina.",
+    "notGuaranteed": "Een doorverwijzing garandeert geen beloning. Die is alleen verschuldigd als aan de voorwaarden hierboven is voldaan.",
+    "formTitle": "Verwijs een bedrijf door",
+    "you": "Over jou",
+    "them": "Over het bedrijf",
+    "referrerName": "Je naam",
+    "referrerEmail": "Je e-mailadres",
+    "referrerPhone": "Je telefoonnummer",
+    "contactHint": "Geef minstens een e-mailadres of telefoonnummer op.",
+    "clientName": "Naam van het bedrijf of de contactpersoon",
+    "clientContact": "Hun e-mail of telefoon",
+    "clientCountry": "Hun land",
+    "projectCategory": "Wat ze nodig hebben",
+    "message": "Wat hebben ze nodig? (optioneel)",
+    "consent": "Ik bevestig dat het bedrijf ermee instemt benaderd te worden, en ik ga ermee akkoord dat mijn gegevens worden bewaard om deze doorverwijzing te verwerken.",
+    "submit": "Doorverwijzing versturen",
+    "successTitle": "Doorverwijzing ontvangen. Bedankt!",
+    "successBody": "Ik neem contact op met het bedrijf en houd je op de hoogte."
+  },
+  "contact": {
+    "metaTitle": "Contact",
+    "metaDescription": "Vertel over je website-, app- of desktopsoftwareproject. Antwoord via e-mail, telefoon of WhatsApp.",
+    "title": "Laten we je bedrijf laten groeien, of er een bouwen.",
+    "intro": "Vul het formulier in of gebruik het kanaal dat jou het beste uitkomt. Vragen zijn welkom, ook als het idee nog pril is.",
+    "channels": "Andere manieren om me te bereiken",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "whatsapp": "WhatsApp",
+    "formTitle": "Projectaanvraag",
+    "name": "Naam",
+    "emailLabel": "E-mailadres",
+    "phoneLabel": "Telefoon",
+    "contactHint": "Geef minstens een e-mailadres of telefoonnummer op.",
+    "country": "Land",
+    "countryPlaceholder": "Kies een land",
+    "category": "Type project",
+    "categoryPlaceholder": "Kies een type",
+    "categoryOther": "Weet ik nog niet",
+    "budget": "Budget (optioneel)",
+    "budgetHint": "Een bandbreedte is genoeg, in elke valuta.",
+    "timeline": "Planning (optioneel)",
+    "timelineHint": "Bijvoorbeeld: binnen twee maanden.",
+    "message": "Vertel over het project",
+    "consent": "Ik ga ermee akkoord dat mijn gegevens worden bewaard om op deze aanvraag te reageren. Ze worden nooit gedeeld of verkocht.",
+    "privacyLink": "Privacy",
+    "submit": "Aanvraag versturen",
+    "successTitle": "Bedankt, je bericht is verstuurd.",
+    "successBody": "Je krijgt binnen een paar werkdagen antwoord.",
+    "groupYou": "Over jou",
+    "groupProject": "Je project",
+    "moreDetails": "Budget en planning (optioneel)",
+    "direct": "Neem direct contact op"
+  },
+  "forms": {
+    "required": "Dit veld is verplicht.",
+    "email": "Vul een geldig e-mailadres in.",
+    "phone": "Vul een geldig telefoonnummer in.",
+    "contactRequired": "Geef een e-mailadres of telefoonnummer op.",
+    "tooLong": "Deze tekst is te lang.",
+    "consent": "Bevestig om verder te gaan.",
+    "rateLimited": "Te veel pogingen. Wacht een paar minuten en probeer het opnieuw.",
+    "generic": "Er ging iets mis. Probeer het opnieuw of gebruik een andere contactmogelijkheid.",
+    "network": "Het bericht kon niet worden verstuurd. Controleer je verbinding en probeer het opnieuw.",
+    "sending": "Versturen...",
+    "fixErrors": "Verbeter de gemarkeerde velden."
+  },
+  "privacy": {
+    "metaTitle": "Privacy",
+    "title": "Privacy",
+    "intro": "Deze site verzamelt alleen wat nodig is om je te antwoorden.",
+    "collectTitle": "Wat wordt verzameld",
+    "collectBody": "Als je het contact- of doorverwijsformulier verstuurt: de gegevens die je invult (naam, e-mail of telefoon, land en je bericht). Er worden geen trackingcookies of advertentietools gebruikt.",
+    "useTitle": "Hoe het wordt gebruikt",
+    "useBody": "Alleen om je aanvraag te beantwoorden of je doorverwijzing te verwerken. Je gegevens worden nooit verkocht of gedeeld voor marketing.",
+    "keepTitle": "Hoe lang het wordt bewaard",
+    "keepBody": "Aanvragen en doorverwijzingen worden bewaard zolang ze in behandeling zijn en daarna gearchiveerd of op verzoek verwijderd.",
+    "rightsTitle": "Jouw keuzes",
+    "rightsBody": "Je kunt altijd via de contactpagina vragen om je gegevens in te zien, te corrigeren of te verwijderen.",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "De site gebruikt geen trackingcookies. Eén cookie onthoudt je taalkeuze als je die wijzigt."
+  }
+}

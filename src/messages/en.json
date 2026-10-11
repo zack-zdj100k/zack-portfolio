@@ -1,0 +1,353 @@
+{
+  "common": {
+    "skipToContent": "Skip to content",
+    "chooseLanguage": "Choose language",
+    "machineTranslation": "This page was translated automatically and is being reviewed. The English version is the reference.",
+    "previewBanner": "Draft preview: you are seeing unpublished content. Visitors don't see this.",
+    "newTab": "opens in a new tab",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "This page doesn't exist or was moved.",
+    "notFoundCta": "Back to home",
+    "whatsappLabel": "Message {name} on WhatsApp",
+    "whatsappMessage": "Hi {name}, I'd like to talk about a project."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "services": "Services & Pricing",
+    "referral": "Referral",
+    "contact": "Contact",
+    "primary": "Main navigation",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "homeLabel": "{name}, home page",
+    "dialHint": "Turn the wheel to change page"
+  },
+  "footer": {
+    "siteLinks": "Site links",
+    "startProject": "Let's scale your business, or build one",
+    "privacy": "Privacy"
+  },
+  "home": {
+    "metaDescription": "Software engineer building websites, apps and desktop software for businesses. See the projects, services and prices, then discuss your project.",
+    "hero": {
+      "greeting": "Hi, I'm",
+      "ctaPrimary": "Discuss a project",
+      "ctaSecondary": "View projects",
+      "reveal1": "Websites.",
+      "reveal2": "Apps.",
+      "reveal3": "Desktop software.",
+      "imageAlt": "3D portrait artwork of {name}"
+    },
+    "about": {
+      "title": "About me",
+      "cta": "More about me",
+      "lampOn": "Turn on the light",
+      "lampOff": "Turn off the light",
+      "lampHint": "Pull the cord"
+    },
+    "projects": {
+      "title": "Real projects. Real screenshots.",
+      "cta": "All projects"
+    },
+    "services": {
+      "title": "Services",
+      "cta": "Services & pricing"
+    },
+    "referral": {
+      "title": "Bring a project. Share the reward.",
+      "body": "Know a business that needs a website, an app or desktop software? Introduce us. When the project goes ahead under the offer terms, you get a reward.",
+      "cta": "See the referral offer"
+    },
+    "contact": {
+      "title": "Let's scale your business, or build one.",
+      "body": "Tell me what your business needs. I'll reply with questions, a plan and an estimate."
+    }
+  },
+  "about": {
+    "metaTitle": "About",
+    "metaDescription": "Who builds your software: background, skills and the way each project is planned, built and reviewed.",
+    "title": "About me",
+    "portraitPending": "Photo coming soon",
+    "role": "Role",
+    "location": "Based in",
+    "languages": "Languages",
+    "whatIBuild": {
+      "title": "What I build",
+      "websitesTitle": "Websites",
+      "websitesBody": "Landing pages, business sites, online shops and booking platforms. Fast, clear, and easy for you to update.",
+      "appsTitle": "Apps",
+      "appsBody": "Web and mobile-friendly applications for shops, companies and restaurants, built around the tasks your customers and team repeat every day.",
+      "softwareTitle": "Desktop software",
+      "softwareBody": "Programs for shops, cafés, restaurants and offices: sales, stock, orders and the daily records your business runs on.",
+      "intro": "Planned around how your business works, and built to be easy to run."
+    },
+    "experience": {
+      "title": "Experience",
+      "present": "Present"
+    },
+    "howIWork": {
+      "title": "How I work",
+      "understandTitle": "Understand",
+      "understandBody": "We talk about your business, your customers and the problem you want solved.",
+      "planTitle": "Plan",
+      "planBody": "You get a written scope: features, timeline and price, before any work starts.",
+      "buildTitle": "Build",
+      "buildBody": "I build in steps and show you progress you can click through, not just screenshots.",
+      "reviewTitle": "Review",
+      "reviewBody": "We test it together against the agreed scope and fix what doesn't match.",
+      "improveTitle": "Improve",
+      "improveBody": "After launch, bugs in the delivered scope get fixed. New ideas get their own estimate."
+    },
+    "whyMe": {
+      "title": "Why work with me?"
+    },
+    "skills": {
+      "title": "Skills",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "databases": "Databases",
+      "tools": "Tools"
+    },
+    "interest": {
+      "title": "Outside of code"
+    },
+    "cta": {
+      "title": "Let's scale your business, or build one.",
+      "projects": "View projects"
+    },
+    "facts": {
+      "title": "Quick facts",
+      "focus": "Focus",
+      "focusValue": "Software for businesses",
+      "stack": "Main stack"
+    },
+    "badge": {
+      "header": "Developer ID",
+      "role": "Software engineer"
+    },
+    "stack": {
+      "title": "My stack, as a periodic table.",
+      "intro": "Hover or tap a tile to see it. Pick a family to light it up.",
+      "all": "All"
+    }
+  },
+  "projects": {
+    "metaTitle": "Projects",
+    "metaDescription": "Websites, apps and desktop software: each project with its goal, features, technologies and current status.",
+    "title": "Projects",
+    "intro": "Each project shows its real status. Concept images are labelled as concepts.",
+    "filterLabel": "Filter by type",
+    "all": "All",
+    "empty": "No projects in this category yet.",
+    "tagsLabel": "Project details",
+    "viewProject": "View project",
+    "category": {
+      "WEBSITE": "Website",
+      "APP": "App",
+      "SOFTWARE": "Software"
+    },
+    "origin": {
+      "CLIENT": "Client",
+      "PERSONAL": "Personal",
+      "CONCEPT": "Concept"
+    },
+    "stage": {
+      "CONCEPT": "Concept",
+      "IN_PROGRESS": "In progress",
+      "LAUNCHED": "Launched"
+    },
+    "imageNote": {
+      "CONCEPT": "Images marked as concept are visual explorations, not final screenshots.",
+      "DEMO": "Images show a demo build, not the live product."
+    },
+    "imageKind": {
+      "REAL": "Screenshot",
+      "CONCEPT": "Concept visual",
+      "DEMO": "Demo build"
+    },
+    "detail": {
+      "back": "All projects",
+      "summary": "Overview",
+      "problem": "The goal",
+      "role": "My role",
+      "solution": "The solution",
+      "features": "Features",
+      "technologies": "Technologies",
+      "challenge": "The challenge",
+      "outcome": "Outcome",
+      "date": "Date",
+      "status": "Status",
+      "type": "Type",
+      "links": "Links",
+      "live": "Live site",
+      "demo": "Demo",
+      "repo": "Source code",
+      "gallery": "Gallery",
+      "feedback": "Client feedback",
+      "next": "Next project",
+      "ctaTitle": "Let's scale your business, or build one.",
+      "dashboardTitle": "The dashboard behind it",
+      "dashboardIntro": "Every icon has a job. Hover or tap a number to see what it does for the business.",
+      "screens": "Dashboard screens"
+    }
+  },
+  "pricing": {
+    "metaTitle": "Services & Pricing",
+    "metaDescription": "Websites, apps and desktop software for businesses, with starting prices, what's included, and how domain, hosting and maintenance work.",
+    "title": "Services & Pricing",
+    "intro": "Every project is planned around your business and its scope. These are the services, followed by how pricing works.",
+    "servicesTitle": "Services",
+    "pricingTitle": "Pricing",
+    "pricingIntro": "Prices are starting points. The final quote depends on scope, features, integrations, design and timeline, and you get it in writing before work starts.",
+    "marketLabel": "Show prices for",
+    "marketOther": "Other countries",
+    "from": "From {amount}",
+    "deliveryWeeks": "{min, plural, one {# week} other {# weeks}}",
+    "deliveryRange": "{min}-{max} weeks",
+    "delivery": "Typical delivery",
+    "includes": "Includes",
+    "pricesPending": "Prices are being finalised. Let's discuss your project and you'll get a quote for exactly what you need.",
+    "noMarketPrice": "No listed price for this country yet. Ask for a quote.",
+    "draft": "Draft",
+    "quoteCta": "Discuss your project",
+    "notes": {
+      "title": "Good to know",
+      "scopeTitle": "What decides the price",
+      "scopeBody": "Number of pages and features, integrations such as payments or delivery, custom design, content, and how soon you need it.",
+      "hostingTitle": "Domain and hosting",
+      "hostingBody": "The first six months of domain and hosting are included. After that, renewals are paid by you, at the provider's price.",
+      "maintenanceTitle": "Maintenance",
+      "maintenanceBody": "Bugs in the delivered scope are fixed. New features or changes to the scope are estimated separately.",
+      "goalTitle": "The goal",
+      "goalBody": "Software that makes your work easier and helps your business grow. Results depend on many things, so no specific sales figures are promised."
+    },
+    "estimator": {
+      "title": "Set your budget",
+      "intro": "Pick a project type, then move the slider to match the scope you have in mind.",
+      "type": "Project type",
+      "estimate": "Your estimate",
+      "less": "Simpler",
+      "more": "More features",
+      "minimum": "Minimum: {amount}",
+      "disclaimer": "This is an estimate, not a final quote. The exact price is confirmed in writing after we talk about your project.",
+      "cta": "Ask for a quote with this budget",
+      "sliderLabel": "Budget for {name}"
+    },
+    "groups": {
+      "WEBSITE": "Websites",
+      "APP": "Mobile apps",
+      "SOFTWARE": "Desktop software",
+      "CUSTOM": "Custom platforms"
+    },
+    "onRequest": "Priced on request",
+    "onRequestBody": "No listed price for this type yet. Describe your project and you get a written quote.",
+    "addOns": "Optional additions (can change the price)"
+  },
+  "referral": {
+    "metaTitle": "Referral offer",
+    "metaDescription": "Refer a business that needs a website, app or desktop software and receive a reward when the project goes ahead under the offer terms.",
+    "title": "Bring a project. Share the reward.",
+    "intro": "Know a business that needs a website, an app or desktop software? Introduce them. If the project goes ahead and meets the conditions below, you receive a reward.",
+    "howTitle": "How it works",
+    "step1Title": "Introduce",
+    "step1Body": "Send the business's details with the form below, with their permission.",
+    "step2Title": "We talk",
+    "step2Body": "I contact them, understand the project and send a quote.",
+    "step3Title": "You're rewarded",
+    "step3Body": "When the conditions of the offer are met, your reward is paid.",
+    "countryLabel": "Your country",
+    "countryPlaceholder": "Select your country",
+    "countryHint": "Rewards depend on your country.",
+    "rewardHeadline": "Your reward: {amount}",
+    "rewardPerProject": "for each referred project that meets the conditions",
+    "rewardFor": "Applies to: {category}",
+    "anyProject": "websites, apps and desktop software",
+    "minValue": "Minimum project value: {amount}",
+    "whenEarned": "When the reward is earned",
+    "terms": "Terms",
+    "noOffer": "There's no referral offer for this country at the moment. You can still introduce a business through the contact page.",
+    "pending": "The referral offer is being finalised and will appear here soon. You can still introduce a business through the contact page.",
+    "notGuaranteed": "Submitting a referral doesn't guarantee a reward. A reward is due only when the conditions above are met.",
+    "formTitle": "Refer a business",
+    "you": "About you",
+    "them": "About the business",
+    "referrerName": "Your name",
+    "referrerEmail": "Your email",
+    "referrerPhone": "Your phone",
+    "contactHint": "Give at least an email or a phone number.",
+    "clientName": "Business or contact name",
+    "clientContact": "Their email or phone",
+    "clientCountry": "Their country",
+    "projectCategory": "What they need",
+    "message": "What do they need? (optional)",
+    "consent": "I confirm the business agreed to be contacted, and I accept that my details are stored to process this referral.",
+    "submit": "Send referral",
+    "successTitle": "Referral received. Thank you!",
+    "successBody": "I'll contact the business and keep you informed about the status."
+  },
+  "contact": {
+    "metaTitle": "Contact",
+    "metaDescription": "Tell me about your website, app or desktop software project. Reply by email, phone or WhatsApp.",
+    "title": "Let's scale your business, or build one.",
+    "intro": "Fill in the form, or use whichever channel suits you. Questions are welcome even if the idea is still early.",
+    "channels": "Other ways to reach me",
+    "email": "Email",
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "formTitle": "Project inquiry",
+    "name": "Name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "contactHint": "Give at least an email or a phone number.",
+    "country": "Country",
+    "countryPlaceholder": "Select a country",
+    "category": "Project type",
+    "categoryPlaceholder": "Select a type",
+    "categoryOther": "Not sure yet",
+    "budget": "Budget (optional)",
+    "budgetHint": "A range is fine, in any currency.",
+    "timeline": "Timeline (optional)",
+    "timelineHint": "For example: within two months.",
+    "message": "Tell me about the project",
+    "consent": "I agree that my details are stored to answer this inquiry. They are never shared or sold.",
+    "privacyLink": "Privacy",
+    "submit": "Send inquiry",
+    "successTitle": "Thank you, your message was sent.",
+    "successBody": "You'll get an answer within a few working days.",
+    "groupYou": "About you",
+    "groupProject": "Your project",
+    "moreDetails": "Budget and timeline (optional)",
+    "direct": "Reach me directly"
+  },
+  "forms": {
+    "required": "This field is required.",
+    "email": "Enter a valid email address.",
+    "phone": "Enter a valid phone number.",
+    "contactRequired": "Give an email or a phone number.",
+    "tooLong": "This is too long.",
+    "consent": "Please confirm to continue.",
+    "rateLimited": "Too many attempts. Please wait a few minutes and try again.",
+    "generic": "Something went wrong. Please try again, or use another contact option.",
+    "network": "The message couldn't be sent. Check your connection and try again.",
+    "sending": "Sending...",
+    "fixErrors": "Please correct the highlighted fields."
+  },
+  "privacy": {
+    "metaTitle": "Privacy",
+    "title": "Privacy",
+    "intro": "This site collects only what is needed to answer you.",
+    "collectTitle": "What is collected",
+    "collectBody": "When you send the contact or referral form: the details you type in (name, email or phone, country, and your message). No tracking cookies and no advertising tools are used.",
+    "useTitle": "How it's used",
+    "useBody": "Only to reply to your inquiry or process your referral. Your details are never sold or shared for marketing.",
+    "keepTitle": "How long it's kept",
+    "keepBody": "Inquiries and referrals are kept while they are being handled, then archived or deleted on request.",
+    "rightsTitle": "Your choices",
+    "rightsBody": "You can ask to see, correct or delete your details at any time through the contact page.",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "The site uses no tracking or advertising cookies. One cookie remembers your language choice when you change it."
+  }
+}

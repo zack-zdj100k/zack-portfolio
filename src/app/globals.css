@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+/*
+  ZACK design tokens. One dark theme (owner's brief), one accent family (pale steel blue).
+  See DESIGN.md for the reasoning. The light "paper" surface is used once, for Services & Pricing.
+*/
+@theme {
+  --color-ink: #0c0c0c;
+  --color-ink-2: #131416;
+  --color-ink-3: #1b1d20;
+  --color-line: #2a2d32;
+  --color-steel: #646973;
+  --color-ice: #bbccd7;
+  --color-mist: #d7e2ea;
+  --color-paper: #f2f4f6;
+  --color-paper-ink: #0c0c0c;
+  --color-danger: #ff8a7a;
+  --color-ok: #9fe0b8;
+
+  --font-sans: var(--font-kanit), var(--font-cyrillic), var(--font-arabic), ui-sans-serif, system-ui, sans-serif;
+  --font-arabic-first: var(--font-arabic), var(--font-kanit), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-mist);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-ink);
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Arabic text reads better in its own face first; Latin brand words fall through to Kanit. */
+  html[lang="ar"] body {
+    font-family: var(--font-arabic-first);
+  }
+  ::selection {
+    background: var(--color-ice);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ice);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .surface-paper :focus-visible {
+    outline-color: var(--color-paper-ink);
+  }
+}
+
+@layer components {
+  /* Gradient display type from the owner's brief. Used on large headings only. */
+  .display-gradient {
+    background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--color-ice);
+  }
+
+  .container-page {
+    width: 100%;
+    max-width: 1400px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .field-input {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid var(--color-line);
+    background: var(--color-ink-2);
+    color: var(--color-mist);
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    transition: border-color 0.2s;
+  }
+  .field-input::placeholder {
+    color: #8a9099;
+  }
+  .field-input:hover {
+    border-color: #3a3e45;
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: var(--color-ice);
+    box-shadow: 0 0 0 3px rgb(187 204 215 / 0.18);
+  }
+  .field-input[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+}
+
+/* Motion is opt-in: everything below only runs when the visitor hasn't asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee var(--marquee-duration, 60s) linear infinite;
+  }
+  .marquee-track[data-reverse="true"] {
+    animation-direction: reverse;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+[dir="rtl"] .marquee-track {
+  animation-name: marquee-rtl;
+}
+@keyframes marquee-rtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
+/* Budget slider (pricing): filled track + a large pill handle that is easy to grab on a phone. */
+.price-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--color-ice) 0 var(--fill, 0%), var(--color-line) var(--fill, 0%) 100%);
+  cursor: pointer;
+}
+[dir="rtl"] .price-slider {
+  background: linear-gradient(to left, var(--color-ice) 0 var(--fill, 0%), var(--color-line) var(--fill, 0%) 100%);
+}
+.price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 56px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--color-mist)
+    repeating-linear-gradient(90deg, var(--color-steel) 0 2px, transparent 2px 6px) center / 14px 12px no-repeat;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.5), 0 0 0 4px rgb(187 204 215 / 0.18);
+  transition: transform 0.15s;
+}
+.price-slider::-moz-range-thumb {
+  width: 56px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-mist);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.5), 0 0 0 4px rgb(187 204 215 / 0.18);
+}
+.price-slider:active::-webkit-slider-thumb {
+  transform: scale(1.08);
+}
+.price-slider:focus-visible {
+  outline: 2px solid var(--color-ice);
+  outline-offset: 8px;
+}
+/* On a light (highlighted) package card: dark track and thumb. */
+.price-slider-paper {
+  background: linear-gradient(to right, var(--color-ink) 0 var(--fill, 0%), rgb(12 12 12 / 0.16) var(--fill, 0%) 100%);
+}
+[dir="rtl"] .price-slider-paper {
+  background: linear-gradient(to left, var(--color-ink) 0 var(--fill, 0%), rgb(12 12 12 / 0.16) var(--fill, 0%) 100%);
+}
+.price-slider-paper::-webkit-slider-thumb {
+  background: var(--color-ink)
+    repeating-linear-gradient(90deg, var(--color-mist) 0 2px, transparent 2px 6px) center / 14px 12px no-repeat;
+  box-shadow: 0 6px 16px rgb(0 0 0 / 0.25), 0 0 0 4px rgb(12 12 12 / 0.12);
+}
+.price-slider-paper::-moz-range-thumb {
+  background: var(--color-ink);
+}
+.price-slider-paper:focus-visible {
+  outline-color: var(--color-ink);
+}

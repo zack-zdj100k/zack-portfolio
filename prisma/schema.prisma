@@ -1,0 +1,559 @@
+// ZACK portfolio — database schema.
+//
+// Conventions
+// - Translatable text lives in a `*Translation` table keyed by (parentId, locale). `locale` is a
+//   string validated by the app (see src/lib/i18n/locales.ts), because codes like "pt-BR" are
+//   not valid enum identifiers. `reviewed` = the owner has checked this translation.
+// - Money is integer minor units (BigInt) + ISO-4217 currency code. Never floats.
+// - Owner-facing content has a DRAFT/PUBLISHED status; public pages only read PUBLISHED rows.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/server/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum ProjectCategory {
+  WEBSITE
+  APP
+  SOFTWARE
+}
+
+enum ProjectOrigin {
+  CLIENT
+  PERSONAL
+  CONCEPT
+}
+
+enum ProjectStage {
+  CONCEPT
+  IN_PROGRESS
+  LAUNCHED
+}
+
+enum ImageKind {
+  REAL
+  CONCEPT
+  DEMO
+}
+
+/// GALLERY images are the project's screenshots; DASHBOARD images are admin screens with an annotated tour.
+enum ImageSection {
+  GALLERY
+  DASHBOARD
+}
+
+enum LinkType {
+  LIVE
+  DEMO
+  REPO
+}
+
+enum HeroMode {
+  DEPTH // A: WebGL depth-parallax of the cutout
+  SEQUENCE // B: scroll-scrubbed turntable frames
+  MODEL // C: real GLB model
+}
+
+enum StorageDriver {
+  LOCAL
+  CLOUDINARY
+}
+
+enum MediaKind {
+  IMAGE
+  MODEL
+}
+
+enum SocialKind {
+  GITHUB
+  LINKEDIN
+  INDEED
+  WHATSAPP
+  INSTAGRAM
+  FACEBOOK
+  X
+  OTHER
+}
+
+enum ReferralStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  WON
+  NOT_ELIGIBLE
+  REWARD_DUE
+  PAID
+}
+
+enum InquiryStatus {
+  NEW
+  IN_PROGRESS
+  REPLIED
+  CLOSED
+}
+
+// ─── Admin ──────────────────────────────────────────────────────────────────
+
+model AdminUser {
+  id           String          @id @default(uuid())
+  email        String          @unique
+  passwordHash String
+  createdAt    DateTime        @default(now())
+  lastLoginAt  DateTime?
+  sessions     AdminSession[]
+  auditLogs    AdminAuditLog[]
+}
+
+// The cookie holds a random token; only its SHA-256 is stored here.
+model AdminSession {
+  tokenHash String    @id
+  adminId   String
+  admin     AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+
+  @@index([adminId])
+  @@index([expiresAt])
+}
+
+model AdminAuditLog {
+  id        String     @id @default(uuid())
+  adminId   String?
+  admin     AdminUser? @relation(fields: [adminId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  createdAt DateTime   @default(now())
+
+  @@index([createdAt])
+}
+
+// Fixed-window counter for login and public-form abuse limits. Keys are hashed (no raw IPs).
+model RateLimitBucket {
+  key     String   @id
+  count   Int
+  resetAt DateTime
+}
+
+// ─── Site, locales, free-form text ──────────────────────────────────────────
+
+model LocaleSetting {
+  code      String  @id
+  enabled   Boolean @default(true)
+  // false = drafted automatically; the site shows a "translation under review" note.
+  reviewed  Boolean @default(false)
+  sortOrder Int     @default(0)
+}
+
+// Overrides for the UI text defaults in src/messages/*.json, editable in /admin/content.
+model PageContent {
+  key       String
+  locale    String
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@id([key, locale])
+}
+
+model SiteSettings {
+  id            Int         @id @default(1)
+  defaultLocale String      @default("en")
+  siteUrl       String?
+  contactEmail  String?
+  phone         String?
+  showPhone     Boolean     @default(false)
+  whatsapp      String?
+  showWhatsapp  Boolean     @default(false)
+  heroMode      HeroMode    @default(DEPTH)
+  heroImageId   String?
+  heroImage     MediaAsset? @relation("HeroImage", fields: [heroImageId], references: [id], onDelete: SetNull)
+  heroDepthId   String?
+  heroDepth     MediaAsset? @relation("HeroDepth", fields: [heroDepthId], references: [id], onDelete: SetNull)
+  heroModelId   String?
+  heroModel     MediaAsset? @relation("HeroModel", fields: [heroModelId], references: [id], onDelete: SetNull)
+  ogImageId     String?
+  ogImage       MediaAsset? @relation("OgImage", fields: [ogImageId], references: [id], onDelete: SetNull)
+  heroFrames    HeroFrame[]
+  updatedAt     DateTime    @updatedAt
+}
+
+// Option B frames, in playback order.
+model HeroFrame {
+  id         String       @id @default(uuid())
+  settingsId Int          @default(1)
+  settings   SiteSettings @relation(fields: [settingsId], references: [id], onDelete: Cascade)
+  mediaId    String
+  media      MediaAsset   @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  sortOrder  Int
+
+  @@index([settingsId, sortOrder])
+}
+
+model SocialLink {
+  id        String     @id @default(uuid())
+  kind      SocialKind
+  label     String?
+  url       String
+  visible   Boolean    @default(true)
+  sortOrder Int        @default(0)
+}
+
+// ─── Media ──────────────────────────────────────────────────────────────────
+
+model MediaAsset {
+  id         String        @id @default(uuid())
+  driver     StorageDriver
+  storageKey String        @unique
+  url        String
+  kind       MediaKind     @default(IMAGE)
+  mimeType   String
+  width      Int?
+  height     Int?
+  bytes      Int
+  // { "en": "…", "fr": "…" }; empty = decorative.
+  alt        Json?
+  label      String?
+  createdAt  DateTime      @default(now())
+
+  projectImages ProjectImage[]
+  heroFrames    HeroFrame[]
+  portraitOf    Profile[]      @relation("Portrait")
+  heroImageOf   SiteSettings[] @relation("HeroImage")
+  heroDepthOf   SiteSettings[] @relation("HeroDepth")
+  heroModelOf   SiteSettings[] @relation("HeroModel")
+  ogImageOf     SiteSettings[] @relation("OgImage")
+}
+
+// ─── Profile ────────────────────────────────────────────────────────────────
+
+model Profile {
+  id           Int                  @id @default(1)
+  publicName   String               @default("ZACK")
+  fullName     String?
+  showFullName Boolean              @default(false)
+  portraitId   String?
+  portrait     MediaAsset?          @relation("Portrait", fields: [portraitId], references: [id], onDelete: SetNull)
+  // Spoken languages, shown as-is (e.g. "Arabic", "French").
+  languages    String[]
+  // { frontend: string[], backend: string[], databases: string[], tools: string[] }
+  skills       Json                 @default("{}")
+  translations ProfileTranslation[]
+  updatedAt    DateTime             @updatedAt
+}
+
+model ProfileTranslation {
+  profileId Int
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  locale    String
+  title     String
+  intro     String   @db.Text
+  bio       String?  @db.Text
+  location  String?
+  whyMe     String[]
+  interest  String?  @db.Text
+  reviewed  Boolean  @default(false)
+
+  @@id([profileId, locale])
+}
+
+model ExperienceItem {
+  id           String                  @id @default(uuid())
+  startDate    DateTime
+  endDate      DateTime?
+  organization String?
+  status       PublishStatus           @default(DRAFT)
+  sortOrder    Int                     @default(0)
+  translations ExperienceTranslation[]
+}
+
+model ExperienceTranslation {
+  itemId      String
+  item        ExperienceItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  locale      String
+  role        String
+  description String?        @db.Text
+  reviewed    Boolean        @default(false)
+
+  @@id([itemId, locale])
+}
+
+// ─── Projects ───────────────────────────────────────────────────────────────
+
+model Project {
+  id           String               @id @default(uuid())
+  slug         String               @unique
+  category     ProjectCategory
+  // null = not confirmed by the owner yet; no label is shown.
+  origin       ProjectOrigin?
+  stage        ProjectStage
+  status       PublishStatus        @default(DRAFT)
+  featured     Boolean              @default(false)
+  sortOrder    Int                  @default(0)
+  projectDate  DateTime?
+  technologies String[]
+  translations ProjectTranslation[]
+  images       ProjectImage[]
+  links        ProjectLink[]
+  testimonials Testimonial[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+
+  @@index([status, sortOrder])
+}
+
+model ProjectTranslation {
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  locale    String
+  title     String
+  summary   String   @db.Text
+  problem   String?  @db.Text
+  role      String?  @db.Text
+  solution  String?  @db.Text
+  challenge String?  @db.Text
+  outcome   String?  @db.Text
+  features  String[]
+  reviewed  Boolean  @default(false)
+
+  @@id([projectId, locale])
+}
+
+model ProjectImage {
+  id        String           @id @default(uuid())
+  projectId String
+  project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mediaId   String
+  media     MediaAsset       @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  kind      ImageKind
+  section   ImageSection     @default(GALLERY)
+  /// Dashboard screens only: the screen's name per language, e.g. {"en": "Dashboard", "fr": "Tableau de bord"}.
+  title     Json?
+  sortOrder Int              @default(0)
+  hotspots  ProjectHotspot[]
+
+  @@index([projectId, sortOrder])
+}
+
+/// A numbered marker on a dashboard screen, explained in the legend beside it.
+model ProjectHotspot {
+  id        String       @id @default(uuid())
+  imageId   String
+  image     ProjectImage @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  /// Position on the screenshot, in percent of its width and height.
+  x         Float
+  y         Float
+  /// Icon shown in the legend (a name from src/components/projects/dashboard-icons.ts).
+  icon      String
+  /// Per-language text, e.g. {"en": "Orders", "fr": "Commandes"}.
+  label     Json
+  body      Json
+  sortOrder Int          @default(0)
+
+  @@index([imageId, sortOrder])
+}
+
+model ProjectLink {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  type      LinkType
+  url       String
+  sortOrder Int      @default(0)
+}
+
+// ─── Services & pricing ─────────────────────────────────────────────────────
+
+model Service {
+  id           String               @id @default(uuid())
+  category     ProjectCategory
+  status       PublishStatus        @default(DRAFT)
+  sortOrder    Int                  @default(0)
+  translations ServiceTranslation[]
+  examples     ServiceExample[]
+}
+
+model ServiceTranslation {
+  serviceId   String
+  service     Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  locale      String
+  name        String
+  description String  @db.Text
+  reviewed    Boolean @default(false)
+
+  @@id([serviceId, locale])
+}
+
+model ServiceExample {
+  id           String                      @id @default(uuid())
+  serviceId    String
+  service      Service                     @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  sortOrder    Int                         @default(0)
+  translations ServiceExampleTranslation[]
+}
+
+model ServiceExampleTranslation {
+  exampleId String
+  example   ServiceExample @relation(fields: [exampleId], references: [id], onDelete: Cascade)
+  locale    String
+  label     String
+  reviewed  Boolean        @default(false)
+
+  @@id([exampleId, locale])
+}
+
+model PricingPackage {
+  id               String                      @id @default(uuid())
+  category         ProjectCategory?
+  status           PublishStatus               @default(DRAFT)
+  highlighted      Boolean                     @default(false)
+  sortOrder        Int                         @default(0)
+  deliveryWeeksMin Int?
+  deliveryWeeksMax Int?
+  translations     PricingPackageTranslation[]
+  prices           PackagePrice[]
+}
+
+model PricingPackageTranslation {
+  packageId   String
+  package     PricingPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  locale      String
+  name        String
+  description String?        @db.Text
+  features    String[]
+  /// Optional additions that can change the price (extra pages, integrations, custom design...).
+  addOns      String[]       @default([])
+  reviewed    Boolean        @default(false)
+
+  @@id([packageId, locale])
+}
+
+// One price per market. market = ISO-3166 alpha-2 country code, or "*" for everyone else.
+model PackagePrice {
+  id        String         @id @default(uuid())
+  packageId String
+  package   PricingPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  market    String
+  currency  String
+  minMinor  BigInt
+  // null = "starting from minMinor"
+  maxMinor  BigInt?
+  // Budget slider on the pricing page: moves from minMinor to maxMinor in steps of stepMinor.
+  stepMinor BigInt?
+
+  @@unique([packageId, market])
+}
+
+// ─── Referral ───────────────────────────────────────────────────────────────
+
+// market = country code, or "*" for every country without its own offer.
+model CountryOffer {
+  id                   String                    @id @default(uuid())
+  market               String
+  currency             String
+  rewardMinor          BigInt
+  category             ProjectCategory?
+  minProjectValueMinor BigInt?
+  status               PublishStatus             @default(DRAFT)
+  sortOrder            Int                       @default(0)
+  translations         CountryOfferTranslation[]
+  referrals            Referral[]
+
+  @@index([market, status])
+}
+
+model CountryOfferTranslation {
+  offerId    String
+  offer      CountryOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  locale     String
+  whenEarned String       @db.Text
+  terms      String       @db.Text
+  reviewed   Boolean      @default(false)
+
+  @@id([offerId, locale])
+}
+
+model Referral {
+  id                     String          @id @default(uuid())
+  offerId                String?
+  offer                  CountryOffer?   @relation(fields: [offerId], references: [id], onDelete: SetNull)
+  referrerName           String
+  referrerEmail          String?
+  referrerPhone          String?
+  referrerCountry        String
+  clientName             String
+  clientContact          String
+  clientCountry          String?
+  projectCategory        ProjectCategory
+  message                String?         @db.Text
+  locale                 String
+  consent                Boolean
+  status                 ReferralStatus  @default(NEW)
+  // Reward promised at submission time; later offer edits don't change it.
+  rewardMinorSnapshot    BigInt?
+  rewardCurrencySnapshot String?
+  adminNotes             String?         @db.Text
+  paidAt                 DateTime?
+  archivedAt             DateTime?
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+
+  @@index([status, createdAt])
+}
+
+// ─── Contact ────────────────────────────────────────────────────────────────
+
+model ContactInquiry {
+  id              String           @id @default(uuid())
+  name            String
+  email           String?
+  phone           String?
+  country         String
+  projectCategory ProjectCategory?
+  budget          String?
+  timeline        String?
+  message         String           @db.Text
+  locale          String
+  consent         Boolean
+  status          InquiryStatus    @default(NEW)
+  adminNotes      String?          @db.Text
+  archivedAt      DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([status, createdAt])
+}
+
+// ─── Testimonials ───────────────────────────────────────────────────────────
+
+model Testimonial {
+  id             String                   @id @default(uuid())
+  projectId      String?
+  project        Project?                 @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  authorName     String
+  authorRole     String?
+  // Must be true (the client approved publication) before status can be PUBLISHED.
+  clientApproved Boolean                  @default(false)
+  status         PublishStatus            @default(DRAFT)
+  sortOrder      Int                      @default(0)
+  translations   TestimonialTranslation[]
+  createdAt      DateTime                 @default(now())
+}
+
+model TestimonialTranslation {
+  testimonialId String
+  testimonial   Testimonial @relation(fields: [testimonialId], references: [id], onDelete: Cascade)
+  locale        String
+  quote         String      @db.Text
+  reviewed      Boolean     @default(false)
+
+  @@id([testimonialId, locale])
+}

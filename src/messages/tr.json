@@ -1,0 +1,353 @@
+{
+  "common": {
+    "skipToContent": "İçeriğe geç",
+    "chooseLanguage": "Dil seçin",
+    "machineTranslation": "Bu sayfa otomatik olarak çevrildi ve gözden geçiriliyor. Referans olan İngilizce sürümdür.",
+    "previewBanner": "Taslak önizleme: yayınlanmamış içeriği görüyorsunuz. Ziyaretçiler bunu görmez.",
+    "newTab": "yeni sekmede açılır",
+    "notFoundTitle": "Sayfa bulunamadı",
+    "notFoundBody": "Bu sayfa yok ya da taşındı.",
+    "notFoundCta": "Ana sayfaya dön",
+    "whatsappLabel": "{name} ile WhatsApp'tan yazışın",
+    "whatsappMessage": "Merhaba {name}, bir proje hakkında konuşmak istiyorum."
+  },
+  "nav": {
+    "home": "Ana sayfa",
+    "about": "Hakkımda",
+    "projects": "Projeler",
+    "services": "Hizmetler ve Fiyatlar",
+    "referral": "Tavsiye",
+    "contact": "İletişim",
+    "primary": "Ana menü",
+    "menu": "Menü",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "homeLabel": "{name}, ana sayfa",
+    "dialHint": "Sayfa değiştirmek için çarkı çevirin"
+  },
+  "footer": {
+    "siteLinks": "Site bağlantıları",
+    "startProject": "İşinizi büyütelim ya da sıfırdan kuralım",
+    "privacy": "Gizlilik"
+  },
+  "home": {
+    "metaDescription": "İşletmeler için web siteleri, uygulamalar ve masaüstü yazılımlar geliştiren yazılım mühendisi. Projelere, hizmetlere ve fiyatlara göz atın, sonra projenizi konuşalım.",
+    "hero": {
+      "greeting": "Merhaba, ben",
+      "ctaPrimary": "Projeyi konuşalım",
+      "ctaSecondary": "Projeleri gör",
+      "reveal1": "Web siteleri.",
+      "reveal2": "Uygulamalar.",
+      "reveal3": "Masaüstü yazılımlar.",
+      "imageAlt": "{name} adlı kişinin 3B portresi"
+    },
+    "about": {
+      "title": "Hakkımda",
+      "cta": "Daha fazlası",
+      "lampOn": "Işığı aç",
+      "lampOff": "Işığı kapat",
+      "lampHint": "İpi çekin"
+    },
+    "projects": {
+      "title": "Gerçek projeler. Gerçek ekran görüntüleri.",
+      "cta": "Tüm projeler"
+    },
+    "services": {
+      "title": "Hizmetler",
+      "cta": "Hizmetler ve fiyatlar"
+    },
+    "referral": {
+      "title": "Bir proje getir. Ödülü paylaş.",
+      "body": "Web sitesi, uygulama ya da masaüstü yazılıma ihtiyacı olan bir işletme tanıyor musunuz? Bizi tanıştırın. Proje teklif koşullarına göre gerçekleşirse ödül kazanırsınız.",
+      "cta": "Tavsiye teklifini gör"
+    },
+    "contact": {
+      "title": "İşinizi büyütelim ya da sıfırdan kuralım.",
+      "body": "İşletmenizin neye ihtiyacı olduğunu anlatın. Sorular, bir plan ve bir tahminle dönüş yapayım."
+    }
+  },
+  "about": {
+    "metaTitle": "Hakkımda",
+    "metaDescription": "Yazılımınızı kim geliştiriyor: geçmiş, beceriler ve her projenin nasıl planlanıp, geliştirilip, gözden geçirildiği.",
+    "title": "Hakkımda",
+    "portraitPending": "Fotoğraf yakında",
+    "role": "Meslek",
+    "location": "Konum",
+    "languages": "Diller",
+    "whatIBuild": {
+      "title": "Neler yapıyorum",
+      "websitesTitle": "Web siteleri",
+      "websitesBody": "Açılış sayfaları, kurumsal siteler, online mağazalar ve rezervasyon platformları. Hızlı, anlaşılır ve kolay güncellenir.",
+      "appsTitle": "Uygulamalar",
+      "appsBody": "Mağazalar, şirketler ve restoranlar için web ve mobil uygulamalar; müşterilerinizin ve ekibinizin her gün tekrarladığı işlere göre tasarlanır.",
+      "softwareTitle": "Masaüstü yazılımlar",
+      "softwareBody": "Mağazalar, kafeler, restoranlar ve ofisler için programlar: satış, stok, siparişler ve işletmenizin günlük kayıtları.",
+      "intro": "İşletmenizin çalışma şekline göre planlanır ve her gün kolayca kullanılır."
+    },
+    "experience": {
+      "title": "Deneyim",
+      "present": "Günümüz"
+    },
+    "howIWork": {
+      "title": "Nasıl çalışıyorum",
+      "understandTitle": "Anlamak",
+      "understandBody": "İşinizi, müşterilerinizi ve çözmek istediğiniz sorunu konuşuruz.",
+      "planTitle": "Planlamak",
+      "planBody": "Çalışma başlamadan önce yazılı bir kapsam alırsınız: özellikler, süre ve fiyat.",
+      "buildTitle": "Geliştirmek",
+      "buildBody": "Adım adım geliştirir ve size sadece ekran görüntüsü değil, deneyebileceğiniz ilerlemeler gösteririm.",
+      "reviewTitle": "Gözden geçirmek",
+      "reviewBody": "Anlaşılan kapsama göre birlikte test eder, uymayan yerleri düzeltirim.",
+      "improveTitle": "İyileştirmek",
+      "improveBody": "Yayından sonra teslim edilen kapsamdaki hatalar düzeltilir. Yeni fikirler için ayrı tahmin yapılır."
+    },
+    "whyMe": {
+      "title": "Neden benimle çalışmalısınız?"
+    },
+    "skills": {
+      "title": "Beceriler",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "databases": "Veritabanları",
+      "tools": "Araçlar"
+    },
+    "interest": {
+      "title": "Kod dışında"
+    },
+    "cta": {
+      "title": "İşinizi büyütelim ya da sıfırdan kuralım.",
+      "projects": "Projeleri gör"
+    },
+    "facts": {
+      "title": "Kısaca",
+      "focus": "Odak",
+      "focusValue": "İşletmeler için yazılım",
+      "stack": "Ana teknolojiler"
+    },
+    "badge": {
+      "header": "Geliştirici kimliği",
+      "role": "Yazılım mühendisi"
+    },
+    "stack": {
+      "title": "Teknolojilerim, periyodik tablo olarak.",
+      "intro": "Görmek için bir kutunun üzerine gelin veya dokunun. Bir aileyi aydınlatmak için seçin.",
+      "all": "Tümü"
+    }
+  },
+  "projects": {
+    "metaTitle": "Projeler",
+    "metaDescription": "Web siteleri, uygulamalar ve masaüstü yazılımlar: her proje amacı, özellikleri, teknolojileri ve gerçek durumuyla.",
+    "title": "Projeler",
+    "intro": "Her proje gerçek durumunu gösterir. Konsept görseller konsept olarak etiketlenir.",
+    "filterLabel": "Türe göre filtrele",
+    "all": "Tümü",
+    "empty": "Bu kategoride henüz proje yok.",
+    "tagsLabel": "Proje bilgileri",
+    "viewProject": "Projeyi gör",
+    "category": {
+      "WEBSITE": "Web sitesi",
+      "APP": "Uygulama",
+      "SOFTWARE": "Yazılım"
+    },
+    "origin": {
+      "CLIENT": "Müşteri",
+      "PERSONAL": "Kişisel",
+      "CONCEPT": "Konsept"
+    },
+    "stage": {
+      "CONCEPT": "Konsept",
+      "IN_PROGRESS": "Devam ediyor",
+      "LAUNCHED": "Yayında"
+    },
+    "imageNote": {
+      "CONCEPT": "Konsept olarak işaretlenen görseller görsel denemelerdir, son ekran görüntüleri değildir.",
+      "DEMO": "Görseller canlı ürünü değil, bir demo sürümünü gösterir."
+    },
+    "imageKind": {
+      "REAL": "Ekran görüntüsü",
+      "CONCEPT": "Konsept görsel",
+      "DEMO": "Demo sürümü"
+    },
+    "detail": {
+      "back": "Tüm projeler",
+      "summary": "Genel bakış",
+      "problem": "Amaç",
+      "role": "Rolüm",
+      "solution": "Çözüm",
+      "features": "Özellikler",
+      "technologies": "Teknolojiler",
+      "challenge": "Zorluk",
+      "outcome": "Sonuç",
+      "date": "Tarih",
+      "status": "Durum",
+      "type": "Tür",
+      "links": "Bağlantılar",
+      "live": "Canlı site",
+      "demo": "Demo",
+      "repo": "Kaynak kod",
+      "gallery": "Galeri",
+      "feedback": "Müşteri görüşü",
+      "next": "Sonraki proje",
+      "ctaTitle": "İşinizi büyütelim ya da sıfırdan kuralım.",
+      "dashboardTitle": "Arkadaki yönetim paneli",
+      "dashboardIntro": "Her simgenin bir görevi var. İşletmeye ne kattığını görmek için bir numaranın üzerine gelin veya dokunun.",
+      "screens": "Panel ekranları"
+    }
+  },
+  "pricing": {
+    "metaTitle": "Hizmetler ve Fiyatlar",
+    "metaDescription": "İşletmeler için web siteleri, uygulamalar ve masaüstü yazılımlar; başlangıç fiyatları, nelerin dahil olduğu ve alan adı, barındırma ve bakımın işleyişi.",
+    "title": "Hizmetler ve Fiyatlar",
+    "intro": "Her proje işinize ve kapsamına göre planlanır. Önce hizmetler, ardından fiyatlandırmanın işleyişi.",
+    "servicesTitle": "Hizmetler",
+    "pricingTitle": "Fiyatlar",
+    "pricingIntro": "Fiyatlar başlangıç noktalarıdır. Son teklif kapsam, özellikler, entegrasyonlar, tasarım ve süreye bağlıdır ve çalışma başlamadan önce yazılı olarak verilir.",
+    "marketLabel": "Fiyatları göster",
+    "marketOther": "Diğer ülkeler",
+    "from": "Başlangıç: {amount}",
+    "deliveryWeeks": "{min, plural, other {# hafta}}",
+    "deliveryRange": "{min}-{max} hafta",
+    "delivery": "Tipik teslim süresi",
+    "includes": "Dahil olanlar",
+    "pricesPending": "Fiyatlar netleştiriliyor. Projenizi konuşalım; tam ihtiyacınıza göre teklif alın.",
+    "noMarketPrice": "Bu ülke için henüz listelenmiş fiyat yok. Teklif isteyin.",
+    "draft": "Taslak",
+    "quoteCta": "Projenizi konuşalım",
+    "notes": {
+      "title": "Bilmeniz gerekenler",
+      "scopeTitle": "Fiyatı ne belirler",
+      "scopeBody": "Sayfa ve özellik sayısı, ödeme veya teslimat gibi entegrasyonlar, özel tasarım, içerik ve ne kadar hızlı ihtiyacınız olduğu.",
+      "hostingTitle": "Alan adı ve barındırma",
+      "hostingBody": "Alan adı ve barındırmanın ilk altı ayı dahildir. Sonrasında yenilemeleri sağlayıcının fiyatıyla siz ödersiniz.",
+      "maintenanceTitle": "Bakım",
+      "maintenanceBody": "Teslim edilen kapsamdaki hatalar düzeltilir. Yeni özellikler veya kapsam değişiklikleri ayrıca fiyatlandırılır.",
+      "goalTitle": "Amaç",
+      "goalBody": "İşinizi kolaylaştıran ve işletmenizin büyümesine yardımcı olan bir yazılım. Sonuçlar birçok etkene bağlıdır, bu yüzden belirli satış rakamları vaat edilmez."
+    },
+    "estimator": {
+      "title": "Bütçenizi belirleyin",
+      "intro": "Bir proje türü seçin, sonra kaydırıcıyı aklınızdaki kapsama göre hareket ettirin.",
+      "type": "Proje türü",
+      "estimate": "Tahmininiz",
+      "less": "Daha basit",
+      "more": "Daha fazla özellik",
+      "minimum": "En az: {amount}",
+      "disclaimer": "Bu bir tahmindir, kesin teklif değildir. Kesin fiyat, projenizi konuştuktan sonra yazılı olarak onaylanır.",
+      "cta": "Bu bütçeyle teklif iste",
+      "sliderLabel": "{name} için bütçe"
+    },
+    "groups": {
+      "WEBSITE": "Web siteleri",
+      "APP": "Mobil uygulamalar",
+      "SOFTWARE": "Masaüstü yazılımlar",
+      "CUSTOM": "Özel platformlar"
+    },
+    "onRequest": "Fiyat talep üzerine",
+    "onRequestBody": "Bu tür için henüz listelenmiş fiyat yok. Projenizi anlatın, yazılı teklif alın.",
+    "addOns": "İsteğe bağlı eklemeler (fiyatı değiştirebilir)"
+  },
+  "referral": {
+    "metaTitle": "Tavsiye teklifi",
+    "metaDescription": "Web sitesi, uygulama veya masaüstü yazılıma ihtiyacı olan bir işletmeyi tavsiye edin; proje teklif koşullarına göre gerçekleşince ödül kazanın.",
+    "title": "Bir proje getir. Ödülü paylaş.",
+    "intro": "Web sitesi, uygulama ya da masaüstü yazılıma ihtiyacı olan bir işletme tanıyor musunuz? Bizi tanıştırın. Proje gerçekleşir ve aşağıdaki koşulları sağlarsa ödül kazanırsınız.",
+    "howTitle": "Nasıl çalışır",
+    "step1Title": "Tanıştırın",
+    "step1Body": "İşletmenin bilgilerini, onun izniyle aşağıdaki formla gönderin.",
+    "step2Title": "Görüşürüz",
+    "step2Body": "İşletmeyle iletişime geçer, projeyi anlar ve teklif gönderirim.",
+    "step3Title": "Ödülünüzü alırsınız",
+    "step3Body": "Teklif koşulları sağlandığında ödülünüz ödenir.",
+    "countryLabel": "Ülkeniz",
+    "countryPlaceholder": "Ülkenizi seçin",
+    "countryHint": "Ödül ülkenize göre değişir.",
+    "rewardHeadline": "Ödülünüz: {amount}",
+    "rewardPerProject": "koşulları sağlayan her tavsiye edilen proje için",
+    "rewardFor": "Geçerli olduğu alan: {category}",
+    "anyProject": "web siteleri, uygulamalar ve masaüstü yazılımlar",
+    "minValue": "Asgari proje tutarı: {amount}",
+    "whenEarned": "Ödül ne zaman kazanılır",
+    "terms": "Koşullar",
+    "noOffer": "Şu anda bu ülke için tavsiye teklifi yok. Yine de iletişim sayfasından bir işletme tanıtabilirsiniz.",
+    "pending": "Tavsiye teklifi netleştiriliyor ve yakında burada görünecek. Yine de iletişim sayfasından bir işletme tanıtabilirsiniz.",
+    "notGuaranteed": "Tavsiye göndermek ödülü garanti etmez. Ödül yalnızca yukarıdaki koşullar sağlandığında hak edilir.",
+    "formTitle": "Bir işletme tavsiye edin",
+    "you": "Sizin bilgileriniz",
+    "them": "İşletme bilgileri",
+    "referrerName": "Adınız",
+    "referrerEmail": "E-postanız",
+    "referrerPhone": "Telefonunuz",
+    "contactHint": "En az bir e-posta veya telefon numarası girin.",
+    "clientName": "İşletme veya kişi adı",
+    "clientContact": "E-postası veya telefonu",
+    "clientCountry": "Ülkesi",
+    "projectCategory": "İhtiyacı",
+    "message": "Neye ihtiyaçları var? (isteğe bağlı)",
+    "consent": "İşletmenin iletişime geçilmesini kabul ettiğini onaylıyor ve bu tavsiyenin işlenmesi için bilgilerimin saklanmasını kabul ediyorum.",
+    "submit": "Tavsiyeyi gönder",
+    "successTitle": "Tavsiye alındı. Teşekkürler!",
+    "successBody": "İşletmeyle iletişime geçip sizi bilgilendireceğim."
+  },
+  "contact": {
+    "metaTitle": "İletişim",
+    "metaDescription": "Web sitesi, uygulama veya masaüstü yazılım projenizi anlatın. E-posta, telefon veya WhatsApp ile yanıt.",
+    "title": "İşinizi büyütelim ya da sıfırdan kuralım.",
+    "intro": "Formu doldurun ya da size uygun kanalı kullanın. Fikir henüz başlangıçta olsa bile sorularınızı bekliyorum.",
+    "channels": "Bana ulaşmanın diğer yolları",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "whatsapp": "WhatsApp",
+    "formTitle": "Proje talebi",
+    "name": "Ad",
+    "emailLabel": "E-posta",
+    "phoneLabel": "Telefon",
+    "contactHint": "En az bir e-posta veya telefon numarası girin.",
+    "country": "Ülke",
+    "countryPlaceholder": "Bir ülke seçin",
+    "category": "Proje türü",
+    "categoryPlaceholder": "Bir tür seçin",
+    "categoryOther": "Henüz emin değilim",
+    "budget": "Bütçe (isteğe bağlı)",
+    "budgetHint": "Bir aralık yeterli, herhangi bir para biriminde.",
+    "timeline": "Süre (isteğe bağlı)",
+    "timelineHint": "Örneğin: iki ay içinde.",
+    "message": "Projeyi anlatın",
+    "consent": "Bu talebe yanıt verilmesi için bilgilerimin saklanmasını kabul ediyorum. Asla paylaşılmaz veya satılmaz.",
+    "privacyLink": "Gizlilik",
+    "submit": "Talebi gönder",
+    "successTitle": "Teşekkürler, mesajınız gönderildi.",
+    "successBody": "Birkaç iş günü içinde yanıt alacaksınız.",
+    "groupYou": "Sizin bilgileriniz",
+    "groupProject": "Projeniz",
+    "moreDetails": "Bütçe ve süre (isteğe bağlı)",
+    "direct": "Bana doğrudan ulaşın"
+  },
+  "forms": {
+    "required": "Bu alan zorunludur.",
+    "email": "Geçerli bir e-posta adresi girin.",
+    "phone": "Geçerli bir telefon numarası girin.",
+    "contactRequired": "Bir e-posta veya telefon numarası girin.",
+    "tooLong": "Metin çok uzun.",
+    "consent": "Devam etmek için lütfen onaylayın.",
+    "rateLimited": "Çok fazla deneme. Birkaç dakika bekleyip tekrar deneyin.",
+    "generic": "Bir sorun oluştu. Tekrar deneyin veya başka bir iletişim yolu kullanın.",
+    "network": "Mesaj gönderilemedi. Bağlantınızı kontrol edip tekrar deneyin.",
+    "sending": "Gönderiliyor...",
+    "fixErrors": "Lütfen işaretli alanları düzeltin."
+  },
+  "privacy": {
+    "metaTitle": "Gizlilik",
+    "title": "Gizlilik",
+    "intro": "Bu site yalnızca size yanıt vermek için gerekeni toplar.",
+    "collectTitle": "Neler toplanır",
+    "collectBody": "İletişim veya tavsiye formunu gönderdiğinizde: yazdığınız bilgiler (ad, e-posta veya telefon, ülke ve mesajınız). İzleme çerezi veya reklam aracı kullanılmaz.",
+    "useTitle": "Nasıl kullanılır",
+    "useBody": "Yalnızca talebinize yanıt vermek veya tavsiyenizi işlemek için. Bilgileriniz asla satılmaz veya pazarlama için paylaşılmaz.",
+    "keepTitle": "Ne kadar saklanır",
+    "keepBody": "Talepler ve tavsiyeler işlendiği süre boyunca saklanır, ardından arşivlenir veya istek üzerine silinir.",
+    "rightsTitle": "Seçenekleriniz",
+    "rightsBody": "Bilgilerinizi görmek, düzeltmek veya silmek için istediğiniz zaman iletişim sayfasından talepte bulunabilirsiniz.",
+    "cookiesTitle": "Çerezler",
+    "cookiesBody": "Site izleme çerezi kullanmaz. Dili değiştirdiğinizde bir çerez seçiminizi hatırlar."
+  }
+}

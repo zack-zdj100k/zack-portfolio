@@ -1,0 +1,51 @@
+{
+  "about": {
+    "whatIBuild": {
+      "websitesBody": "Landing pages, sitios corporativos, tiendas en línea y plataformas de reservas. Rápidos, claros y fáciles de actualizar.",
+      "appsBody": "Aplicaciones web y para celular para tiendas, empresas y restaurantes, pensadas para las tareas que sus clientes y su equipo repiten cada día.",
+      "softwareBody": "Programas para tiendas, cafeterías, restaurantes y oficinas: ventas, inventario, pedidos y los registros diarios de su negocio, en su computador.",
+      "intro": "Pensado según cómo funciona su negocio, y fácil de usar cada día."
+    },
+    "howIWork": {
+      "improveBody": "Después del lanzamiento, se corrigen los errores del alcance entregado. Las ideas nuevas tienen su propia cotización."
+    },
+    "stack": {
+      "intro": "Pase el cursor o toque una casilla para verla. Elija una familia para iluminarla."
+    }
+  },
+  "pricing": {
+    "pricingIntro": "Los precios son puntos de partida. La cotización final depende del alcance, las funciones, las integraciones, el diseño y los tiempos, y la recibe por escrito antes de empezar.",
+    "pricesPending": "Los precios se están cerrando. Hablemos de tu proyecto y recibirás una cotización para exactamente lo que necesitas.",
+    "noMarketPrice": "Aún no hay precio publicado para este país. Pida una cotización.",
+    "quoteCta": "Hablemos de tu proyecto",
+    "notes": {
+      "hostingTitle": "Dominio y hosting",
+      "hostingBody": "Los primeros seis meses de dominio y hosting están incluidos. Después, las renovaciones corren por su cuenta, al precio del proveedor.",
+      "maintenanceBody": "Se corrigen los errores del alcance entregado. Las funciones nuevas o los cambios de alcance se cotizan aparte."
+    },
+    "estimator": {
+      "cta": "Pedir cotización con este monto",
+      "intro": "Elija un tipo de proyecto y mueva el control según el alcance que tiene en mente.",
+      "disclaimer": "Esto es una estimación, no una cotización final. El precio exacto se confirma por escrito después de hablar de su proyecto.",
+      "title": "Defina su presupuesto",
+      "estimate": "Su estimación"
+    }
+  },
+  "contact": {
+    "intro": "Llene el formulario o use el canal que prefiera. Las preguntas son bienvenidas aunque la idea apenas esté empezando.",
+    "successBody": "Recibirá una respuesta en pocos días hábiles.",
+    "groupYou": "Sus datos",
+    "groupProject": "Su proyecto"
+  },
+  "referral": {
+    "step2Body": "Me comunico con la empresa, entiendo el proyecto y envío una cotización."
+  },
+  "common": {
+    "whatsappLabel": "Escríbale a {name} por WhatsApp"
+  },
+  "home": {
+    "about": {
+      "lampHint": "Tire del cordón"
+    }
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "common": {
+    "skipToContent": "Ir para o conteúdo",
+    "chooseLanguage": "Escolher idioma",
+    "machineTranslation": "Esta página foi traduzida automaticamente e está em revisão. A versão em inglês é a referência.",
+    "previewBanner": "Prévia de rascunhos: você está vendo conteúdo não publicado. Os visitantes não veem isso.",
+    "newTab": "abre em uma nova aba",
+    "notFoundTitle": "Página não encontrada",
+    "notFoundBody": "Esta página não existe ou foi movida.",
+    "notFoundCta": "Voltar ao início",
+    "whatsappLabel": "Fale com {name} pelo WhatsApp",
+    "whatsappMessage": "Oi {name}, quero conversar sobre um projeto."
+  },
+  "nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "projects": "Projetos",
+    "services": "Serviços e preços",
+    "referral": "Indicação",
+    "contact": "Contato",
+    "primary": "Navegação principal",
+    "menu": "Menu",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "homeLabel": "{name}, página inicial",
+    "dialHint": "Gire a roda para mudar de página"
+  },
+  "footer": {
+    "siteLinks": "Links do site",
+    "startProject": "Vamos escalar o seu negócio, ou construir um",
+    "privacy": "Privacidade"
+  },
+  "home": {
+    "metaDescription": "Engenheiro de software que cria sites, aplicativos e softwares desktop para empresas. Veja projetos, serviços e preços, e vamos conversar sobre o seu projeto.",
+    "hero": {
+      "greeting": "Oi, eu sou",
+      "ctaPrimary": "Conversar sobre um projeto",
+      "ctaSecondary": "Ver projetos",
+      "reveal1": "Sites.",
+      "reveal2": "Aplicativos.",
+      "reveal3": "Software desktop.",
+      "imageAlt": "Retrato 3D de {name}"
+    },
+    "about": {
+      "title": "Sobre mim",
+      "cta": "Saiba mais",
+      "lampOn": "Acender a luz",
+      "lampOff": "Apagar a luz",
+      "lampHint": "Puxe a cordinha"
+    },
+    "projects": {
+      "title": "Projetos reais. Capturas reais.",
+      "cta": "Todos os projetos"
+    },
+    "services": {
+      "title": "Serviços",
+      "cta": "Serviços e preços"
+    },
+    "referral": {
+      "title": "Traga um projeto. Divida a recompensa.",
+      "body": "Conhece uma empresa que precisa de um site, aplicativo ou software desktop? Apresente-nos. Quando o projeto acontece dentro das condições da oferta, você recebe uma recompensa.",
+      "cta": "Ver a oferta de indicação"
+    },
+    "contact": {
+      "title": "Vamos escalar o seu negócio, ou construir um.",
+      "body": "Conte o que a sua empresa precisa. Eu respondo com perguntas, um plano e uma estimativa."
+    }
+  },
+  "about": {
+    "metaTitle": "Sobre",
+    "metaDescription": "Quem desenvolve o seu software: trajetória, habilidades e como cada projeto é planejado, construído e revisado.",
+    "title": "Sobre mim",
+    "portraitPending": "Foto em breve",
+    "role": "Profissão",
+    "location": "Localização",
+    "languages": "Idiomas",
+    "whatIBuild": {
+      "title": "O que eu crio",
+      "websitesTitle": "Sites",
+      "websitesBody": "Landing pages, sites institucionais, lojas virtuais e plataformas de agendamento. Rápidos, claros e fáceis de atualizar.",
+      "appsTitle": "Aplicativos",
+      "appsBody": "Aplicativos web e mobile para lojas, empresas e restaurantes, pensados para as tarefas que seus clientes e sua equipe repetem todo dia.",
+      "softwareTitle": "Software desktop",
+      "softwareBody": "Programas para lojas, cafés, restaurantes e escritórios: vendas, estoque, pedidos e os registros diários do seu negócio.",
+      "intro": "Planejado de acordo com o jeito que a sua empresa funciona, e fácil de usar no dia a dia."
+    },
+    "experience": {
+      "title": "Experiência",
+      "present": "Atual"
+    },
+    "howIWork": {
+      "title": "Como eu trabalho",
+      "understandTitle": "Entender",
+      "understandBody": "Conversamos sobre o seu negócio, seus clientes e o problema que você quer resolver.",
+      "planTitle": "Planejar",
+      "planBody": "Você recebe um escopo por escrito: funcionalidades, prazo e preço, antes de qualquer trabalho começar.",
+      "buildTitle": "Construir",
+      "buildBody": "Desenvolvo por etapas e mostro avanços que você pode testar, não só capturas de tela.",
+      "reviewTitle": "Revisar",
+      "reviewBody": "Testamos juntos com base no escopo combinado e corrijo o que não estiver de acordo.",
+      "improveTitle": "Melhorar",
+      "improveBody": "Depois do lançamento, os bugs do escopo entregue são corrigidos. Ideias novas têm um orçamento próprio."
+    },
+    "whyMe": {
+      "title": "Por que trabalhar comigo?"
+    },
+    "skills": {
+      "title": "Habilidades",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "databases": "Bancos de dados",
+      "tools": "Ferramentas"
+    },
+    "interest": {
+      "title": "Fora do código"
+    },
+    "cta": {
+      "title": "Vamos escalar o seu negócio, ou construir um.",
+      "projects": "Ver projetos"
+    },
+    "facts": {
+      "title": "Em resumo",
+      "focus": "Foco",
+      "focusValue": "Software para empresas",
+      "stack": "Stack principal"
+    },
+    "badge": {
+      "header": "Crachá de desenvolvedor",
+      "role": "Engenheiro de software"
+    },
+    "stack": {
+      "title": "Minha stack, como tabela periódica.",
+      "intro": "Passe o mouse ou toque em um quadrado para ver. Escolha uma família para iluminá-la.",
+      "all": "Tudo"
+    }
+  },
+  "projects": {
+    "metaTitle": "Projetos",
+    "metaDescription": "Sites, aplicativos e softwares desktop: cada projeto com objetivo, funcionalidades, tecnologias e status real.",
+    "title": "Projetos",
+    "intro": "Cada projeto mostra o seu status real. Imagens de conceito são marcadas como conceito.",
+    "filterLabel": "Filtrar por tipo",
+    "all": "Todos",
+    "empty": "Ainda não há projetos nesta categoria.",
+    "tagsLabel": "Detalhes do projeto",
+    "viewProject": "Ver projeto",
+    "category": {
+      "WEBSITE": "Site",
+      "APP": "Aplicativo",
+      "SOFTWARE": "Software"
+    },
+    "origin": {
+      "CLIENT": "Cliente",
+      "PERSONAL": "Pessoal",
+      "CONCEPT": "Conceito"
+    },
+    "stage": {
+      "CONCEPT": "Conceito",
+      "IN_PROGRESS": "Em andamento",
+      "LAUNCHED": "No ar"
+    },
+    "imageNote": {
+      "CONCEPT": "Imagens marcadas como conceito são explorações visuais, não capturas finais.",
+      "DEMO": "As imagens mostram uma versão de demonstração, não o produto no ar."
+    },
+    "imageKind": {
+      "REAL": "Captura de tela",
+      "CONCEPT": "Imagem de conceito",
+      "DEMO": "Versão demo"
+    },
+    "detail": {
+      "back": "Todos os projetos",
+      "summary": "Visão geral",
+      "problem": "O objetivo",
+      "role": "Meu papel",
+      "solution": "A solução",
+      "features": "Funcionalidades",
+      "technologies": "Tecnologias",
+      "challenge": "O desafio",
+      "outcome": "Resultado",
+      "date": "Data",
+      "status": "Status",
+      "type": "Tipo",
+      "links": "Links",
+      "live": "Site no ar",
+      "demo": "Demo",
+      "repo": "Código-fonte",
+      "gallery": "Galeria",
+      "feedback": "Opinião do cliente",
+      "next": "Próximo projeto",
+      "ctaTitle": "Vamos escalar o seu negócio, ou construir um.",
+      "dashboardTitle": "O painel por trás",
+      "dashboardIntro": "Cada ícone tem uma função. Passe o mouse ou toque em um número para ver o que ele faz pelo negócio.",
+      "screens": "Telas do painel"
+    }
+  },
+  "pricing": {
+    "metaTitle": "Serviços e preços",
+    "metaDescription": "Sites, aplicativos e softwares desktop para empresas, com preços iniciais, o que está incluído e como funcionam domínio, hospedagem e manutenção.",
+    "title": "Serviços e preços",
+    "intro": "Cada projeto é planejado de acordo com o seu negócio e o escopo. Primeiro os serviços, depois como funcionam os preços.",
+    "servicesTitle": "Serviços",
+    "pricingTitle": "Preços",
+    "pricingIntro": "Os preços são pontos de partida. O orçamento final depende do escopo, das funcionalidades, das integrações, do design e do prazo, e você o recebe por escrito antes de começar.",
+    "marketLabel": "Mostrar preços para",
+    "marketOther": "Outros países",
+    "from": "A partir de {amount}",
+    "deliveryWeeks": "{min, plural, one {# semana} other {# semanas}}",
+    "deliveryRange": "{min} a {max} semanas",
+    "delivery": "Prazo habitual",
+    "includes": "Inclui",
+    "pricesPending": "Os preços estão sendo finalizados. Vamos falar do seu projeto e você recebe um orçamento para exatamente o que precisa.",
+    "noMarketPrice": "Ainda não há preço publicado para este país. Peça um orçamento.",
+    "draft": "Rascunho",
+    "quoteCta": "Vamos falar do seu projeto",
+    "notes": {
+      "title": "Bom saber",
+      "scopeTitle": "O que define o preço",
+      "scopeBody": "Número de páginas e funcionalidades, integrações como pagamento ou entrega, design sob medida, conteúdo e a urgência.",
+      "hostingTitle": "Domínio e hospedagem",
+      "hostingBody": "Os primeiros seis meses de domínio e hospedagem estão incluídos. Depois, as renovações ficam por sua conta, pelo preço do provedor.",
+      "maintenanceTitle": "Manutenção",
+      "maintenanceBody": "Os bugs do escopo entregue são corrigidos. Novas funcionalidades ou mudanças de escopo são orçadas à parte.",
+      "goalTitle": "O objetivo",
+      "goalBody": "Um software que facilite o seu trabalho e ajude o seu negócio a crescer. Os resultados dependem de muitos fatores, por isso não se prometem números de vendas."
+    },
+    "estimator": {
+      "title": "Defina seu orçamento",
+      "intro": "Escolha um tipo de projeto e mova o controle de acordo com o tamanho que você imagina.",
+      "type": "Tipo de projeto",
+      "estimate": "Sua estimativa",
+      "less": "Mais simples",
+      "more": "Mais recursos",
+      "minimum": "Mínimo: {amount}",
+      "disclaimer": "Isto é uma estimativa, não um orçamento final. O preço exato é confirmado por escrito depois de conversarmos sobre o projeto.",
+      "cta": "Pedir orçamento com este valor",
+      "sliderLabel": "Orçamento para {name}"
+    },
+    "groups": {
+      "WEBSITE": "Sites",
+      "APP": "Apps móveis",
+      "SOFTWARE": "Software para computador",
+      "CUSTOM": "Plataformas sob medida"
+    },
+    "onRequest": "Preço sob consulta",
+    "onRequestBody": "Ainda não há preço publicado para este tipo. Descreva seu projeto e receba um orçamento por escrito.",
+    "addOns": "Adicionais opcionais (podem mudar o preço)"
+  },
+  "referral": {
+    "metaTitle": "Oferta de indicação",
+    "metaDescription": "Indique uma empresa que precisa de um site, aplicativo ou software desktop e receba uma recompensa quando o projeto acontecer dentro das condições.",
+    "title": "Traga um projeto. Divida a recompensa.",
+    "intro": "Conhece uma empresa que precisa de um site, aplicativo ou software desktop? Apresente-a. Se o projeto acontecer e cumprir as condições abaixo, você recebe uma recompensa.",
+    "howTitle": "Como funciona",
+    "step1Title": "Apresente",
+    "step1Body": "Envie os dados da empresa pelo formulário abaixo, com a permissão dela.",
+    "step2Title": "Conversamos",
+    "step2Body": "Entro em contato, entendo o projeto e envio um orçamento.",
+    "step3Title": "Você é recompensado",
+    "step3Body": "Quando as condições da oferta forem cumpridas, sua recompensa é paga.",
+    "countryLabel": "Seu país",
+    "countryPlaceholder": "Escolha seu país",
+    "countryHint": "A recompensa depende do seu país.",
+    "rewardHeadline": "Sua recompensa: {amount}",
+    "rewardPerProject": "para cada projeto indicado que cumprir as condições",
+    "rewardFor": "Vale para: {category}",
+    "anyProject": "sites, aplicativos e softwares desktop",
+    "minValue": "Valor mínimo do projeto: {amount}",
+    "whenEarned": "Quando a recompensa é conquistada",
+    "terms": "Condições",
+    "noOffer": "No momento não há oferta de indicação para este país. Você ainda pode apresentar uma empresa pela página de contato.",
+    "pending": "A oferta de indicação está sendo finalizada e aparecerá aqui em breve. Você ainda pode apresentar uma empresa pela página de contato.",
+    "notGuaranteed": "Enviar uma indicação não garante uma recompensa. Ela só é devida quando as condições acima são cumpridas.",
+    "formTitle": "Indique uma empresa",
+    "you": "Seus dados",
+    "them": "Dados da empresa",
+    "referrerName": "Seu nome",
+    "referrerEmail": "Seu e-mail",
+    "referrerPhone": "Seu telefone",
+    "contactHint": "Informe pelo menos um e-mail ou telefone.",
+    "clientName": "Nome da empresa ou do contato",
+    "clientContact": "E-mail ou telefone deles",
+    "clientCountry": "País deles",
+    "projectCategory": "Do que precisam",
+    "message": "Do que eles precisam? (opcional)",
+    "consent": "Confirmo que a empresa concordou em ser contatada e aceito que meus dados sejam guardados para processar esta indicação.",
+    "submit": "Enviar indicação",
+    "successTitle": "Indicação recebida. Obrigado!",
+    "successBody": "Vou entrar em contato com a empresa e manter você informado."
+  },
+  "contact": {
+    "metaTitle": "Contato",
+    "metaDescription": "Conte sobre o seu projeto de site, aplicativo ou software desktop. Resposta por e-mail, telefone ou WhatsApp.",
+    "title": "Vamos escalar o seu negócio, ou construir um.",
+    "intro": "Preencha o formulário ou use o canal que preferir. Perguntas são bem-vindas, mesmo que a ideia ainda esteja no começo.",
+    "channels": "Outras formas de falar comigo",
+    "email": "E-mail",
+    "phone": "Telefone",
+    "whatsapp": "WhatsApp",
+    "formTitle": "Pedido de projeto",
+    "name": "Nome",
+    "emailLabel": "E-mail",
+    "phoneLabel": "Telefone",
+    "contactHint": "Informe pelo menos um e-mail ou telefone.",
+    "country": "País",
+    "countryPlaceholder": "Escolha um país",
+    "category": "Tipo de projeto",
+    "categoryPlaceholder": "Escolha um tipo",
+    "categoryOther": "Ainda não sei",
+    "budget": "Orçamento (opcional)",
+    "budgetHint": "Uma faixa já ajuda, em qualquer moeda.",
+    "timeline": "Prazo (opcional)",
+    "timelineHint": "Por exemplo: em até dois meses.",
+    "message": "Conte sobre o projeto",
+    "consent": "Concordo que meus dados sejam guardados para responder a este pedido. Eles nunca são compartilhados ou vendidos.",
+    "privacyLink": "Privacidade",
+    "submit": "Enviar pedido",
+    "successTitle": "Obrigado, sua mensagem foi enviada.",
+    "successBody": "Você vai receber uma resposta em poucos dias úteis.",
+    "groupYou": "Seus dados",
+    "groupProject": "Seu projeto",
+    "moreDetails": "Orçamento e prazo (opcional)",
+    "direct": "Fale comigo diretamente"
+  },
+  "forms": {
+    "required": "Este campo é obrigatório.",
+    "email": "Informe um e-mail válido.",
+    "phone": "Informe um telefone válido.",
+    "contactRequired": "Informe um e-mail ou telefone.",
+    "tooLong": "O texto está longo demais.",
+    "consent": "Confirme para continuar.",
+    "rateLimited": "Muitas tentativas. Aguarde alguns minutos e tente de novo.",
+    "generic": "Algo deu errado. Tente de novo ou use outra forma de contato.",
+    "network": "A mensagem não pôde ser enviada. Verifique sua conexão e tente de novo.",
+    "sending": "Enviando...",
+    "fixErrors": "Corrija os campos destacados."
+  },
+  "privacy": {
+    "metaTitle": "Privacidade",
+    "title": "Privacidade",
+    "intro": "Este site coleta apenas o necessário para responder você.",
+    "collectTitle": "O que é coletado",
+    "collectBody": "Ao enviar o formulário de contato ou de indicação: os dados que você digita (nome, e-mail ou telefone, país e sua mensagem). Não são usados cookies de rastreamento nem ferramentas de publicidade.",
+    "useTitle": "Como é usado",
+    "useBody": "Somente para responder ao seu pedido ou processar sua indicação. Seus dados nunca são vendidos nem compartilhados para marketing.",
+    "keepTitle": "Por quanto tempo",
+    "keepBody": "Pedidos e indicações ficam guardados enquanto são tratados e depois são arquivados ou excluídos a pedido.",
+    "rightsTitle": "Suas escolhas",
+    "rightsBody": "Você pode pedir para ver, corrigir ou excluir seus dados a qualquer momento pela página de contato.",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "O site não usa cookies de rastreamento. Um cookie lembra o idioma escolhido quando você o muda."
+  }
+}

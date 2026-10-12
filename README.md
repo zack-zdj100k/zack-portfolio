@@ -32,6 +32,14 @@ npm run admin:code                # prompts for your admin access code (min 12 c
 npm run dev                      # http://localhost:3000  →  redirects to /en (or the browser's language)
 ```
 
+`npm run dev` runs the whole site on one port: public pages, the admin and the API are one Next.js
+app. Before starting it checks that PostgreSQL is reachable (and says how to start it if not),
+applies any new migrations, refreshes the Prisma client and refuses to start a second copy on a
+busy port; once up, it compiles every main page in the background so the first visits are quick.
+`PORT=4000 npm run dev` picks another port; `npm run dev:next` is plain `next dev` without checks.
+Page changes in dev are slower than on the live site (no prefetching, compiling on first visit);
+to try the real speed: `npm run build && npm start`.
+
 Admin: <http://localhost:3000/admin> (on the live site: `https://your-domain/admin`). The login asks
 only for your **access code**. There is no public sign-up: the code is set with `npm run admin:code`
 (run it again to replace it, which signs out every session) or changed in Admin → Settings.

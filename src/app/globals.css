@@ -199,3 +199,13 @@
 .price-slider-paper:focus-visible {
   outline-color: var(--color-ink);
 }
+
+/* Top progress bar while a page loads (src/app/[locale]/loading.tsx). */
+@keyframes loading-bar {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}

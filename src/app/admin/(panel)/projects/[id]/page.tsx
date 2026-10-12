@@ -23,6 +23,8 @@ import {
   uploadHotspotImage,
 } from "@/server/actions/projects";
 import { HotspotPicker } from "@/components/admin/HotspotPicker";
+import { TechListEditor } from "@/components/admin/TechListEditor";
+import { techKey } from "@/components/projects/TechTiles";
 import { MoveButtons } from "@/components/admin/MoveButtons";
 import { DASHBOARD_ICON_NAMES } from "@/components/projects/dashboard-icons";
 import { CATEGORY_OPTIONS, Card, Checkbox, Flash, Input, LocaleTabs, PageTitle, Select, STATUS_OPTIONS, Textarea } from "@/components/admin/ui";
@@ -67,6 +69,15 @@ export default async function ProjectEditor({ params, searchParams }: PageProps<
     },
   });
   if (!project) notFound();
+  // Technology suggestions and tile colours come from Admin → Skills (visible groups, in order).
+  const skillGroups = await prisma.skillGroup.findMany({
+    where: { visible: true },
+    orderBy: { sortOrder: "asc" },
+    include: { skills: { where: { visible: true }, orderBy: { sortOrder: "asc" }, select: { name: true } } },
+  });
+  const skillGroupOf: Record<string, number> = {};
+  skillGroups.forEach((g, gi) => g.skills.forEach((s) => (skillGroupOf[techKey(s.name)] ??= gi)));
+  const skillNames = [...new Set(skillGroups.flatMap((g) => g.skills.map((s) => s.name)))];
   const tr = project.translations.find((t) => t.locale === locale);
   const en = project.translations.find((t) => t.locale === "en");
   const link = (type: "LIVE" | "DEMO" | "REPO") => project.links.find((l) => l.type === type)?.url;
@@ -125,13 +136,9 @@ export default async function ProjectEditor({ params, searchParams }: PageProps<
           />
           <Input label="Date (YYYY-MM)" name="projectDate" defaultValue={project.projectDate?.toISOString().slice(0, 7)} placeholder="2026-09" />
           <Select label="Visibility" name="status" options={STATUS_OPTIONS} defaultValue={project.status} />
-          <Input
-            label="Technologies"
-            name="technologies"
-            defaultValue={project.technologies.join(", ")}
-            className="md:col-span-3"
-            hint="Comma-separated, e.g. Next.js, PostgreSQL."
-          />
+          <div className="md:col-span-3">
+            <TechListEditor name="technologies" defaultValue={project.technologies} suggestions={skillNames} groupOf={skillGroupOf} />
+          </div>
           <div className="md:col-span-3">
             <Checkbox label="Show on the home page" name="featured" defaultChecked={project.featured} />
           </div>

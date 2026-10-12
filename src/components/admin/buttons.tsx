@@ -17,6 +17,8 @@ export function SubmitButton({
   formAction,
   confirm,
   className = "",
+  ariaLabel,
+  pendingText = "Saving...",
 }: {
   children: React.ReactNode;
   variant?: keyof typeof styles;
@@ -26,6 +28,9 @@ export function SubmitButton({
   /** Asks for confirmation first (used for destructive actions). */
   confirm?: string;
   className?: string;
+  /** For icon-only buttons. */
+  ariaLabel?: string;
+  pendingText?: string;
 }) {
   const { pending } = useFormStatus();
   return (
@@ -34,13 +39,14 @@ export function SubmitButton({
       name={name}
       value={value}
       formAction={formAction}
+      aria-label={ariaLabel}
       disabled={pending}
       onClick={(e) => {
         if (confirm && !window.confirm(confirm)) e.preventDefault();
       }}
       className={`inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-colors disabled:cursor-wait disabled:opacity-60 ${styles[variant]} ${className}`}
     >
-      {pending ? "Saving..." : children}
+      {pending ? pendingText : children}
     </button>
   );
 }

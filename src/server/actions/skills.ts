@@ -58,9 +58,15 @@ export async function createSkill(fd: FormData) {
     const groupId = str(fd, "groupId", 60);
     const name = str(fd, "name", 60);
     if (!name) throw new ActionError("Enter the technology's name.");
+    await prisma.skillGroup.findUniqueOrThrow({ where: { id: groupId } });
+    if (await prisma.skill.findFirst({ where: { groupId, name: { equals: name, mode: "insensitive" } } })) {
+      throw new ActionError(`${name} is already in this group.`);
+    }
+    const symbol = str(fd, "symbol", 3);
     const last = await prisma.skill.aggregate({ where: { groupId }, _max: { sortOrder: true } });
-    const skill = await prisma.skill.create({ data: { groupId, name, sortOrder: (last._max.sortOrder ?? -1) + 1 } });
-    return skill.id;
+    const skill = await prisma.skill.create({ data: { groupId, name, symbol: symbol || null, sortOrder: (last._max.sortOrder ?? -1) + 1 } });
+    // Land on the new skill, opened, so its description and projects can be filled in.
+    return { id: skill.id, back: `${back(fd)}&edit=${skill.id}#skill-${skill.id}` };
   });
 }
 

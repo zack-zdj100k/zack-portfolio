@@ -336,8 +336,11 @@ function DialItem({
   });
   return (
     <motion.li className="absolute left-1/2 top-1/2 size-0" style={{ transform, opacity }}>
+      {/* Fully prefetched while the wheel is open (pages are dynamic, so the default would only
+          fetch their loading shell): tapping a page then shows it at once. Production only. */}
       <Link
         href={href}
+        prefetch={true}
         data-dial-item
         aria-current={active ? "page" : undefined}
         onClick={onSelect}

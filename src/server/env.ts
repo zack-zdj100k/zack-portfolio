@@ -20,4 +20,9 @@ if (!parsed.success) {
 }
 
 export const env = parsed.data;
+
+// Vercel has no lasting disk: uploads saved "locally" would vanish on the next deploy.
+if (process.env.VERCEL && (env.STORAGE_DRIVER !== "cloudinary" || !env.CLOUDINARY_URL)) {
+  throw new Error('On Vercel, set STORAGE_DRIVER="cloudinary" and CLOUDINARY_URL (see docs/deploy-vercel-render-cloudinary.md).');
+}
 export const isProd = env.NODE_ENV === "production";

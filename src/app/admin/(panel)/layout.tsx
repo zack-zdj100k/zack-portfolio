@@ -7,6 +7,10 @@ import { logout } from "@/server/actions/auth";
 import { togglePreview } from "@/server/actions/settings";
 import { AdminNav } from "@/components/admin/AdminNav";
 import { UnsavedChangesGuard } from "@/components/admin/UnsavedChangesGuard";
+import { UploadShrinker } from "@/components/admin/UploadShrinker";
+
+// Vercel refuses request bodies over 4.5 MB; keep uploads under that with a little room for the form.
+const UPLOAD_LIMIT = process.env.VERCEL ? 4.3 * 1024 * 1024 : null;
 
 export default async function PanelLayout({ children }: LayoutProps<"/admin">) {
   const admin = await requireAdminPage();
@@ -44,6 +48,7 @@ export default async function PanelLayout({ children }: LayoutProps<"/admin">) {
       </aside>
       <main className="min-w-0 px-4 py-8 sm:px-6 md:px-10 md:py-10">
         <UnsavedChangesGuard />
+        <UploadShrinker limitBytes={UPLOAD_LIMIT} />
         {children}
         <div className="mt-16 flex flex-wrap gap-2 border-t border-line pt-6 lg:hidden">
           <form action={togglePreview}>

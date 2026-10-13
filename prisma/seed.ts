@@ -14,6 +14,7 @@ import { readFileSync } from "node:fs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, type ImageKind, type Prisma } from "../src/server/generated/prisma/client";
 import { fallbackChain, locales, type Locale } from "../src/lib/i18n/locales";
+import { staticCloudKey } from "../src/lib/static-media";
 import { translations } from "./seed-i18n";
 import manifest from "../public/hero/manifest.json";
 import { DASHBOARD_TOURS, FEATURE_SHOTS } from "./data/dashboard-tours";
@@ -176,6 +177,9 @@ async function staticMedia(url: string, width: number | null, height: number | n
   // Files shipped in /public are registered as LOCAL media with a "public:" key, so the admin can
   // reuse or replace them, but never deletes the file itself.
   const storageKey = `public:${url}`;
+  // Already moved to Cloudinary (npm run media:cloudinary): reuse it rather than register it again.
+  const moved = await prisma.mediaAsset.findUnique({ where: { storageKey: staticCloudKey(url) } });
+  if (moved) return moved;
   return prisma.mediaAsset.upsert({
     where: { storageKey },
     update: {},

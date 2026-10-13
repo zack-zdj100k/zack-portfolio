@@ -65,12 +65,15 @@ Never commit `.env`. `.env.example` holds placeholders only.
 The site needs three things: somewhere to run Next.js, a PostgreSQL database, and somewhere to keep
 uploaded images. Two setups that work:
 
-**A. Managed (simplest):** Vercel (app) + Neon or Supabase (PostgreSQL) + Cloudinary (images).
+**Step-by-step for Vercel + Render + Cloudinary: [docs/deploy-vercel-render-cloudinary.md](docs/deploy-vercel-render-cloudinary.md)**
+(includes moving existing pictures with `npm run media:cloudinary`).
+
+**A. Managed (simplest):** Vercel (app) + Neon, Supabase or Render (PostgreSQL) + Cloudinary (images).
 1. Create the database; copy its connection string.
 2. Create a Cloudinary account; copy the API environment variable.
 3. Import the repository in Vercel. Set `DATABASE_URL`, `SESSION_SECRET`, `NEXT_PUBLIC_SITE_URL`,
    `STORAGE_DRIVER=cloudinary`, `CLOUDINARY_URL`.
-4. Build command `npm run build`. Run `npm run db:deploy` and `npm run db:seed` once against the
+4. Vercel runs `npm run vercel-build` (applies migrations, then builds). Run `npm run db:seed` once against the
    production database (from your machine with `DATABASE_URL` pointing at it), then
    `npm run admin:code`.
 5. Optional: Vercel sets the `x-vercel-ip-country` header, which pre-selects the visitor's country

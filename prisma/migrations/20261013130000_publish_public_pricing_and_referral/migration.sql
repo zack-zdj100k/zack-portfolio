@@ -15,9 +15,9 @@ WHERE translation."packageId" = package."id"
   AND package."status" = 'DRAFT';
 
 UPDATE "PackagePrice" AS price
-SET "minMinor" = values.min_minor,
-    "maxMinor" = values.max_minor,
-    "stepMinor" = values.step_minor
+SET "minMinor" = price_values.min_minor,
+    "maxMinor" = price_values.max_minor,
+    "stepMinor" = price_values.step_minor
 FROM "PricingPackageTranslation" AS translation,
      (VALUES
        ('Landing page', 3000000::BIGINT, 4000000::BIGINT, 100000::BIGINT),

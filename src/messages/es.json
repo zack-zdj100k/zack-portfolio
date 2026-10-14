@@ -28,7 +28,9 @@
   "footer": {
     "siteLinks": "Enlaces del sitio",
     "startProject": "Hagamos crecer tu negocio, o construyámoslo",
-    "privacy": "Privacidad"
+    "privacy": "Privacidad",
+    "backToTop": "Volver arriba",
+    "sound": "Sonidos"
   },
   "home": {
     "metaDescription": "Ingeniero de software: sitios web, apps y software de escritorio para empresas, pequeños negocios, startups y personas con una idea de proyecto. Mira los proyectos, los servicios y los precios, y hablemos de tu proyecto.",

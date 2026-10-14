@@ -66,14 +66,15 @@ export async function deleteOffer(fd: FormData) {
   });
 }
 
-/** Adds the ticked countries to an offer, all with the same starting settings (as drafts). */
+/** Adds the ticked countries to an offer, all with the same starting settings. */
 export async function addOfferCountries(fd: FormData) {
-  await adminAction(fd, { back: back(fd), entity: "ReferralOfferCountry", action: "create", success: "Countries added as drafts. Review each one, then publish." }, async () => {
+  await adminAction(fd, { back: back(fd), entity: "ReferralOfferCountry", action: "create", success: "Countries added." }, async () => {
     const offerId = str(fd, "offerId", 60);
     const picked = countries(fd);
     if (picked.length === 0) throw new ActionError("Tick at least one country.");
     const reward = moneyMinor(fd, "reward");
     if (reward === null) throw new ActionError("Enter the reward amount.");
+    const status = oneOf(fd, "status", ["DRAFT", "PUBLISHED"] as const, "PUBLISHED");
     const created = await prisma.referralOfferCountry.createMany({
       data: picked.map((country) => ({
         offerId,
@@ -82,10 +83,19 @@ export async function addOfferCountries(fd: FormData) {
         rewardMinor: reward,
         categories: categories(fd),
         minProjectValueMinor: moneyMinor(fd, "minProjectValue"),
+        status,
       })),
       skipDuplicates: true,
     });
     if (created.count === 0) throw new ActionError("Those countries are already in this offer.");
+    if (status === "PUBLISHED") {
+      const en = await prisma.referralOfferTranslation.findUnique({ where: { offerId_locale: { offerId, locale: "en" } } });
+      if (!en?.payoutConditions || !en.terms) {
+        await prisma.referralOfferCountry.updateMany({ where: { offerId, country: { in: picked } }, data: { status: "DRAFT" } });
+        throw new ActionError("Added as drafts: write the offer's English payout conditions and terms, then publish the countries.");
+      }
+      await assertNoCountryClash(offerId);
+    }
     return offerId;
   });
 }

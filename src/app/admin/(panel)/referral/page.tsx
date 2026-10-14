@@ -108,6 +108,24 @@ export default async function ReferralOffersAdmin({ searchParams }: PageProps<"/
               <p className="mb-4 text-sm text-mist/60">
                 A country is live when the offer and the country are both published and the country is available. Texts above apply to every country unless a country has its own.
               </p>
+              {(() => {
+                const drafts = o.countries.filter((c) => c.status === "DRAFT");
+                if (drafts.length === 0) return null;
+                return (
+                  <form action={bulkUpdateOfferCountries} className="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-amber-300/30 bg-amber-300/5 px-4 py-3 text-sm text-mist/85">
+                    <input type="hidden" name="offerId" value={o.id} />
+                    <input type="hidden" name="locale" value={locale} />
+                    <input type="hidden" name="status" value="PUBLISHED" />
+                    {drafts.map((c) => (
+                      <input key={c.id} type="hidden" name="countries" value={c.country} />
+                    ))}
+                    <span className="min-w-0 flex-1">
+                      Hidden from visitors (draft): {drafts.map((c) => c.country).join(", ")}.
+                    </span>
+                    <SubmitButton variant="secondary">Publish {drafts.length === 1 ? "it" : `all ${drafts.length}`}</SubmitButton>
+                  </form>
+                );
+              })()}
               {o.countries.length === 0 ? (
                 <p className="mb-4 rounded-xl border border-amber-300/30 bg-amber-300/5 px-4 py-3 text-sm text-mist/80">No countries yet: nobody can see this offer.</p>
               ) : (
@@ -185,8 +203,17 @@ export default async function ReferralOffersAdmin({ searchParams }: PageProps<"/
                     <Input label="Minimum project value (optional)" name="minProjectValue" />
                   </div>
                   <CategoryChecks />
+                  <Select
+                    label="Visibility"
+                    name="status"
+                    options={[
+                      { value: "PUBLISHED", label: "Published (live as soon as the offer is published)" },
+                      { value: "DRAFT", label: "Draft (hidden)" },
+                    ]}
+                    defaultValue="PUBLISHED"
+                  />
                   <div>
-                    <SubmitButton variant="secondary">Add ticked countries (as drafts)</SubmitButton>
+                    <SubmitButton variant="secondary">Add ticked countries</SubmitButton>
                   </div>
                 </form>
               </details>

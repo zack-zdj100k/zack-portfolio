@@ -28,7 +28,9 @@
   "footer": {
     "siteLinks": "Links do site",
     "startProject": "Vamos escalar o seu negócio, ou construir um",
-    "privacy": "Privacidade"
+    "privacy": "Privacidade",
+    "backToTop": "Voltar ao topo",
+    "sound": "Sons"
   },
   "home": {
     "metaDescription": "Engenheiro de software: sites, aplicativos e softwares desktop para empresas, pequenos negócios, startups e pessoas com uma ideia de projeto. Veja os projetos, os serviços e os preços, e vamos conversar sobre o seu projeto.",

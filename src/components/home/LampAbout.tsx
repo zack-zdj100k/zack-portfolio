@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useAnimationControls } from "motion/react";
 import { useReduceMotion } from "@/components/ui/motion";
+import { playCord } from "@/lib/sfx";
 
 // Deterministic "random" fireflies (same on server and client, so no hydration mismatch).
 const FIREFLIES = Array.from({ length: 16 }, (_, i) => ({
@@ -34,6 +35,7 @@ export function LampAbout({
   const dragged = useRef(false);
 
   async function toggle() {
+    playCord(!on);
     setOn((v) => !v);
     if (!reduce) {
       await cord.start({ y: 18, transition: { duration: 0.12 } });

@@ -10,6 +10,11 @@ import { ExternalLink, PrimaryLink } from "@/components/ui/buttons";
 import { ProjectTags } from "@/components/projects/labels";
 import { DashboardTour } from "@/components/projects/DashboardTour";
 import { ArchitectureFlow } from "@/components/projects/ArchitectureFlow";
+import { ArchitectureClouds } from "@/components/projects/ArchitectureClouds";
+
+// true: the frontend / backend / database / flow texts open as clouds along an animated route.
+// false: the original plain grid of texts.
+const ARCH_CLOUDS = true;
 import { dir, type Locale } from "@/lib/i18n/locales";
 import { altFor } from "@/lib/media";
 import { pageMetadata, siteUrl } from "@/lib/seo";
@@ -248,7 +253,23 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
                 }}
               />
             )}
-            {architecture && (
+            {architecture && ARCH_CLOUDS && (
+              <ArchitectureClouds
+                label={t("arch.flow")}
+                rtl={dir(locale) === "rtl"}
+                stops={(
+                  [
+                    ["flow", "CLIENT", architecture.flow],
+                    ["frontend", "FRONTEND", architecture.frontend],
+                    ["backend", "BACKEND", architecture.backend],
+                    ["database", "DATABASE", architecture.database],
+                  ] as const
+                )
+                  .filter(([, , text]) => text)
+                  .map(([key, kind, text]) => ({ key, station: t(`arch.kinds.${kind}`), title: t(`arch.${key}`), text: text as string }))}
+              />
+            )}
+            {architecture && !ARCH_CLOUDS && (
               <dl className="grid gap-x-12 gap-y-10 md:grid-cols-2">
                 {(
                     [

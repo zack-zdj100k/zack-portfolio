@@ -28,7 +28,9 @@
   "footer": {
     "siteLinks": "Link del sito",
     "startProject": "Facciamo crescere la tua attività, o costruiamola",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "backToTop": "Torna su",
+    "sound": "Suoni"
   },
   "home": {
     "metaDescription": "Ingegnere del software: siti web, app e software desktop per aziende, piccole imprese, startup e persone con un'idea di progetto. Guarda i progetti, i servizi e i prezzi, poi parliamo del tuo progetto.",

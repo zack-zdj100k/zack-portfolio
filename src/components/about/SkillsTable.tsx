@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { stackIcon, stackSymbol } from "@/lib/stack";
 import { tint } from "./skill-tints";
+import { playTile } from "@/lib/sfx";
 
 /** family = index of the skill's first group (its colour); families = every group it is in. */
 type Element = { n: number; name: string; symbol: string; family: number; families: number[] };
@@ -37,6 +38,34 @@ export function SkillsTable({
   }, [groups]);
   const [family, setFamily] = useState<number | null>(null);
   const [active, setActive] = useState<Element | null>(elements[0] ?? null);
+  const grid = useRef<HTMLUListElement>(null);
+  const current = useRef(active?.n);
+  const pick = (el: Element) => {
+    if (current.current !== el.n) playTile(el.n - 1, el.family);
+    current.current = el.n;
+    setActive(el);
+  };
+
+  // Touch screens have no hover: each row of tiles crossing the middle of the screen plays its note.
+  useEffect(() => {
+    const ul = grid.current;
+    if (!ul || !window.matchMedia("(hover: none)").matches) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const n = Number((e.target as HTMLElement).dataset.n);
+          const el = elements.find((x) => x.n === n);
+          if (el) pick(el);
+          break;
+        }
+      },
+      { rootMargin: "-50% 0px -50% 0px" },
+    );
+    ul.querySelectorAll("button[data-n]").forEach((b) => io.observe(b));
+    return () => io.disconnect();
+  }, [elements]);
+
   if (elements.length === 0) return null;
   const shown = active ?? elements[0];
   const icon = stackIcon(shown.name);
@@ -65,7 +94,7 @@ export function SkillsTable({
           ))}
         </div>
 
-        <ul className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(78px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(92px,1fr))]">
+        <ul ref={grid} className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(78px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(92px,1fr))]">
           {elements.map((el) => {
             const dim = family !== null && !el.families.includes(family);
             // A lit tile takes the picked family's colour (a skill can be in several families).
@@ -74,9 +103,10 @@ export function SkillsTable({
               <li key={el.n}>
                 <button
                   type="button"
-                  onMouseEnter={() => setActive(el)}
-                  onFocus={() => setActive(el)}
-                  onClick={() => setActive(el)}
+                  data-n={el.n}
+                  onMouseEnter={() => pick(el)}
+                  onFocus={() => pick(el)}
+                  onClick={() => pick(el)}
                   aria-label={`${el.name}, ${el.families.map(familyLabel).join(", ")}`}
                   className={`group relative flex aspect-square w-full flex-col justify-between rounded-xl p-2.5 text-start transition-[opacity,transform] duration-300 hover:-translate-y-0.5 ${style.tile} ${style.text} ${
                     dim ? "opacity-20" : "opacity-100"

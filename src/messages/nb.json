@@ -28,7 +28,9 @@
   "footer": {
     "siteLinks": "Lenker på siden",
     "startProject": "La oss skalere bedriften din, eller bygge den",
-    "privacy": "Personvern"
+    "privacy": "Personvern",
+    "backToTop": "Til toppen",
+    "sound": "Lyder"
   },
   "home": {
     "metaDescription": "Programvareutvikler som lager nettsider, apper og skrivebordsprogrammer for bedrifter, småbedrifter, oppstartsselskaper og folk med en prosjektidé. Se prosjektene, tjenestene og prisene, og la oss snakke om prosjektet ditt.",

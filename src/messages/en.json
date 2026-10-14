@@ -28,7 +28,9 @@
   "footer": {
     "siteLinks": "Site links",
     "startProject": "Let's scale your business, or build one",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "backToTop": "Back to top",
+    "sound": "Sounds"
   },
   "home": {
     "metaDescription": "Software engineer building websites, apps and desktop software for companies, small businesses, startups and people with a project idea. See the projects, services and prices, then discuss your project.",

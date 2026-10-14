@@ -28,7 +28,9 @@
   "footer": {
     "siteLinks": "Site bağlantıları",
     "startProject": "İşinizi büyütelim ya da sıfırdan kuralım",
-    "privacy": "Gizlilik"
+    "privacy": "Gizlilik",
+    "backToTop": "Başa dön",
+    "sound": "Sesler"
   },
   "home": {
     "metaDescription": "Şirketler, küçük işletmeler, girişimler ve proje fikri olan kişiler için web siteleri, uygulamalar ve masaüstü yazılımlar geliştiren yazılım mühendisi. Projeleri, hizmetleri ve fiyatları görün, sonra projenizi konuşalım.",

@@ -28,7 +28,9 @@
   "footer": {
     "siteLinks": "Liens du site",
     "startProject": "Développons votre entreprise, ou créons-la",
-    "privacy": "Confidentialité"
+    "privacy": "Confidentialité",
+    "backToTop": "Retour en haut",
+    "sound": "Sons"
   },
   "home": {
     "metaDescription": "Ingénieur logiciel : sites web, applications et logiciels de bureau pour les entreprises, les petites entreprises, les startups et les porteurs de projet. Découvrez les projets, les services et les prix, puis parlons de votre projet.",

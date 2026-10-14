@@ -5,14 +5,15 @@ import { useReduceMotion } from "@/components/ui/motion";
 import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import type { ShowcaseFeature } from "@/lib/admin-showcase";
 import { MockScreen } from "./MockScreens";
+import { GlassStack } from "./GlassStack";
 import { layerClass } from "@/components/ui/layers";
 
 type Item = { key: ShowcaseFeature; title: string; body: string };
 
 /**
  * Public preview of the admin dashboard (a demo, not the real one). Wide screens: the feature list
- * scrolls while a sticky Mac-style window shows the active feature's demo screen. Phones, and
- * anyone who prefers reduced motion: a plain step-by-step list, each feature with its own screen.
+ * scrolls while a sticky Mac-style window shows the active feature's demo screen. Phones and
+ * tablets: a deck of stacked glass cards. Reduced motion: a plain list, each feature with its screen.
  */
 export function AdminShowcase({ items, labels }: { items: Item[]; labels: { demo: string; address: string; screenOf: string } }) {
   const reduce = useReduceMotion();
@@ -38,7 +39,13 @@ export function AdminShowcase({ items, labels }: { items: Item[]; labels: { demo
   const stacked = reduce;
 
   return (
-    <div className={stacked ? "" : "lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14"}>
+    <>
+      {!stacked && (
+        <div className="lg:hidden">
+          <GlassStack items={items} labels={labels} />
+        </div>
+      )}
+      <div className={stacked ? "" : "max-lg:hidden lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14"}>
       <ol className="flex flex-col gap-12 lg:gap-0">
         {items.map((item, i) => {
           const on = !stacked && i === active;
@@ -101,5 +108,6 @@ export function AdminShowcase({ items, labels }: { items: Item[]; labels: { demo
         </div>
       )}
     </div>
+    </>
   );
 }

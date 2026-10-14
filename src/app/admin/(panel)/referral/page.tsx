@@ -5,6 +5,7 @@ import {
   bulkUpdateOfferCountries,
   createOffer,
   deleteOffer,
+  publishOffer,
   removeOfferCountry,
   saveOffer,
   saveOfferCountry,
@@ -103,6 +104,25 @@ export default async function ReferralOffersAdmin({ searchParams }: PageProps<"/
               </div>
             </form>
 
+            {(() => {
+              // Say plainly why visitors can't see this offer yet, with the one action that fixes it.
+              const missingText = !o.translations.some((t) => t.payoutConditions.trim()) || !o.translations.some((t) => t.terms.trim());
+              if (o.status === "PUBLISHED" && !missingText) return null;
+              return (
+                <form action={publishOffer} className="mt-6 flex flex-wrap items-center gap-3 rounded-xl border border-amber-300/40 bg-amber-300/10 px-4 py-3 text-sm text-mist/90">
+                  <input type="hidden" name="id" value={o.id} />
+                  <input type="hidden" name="locale" value={locale} />
+                  <span className="min-w-0 flex-1">
+                    {o.status === "DRAFT"
+                      ? `Not visible on the site: this offer is a draft, so none of its ${o.countries.length} countr${o.countries.length === 1 ? "y is" : "ies are"} shown to visitors.`
+                      : "Visitors see this offer without payout conditions or terms."}
+                    {missingText && " Write the payout conditions and terms below (any language, English is best) and save the offer first."}
+                  </span>
+                  {o.status === "DRAFT" && !missingText && <SubmitButton>Publish offer and its countries</SubmitButton>}
+                </form>
+              );
+            })()}
+
             <div className="mt-8 border-t border-line pt-6">
               <h3 className="mb-1 font-bold text-mist">Eligible countries</h3>
               <p className="mb-4 text-sm text-mist/60">
@@ -110,7 +130,8 @@ export default async function ReferralOffersAdmin({ searchParams }: PageProps<"/
               </p>
               {(() => {
                 const drafts = o.countries.filter((c) => c.status === "DRAFT");
-                if (drafts.length === 0) return null;
+                // While the offer itself is a draft, the banner above publishes everything at once.
+                if (drafts.length === 0 || o.status === "DRAFT") return null;
                 return (
                   <form action={bulkUpdateOfferCountries} className="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-amber-300/30 bg-amber-300/5 px-4 py-3 text-sm text-mist/85">
                     <input type="hidden" name="offerId" value={o.id} />
@@ -141,7 +162,11 @@ export default async function ReferralOffersAdmin({ searchParams }: PageProps<"/
                             <span className="text-mist">{formatMoney(Number(c.rewardMinor), c.currency, "en")}</span>
                             <span className="text-mist/60">{c.categories.length ? c.categories.map((x) => x.toLowerCase()).join(", ") : "all categories"}</span>
                             {!c.available && <Badge tone="warn">Unavailable</Badge>}
-                            <StatusBadge status={c.status} />
+                            {o.status === "PUBLISHED" && c.status === "PUBLISHED" && c.available ? (
+                              <Badge tone="ok">Live</Badge>
+                            ) : (
+                              <Badge tone="warn">{o.status === "DRAFT" ? "Hidden: offer is a draft" : c.status === "DRAFT" ? "Hidden: draft" : "Hidden: paused"}</Badge>
+                            )}
                             <span className="text-xs text-mist/50">{c._count.referrals} referral(s)</span>
                           </summary>
                           <form action={saveOfferCountry} className="grid gap-4 border-t border-line p-4 md:grid-cols-4">

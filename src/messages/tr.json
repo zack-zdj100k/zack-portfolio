@@ -302,6 +302,7 @@
     "whenEarned": "Ödül ne zaman kazanılır",
     "terms": "Koşullar",
     "noOffer": "Şu anda bu ülke için tavsiye teklifi yok. Yine de iletişim sayfasından bir işletme tanıtabilirsiniz.",
+    "offeredIn": "Teklif şu ülkelerde geçerli:",
     "pending": "Tavsiye teklifi netleştiriliyor ve yakında burada görünecek. Yine de iletişim sayfasından bir işletme tanıtabilirsiniz.",
     "notGuaranteed": "Tavsiye göndermek ödülü garanti etmez. Ödül yalnızca yukarıdaki koşullar sağlandığında hak edilir.",
     "formTitle": "Bir işletme tavsiye edin",

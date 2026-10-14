@@ -45,6 +45,8 @@ export function ReferralExperience({
   const [country, setCountry] = useState(countries.some((c) => c.code === defaultCountry) ? defaultCountry! : "");
   // Only the offers configured for this exact country; there is no "everyone else" fallback.
   const applicable = useMemo(() => (country ? offers.filter((o) => o.country === country) : []), [country, offers]);
+  // Countries that do have an offer, offered as shortcuts when the picked one has none.
+  const offered = useMemo(() => countries.filter((c) => offers.some((o) => o.country === c.code)), [countries, offers]);
   const covered = useMemo(
     () => (applicable.some((o) => o.categories.length === 0) ? CATEGORIES : CATEGORIES.filter((c) => applicable.some((o) => o.categories.includes(c)))),
     [applicable],
@@ -76,12 +78,32 @@ export function ReferralExperience({
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               {applicable.length === 0 ? (
-                <p className="rounded-[28px] border border-line bg-ink-2 p-8 text-lg text-mist/80">
-                  {t("noOffer")}{" "}
-                  <Link href="/contact" className="text-mist underline decoration-ice/50 underline-offset-4">
-                    {tNav("contact")}
-                  </Link>
-                </p>
+                <div className="flex flex-col gap-5 rounded-[28px] border border-line bg-ink-2 p-8">
+                  <p className="text-lg text-mist/80">
+                    {t("noOffer")}{" "}
+                    <Link href="/contact" className="text-mist underline decoration-ice/50 underline-offset-4">
+                      {tNav("contact")}
+                    </Link>
+                  </p>
+                  {offered.length > 0 && (
+                    <div className="flex flex-col gap-3 border-t border-line pt-5">
+                      <p className="text-sm uppercase tracking-widest text-mist/55">{t("offeredIn")}</p>
+                      <ul className="flex flex-wrap gap-2">
+                        {offered.map((c) => (
+                          <li key={c.code}>
+                            <button
+                              type="button"
+                              onClick={() => setCountry(c.code)}
+                              className="rounded-full border border-line px-4 py-2 text-sm text-mist/85 transition-colors hover:border-ice/60 hover:text-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ice"
+                            >
+                              {c.name}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <div className="grid gap-4">
                   {applicable.map((o) => (

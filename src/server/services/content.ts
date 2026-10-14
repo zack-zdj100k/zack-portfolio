@@ -218,7 +218,11 @@ export const getOffers = cache(async (locale: Locale) => {
     include: { translations: true, offer: { include: { translations: true } } },
   });
   return rows.map((c) => {
-    const text = (field: "eligibility" | "payoutConditions" | "terms") => pickField(c.translations, locale, field) ?? pickField(c.offer.translations, locale, field) ?? "";
+    // Along the language fallback chain first, then any language the owner wrote it in.
+    const any = (rows: { eligibility: string | null; payoutConditions: string | null; terms: string | null }[], field: "eligibility" | "payoutConditions" | "terms") =>
+      rows.map((r) => r[field]).find((v) => v?.trim()) ?? null;
+    const text = (field: "eligibility" | "payoutConditions" | "terms") =>
+      pickField(c.translations, locale, field) ?? pickField(c.offer.translations, locale, field) ?? any(c.translations, field) ?? any(c.offer.translations, field) ?? "";
     return {
       id: c.id,
       status: c.status === "PUBLISHED" && c.offer.status === "PUBLISHED" ? ("PUBLISHED" as const) : ("DRAFT" as const),

@@ -45,15 +45,18 @@ export async function PricingBlock({
         : markets[0];
   const marketLabel = (m: string) => (m === "*" ? t("marketOther") : countryName(m, locale));
 
+  // A package priced only for some countries is offered only there (or everywhere once it has a "*"
+  // price). A package with no price at all is shown everywhere as "ask for a quote".
   const cardsFor = (market: string): (CardPackage & { group: Group })[] =>
-    packages.map((p) => {
+    packages.flatMap((p) => {
       const price = p.prices.find((x) => x.market === market) ?? p.prices.find((x) => x.market === "*") ?? null;
+      if (!price && p.prices.length > 0) return [];
       const delivery = p.deliveryWeeksMin
         ? p.deliveryWeeksMax && p.deliveryWeeksMax !== p.deliveryWeeksMin
           ? t("deliveryRange", { min: p.deliveryWeeksMin, max: p.deliveryWeeksMax })
           : t("deliveryWeeks", { min: p.deliveryWeeksMin })
         : null;
-      return {
+      return [{
         id: p.id,
         group: p.category ?? "CUSTOM",
         name: p.t?.name ?? "",
@@ -64,7 +67,7 @@ export async function PricingBlock({
         addOns: p.t?.addOns ?? [],
         delivery,
         price: price ? { currency: price.currency, min: price.min, max: price.max, step: price.step } : null,
-      };
+      }];
     });
 
   const labels = {

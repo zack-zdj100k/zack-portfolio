@@ -95,7 +95,7 @@ const EN = {
       weeks: [4, 6],
     },
     {
-      category: null,
+      category: "APP",
       name: "Custom platform or app",
       description: "Marketplaces, multi-user platforms, apps and desktop software.",
       features: ["Custom features", "User accounts & roles", "Admin dashboard", "6 months domain + hosting"],

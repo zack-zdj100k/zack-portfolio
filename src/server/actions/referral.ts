@@ -20,6 +20,18 @@ function countries(fd: FormData) {
     .filter((c) => (COUNTRY_CODES as readonly string[]).includes(c));
 }
 
+type Texts = { payoutConditions: string | null; terms: string | null };
+const filled = (rows: Texts[]) => rows.some((r) => r.payoutConditions?.trim()) && rows.some((r) => r.terms?.trim());
+
+/**
+ * An offer can go live once its payout conditions and terms are written in at least one language;
+ * visitors reading another language fall back to it. `pending` is text being saved right now.
+ */
+async function offerHasTerms(offerId: string, pending?: { locale: string } & Texts) {
+  const rows = await prisma.referralOfferTranslation.findMany({ where: { offerId, ...(pending ? { locale: { not: pending.locale } } : {}) } });
+  return filled(pending ? [...rows, pending] : rows);
+}
+
 export async function createOffer(fd: FormData) {
   await adminAction(fd, { back: back(fd), entity: "ReferralOffer", action: "create", success: "Offer added as a draft. Now add its countries." }, async () => {
     const name = str(fd, "name", 120);
@@ -45,8 +57,7 @@ export async function saveOffer(fd: FormData) {
     const status = oneOf(fd, "status", ["DRAFT", "PUBLISHED"] as const, "DRAFT");
     const text = { eligibility: str(fd, "eligibility", 3000), payoutConditions: str(fd, "payoutConditions", 3000), terms: str(fd, "terms", 5000) };
     if (status === "PUBLISHED") {
-      const en = locale === "en" ? text : await prisma.referralOfferTranslation.findUnique({ where: { offerId_locale: { offerId: id, locale: "en" } } });
-      if (!en?.payoutConditions || !en.terms) throw new ActionError("Write the English payout conditions and terms before publishing.");
+      if (!(await offerHasTerms(id, { locale, ...text }))) throw new ActionError("Write the payout conditions and terms before publishing.");
     }
     const data = { ...text, reviewed: bool(fd, "reviewed") };
     await prisma.$transaction([
@@ -54,6 +65,20 @@ export async function saveOffer(fd: FormData) {
       prisma.referralOfferTranslation.upsert({ where: { offerId_locale: { offerId: id, locale } }, update: data, create: { offerId: id, locale, ...data } }),
     ]);
     if (status === "PUBLISHED") await assertNoCountryClash(id);
+    return id;
+  });
+}
+
+/** Publishes an offer and, in one go, its draft countries, so the countries just added go live. */
+export async function publishOffer(fd: FormData) {
+  await adminAction(fd, { back: back(fd), entity: "ReferralOffer", action: "publish", success: "Offer published: its countries are now live." }, async () => {
+    const id = str(fd, "id", 60);
+    if (!(await offerHasTerms(id))) throw new ActionError("Write the offer's payout conditions and terms, save the offer, then publish.");
+    await prisma.$transaction([
+      prisma.referralOffer.update({ where: { id }, data: { status: "PUBLISHED" } }),
+      prisma.referralOfferCountry.updateMany({ where: { offerId: id, status: "DRAFT" }, data: { status: "PUBLISHED" } }),
+    ]);
+    await assertNoCountryClash(id);
     return id;
   });
 }
@@ -89,10 +114,9 @@ export async function addOfferCountries(fd: FormData) {
     });
     if (created.count === 0) throw new ActionError("Those countries are already in this offer.");
     if (status === "PUBLISHED") {
-      const en = await prisma.referralOfferTranslation.findUnique({ where: { offerId_locale: { offerId, locale: "en" } } });
-      if (!en?.payoutConditions || !en.terms) {
+      if (!(await offerHasTerms(offerId))) {
         await prisma.referralOfferCountry.updateMany({ where: { offerId, country: { in: picked } }, data: { status: "DRAFT" } });
-        throw new ActionError("Added as drafts: write the offer's English payout conditions and terms, then publish the countries.");
+        throw new ActionError("Added as drafts: write the offer's payout conditions and terms, then publish the countries.");
       }
       await assertNoCountryClash(offerId);
     }
@@ -126,11 +150,11 @@ export async function saveOfferCountry(fd: FormData) {
       create: { offerCountryId: id, locale, ...data },
     });
     if (status === "PUBLISHED") {
-      const offerEn = await prisma.referralOfferTranslation.findUnique({ where: { offerId_locale: { offerId: row.offerId, locale: "en" } } });
-      const ownEn = await prisma.referralOfferCountryTranslation.findUnique({ where: { offerCountryId_locale: { offerCountryId: id, locale: "en" } } });
-      if (!(ownEn?.payoutConditions || offerEn?.payoutConditions) || !(ownEn?.terms || offerEn?.terms)) {
+      const offerRows = await prisma.referralOfferTranslation.findMany({ where: { offerId: row.offerId } });
+      const ownRows = await prisma.referralOfferCountryTranslation.findMany({ where: { offerCountryId: id } });
+      if (!filled([...offerRows, ...ownRows])) {
         await prisma.referralOfferCountry.update({ where: { id }, data: { status: "DRAFT" } });
-        throw new ActionError("Saved as a draft: write the offer's English payout conditions and terms before publishing this country.");
+        throw new ActionError("Saved as a draft: write the payout conditions and terms before publishing this country.");
       }
       await assertNoCountryClash(row.offerId);
     }
@@ -160,10 +184,9 @@ export async function bulkUpdateOfferCountries(fd: FormData) {
       },
     });
     if (status === "PUBLISHED") {
-      const en = await prisma.referralOfferTranslation.findUnique({ where: { offerId_locale: { offerId, locale: "en" } } });
-      if (!en?.payoutConditions || !en.terms) {
+      if (!(await offerHasTerms(offerId))) {
         await prisma.referralOfferCountry.updateMany({ where: { offerId, country: { in: picked } }, data: { status: "DRAFT" } });
-        throw new ActionError("Kept as drafts: write the offer's English payout conditions and terms before publishing countries.");
+        throw new ActionError("Kept as drafts: write the offer's payout conditions and terms before publishing countries.");
       }
       await assertNoCountryClash(offerId);
     }

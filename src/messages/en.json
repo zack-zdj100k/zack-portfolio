@@ -302,6 +302,7 @@
     "whenEarned": "When the reward is earned",
     "terms": "Terms",
     "noOffer": "There's no referral offer for this country at the moment. You can still introduce a business through the contact page.",
+    "offeredIn": "The offer is available in:",
     "pending": "The referral offer is being finalised and will appear here soon. You can still introduce a business through the contact page.",
     "notGuaranteed": "Submitting a referral doesn't guarantee a reward. A reward is due only when the conditions above are met.",
     "formTitle": "Refer a business",

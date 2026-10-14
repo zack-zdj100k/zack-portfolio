@@ -302,6 +302,7 @@
     "whenEarned": "Quand la récompense est acquise",
     "terms": "Conditions",
     "noOffer": "Il n'y a pas d'offre de parrainage pour ce pays pour le moment. Vous pouvez quand même présenter une entreprise via la page contact.",
+    "offeredIn": "L’offre est disponible en :",
     "pending": "L'offre de parrainage est en cours de finalisation et apparaîtra ici bientôt. Vous pouvez quand même présenter une entreprise via la page contact.",
     "notGuaranteed": "Envoyer une recommandation ne garantit pas de récompense. Elle n'est due que lorsque les conditions ci-dessus sont remplies.",
     "formTitle": "Recommander une entreprise",

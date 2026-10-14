@@ -5,6 +5,7 @@ import { CATEGORY_OPTIONS, Card, Checkbox, Flash, Input, LocaleTabs, PageTitle, 
 import { SubmitButton } from "@/components/admin/buttons";
 import { aggregateStates, editLocale, moneyInput } from "@/components/admin/params";
 import { dir, localeNames } from "@/lib/i18n/locales";
+import { countryName } from "@/lib/countries";
 import { formatMoney } from "@/lib/money";
 
 export const metadata: Metadata = { title: "Services & pricing" };
@@ -78,7 +79,7 @@ export default async function ServicesAdmin({ searchParams }: PageProps<"/admin/
 
       <Card
         title="Pricing packages"
-        description='Prices are set per country ("DZ" for Algeria, "*" for every other country). The minimum is the lowest price a client can choose on the budget slider; the maximum is the top of the slider; the step is how much each slider notch adds. Leave the maximum empty for a "from" price (no slider for that package).'
+        description='Prices are set per country ("DZ" for Algeria, "*" for every other country). A package only appears in the countries it has a price for (or everywhere, once it has a "*" price). To give several countries the same price, type their codes together, e.g. "FR, BE, CH". The minimum is the lowest price a client can choose on the budget slider; the maximum is the top of the slider; the step is how much each slider notch adds. Leave the maximum empty for a "from" price (no slider for that package).'
       >
         <div className="flex flex-col gap-6">
           {packages.map((p) => {
@@ -139,7 +140,7 @@ export default async function ServicesAdmin({ searchParams }: PageProps<"/admin/
                   <ul className="mb-3 flex flex-col gap-2">
                     {p.prices.map((price) => (
                       <li key={price.id} className="flex flex-wrap items-center gap-3 text-sm">
-                        <span className="w-24 text-mist/60">{price.market === "*" ? "Other countries" : price.market}</span>
+                        <span className="w-44 truncate text-mist/60">{price.market === "*" ? "Other countries" : `${price.market} · ${countryName(price.market, "en")}`}</span>
                         <span className="text-mist">
                           {price.stepMinor !== null && <span className="me-2 text-mist/60">step {formatMoney(Number(price.stepMinor), price.currency, "en")}</span>}
                           {price.maxMinor === null
@@ -157,8 +158,16 @@ export default async function ServicesAdmin({ searchParams }: PageProps<"/admin/
                   </ul>
                   <form action={savePrice} className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:items-end">
                     <input type="hidden" name="packageId" value={p.id} />
-                    <Input label="Country" name="market" defaultValue={p.prices[0]?.market ?? "DZ"} maxLength={2} hint="DZ, FR... or *" />
-                    <Input label="Currency" name="currency" defaultValue={p.prices[0]?.currency ?? "DZD"} maxLength={3} />
+                    <Input
+                      label="Countries"
+                      name="market"
+                      defaultValue={p.prices.length ? "" : "DZ"}
+                      required
+                      maxLength={1000}
+                      placeholder="FR, BE, CH"
+                      hint="One or several codes, or *. Existing ones are updated."
+                    />
+                    <Input label="Currency" name="currency" defaultValue={p.prices[0]?.currency ?? "DZD"} required maxLength={3} hint="Of those countries: EUR for FR, DZD for DZ" />
                     <Input label="Minimum price" name="min" defaultValue={moneyInput(p.prices[0]?.minMinor)} required placeholder="40000" hint="Lowest the client can pick" />
                     <Input label="Maximum (optional)" name="max" defaultValue={moneyInput(p.prices[0]?.maxMinor)} placeholder="70000" hint="Top of the slider" />
                     <Input label="Slider step (optional)" name="step" defaultValue={moneyInput(p.prices[0]?.stepMinor)} placeholder="5000" hint="Empty = 20 steps" />

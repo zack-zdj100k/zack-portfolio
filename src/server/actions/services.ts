@@ -1,7 +1,8 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { ActionError, bool, currencyCode, int, lines, localeOf, marketCode, moneyMinor, oneOf, optStr, str } from "./helpers";
+import { COUNTRY_CODES } from "@/lib/countries";
+import { ActionError, bool, currencyCode, int, lines, localeOf, moneyMinor, oneOf, optStr, str } from "./helpers";
 import { adminAction } from "./run";
 
 const CATEGORIES = ["WEBSITE", "APP", "SOFTWARE"] as const;
@@ -120,10 +121,27 @@ export async function savePackage(fd: FormData) {
   });
 }
 
+/** "FR, BE ch" → ["FR", "BE", "CH"]; "*" stands for every other country. */
+function markets(fd: FormData): string[] {
+  const codes = [...new Set(str(fd, "market", 1000).toUpperCase().split(/[\s,;]+/).filter(Boolean))];
+  if (codes.length === 0) throw new ActionError('Enter at least one country code (DZ, FR...) or "*" for all other countries.');
+  const unknown = codes.filter((c) => c !== "*" && !(COUNTRY_CODES as readonly string[]).includes(c));
+  if (unknown.length) throw new ActionError(`Not a country code: ${unknown.join(", ")}. Use 2-letter codes like DZ, FR, BE, or "*".`);
+  return codes;
+}
+
 export async function savePrice(fd: FormData) {
-  await adminAction(fd, { back: back(), entity: "PackagePrice", action: "save", success: "Price saved." }, async () => {
+  const list = (() => {
+    try {
+      return markets(fd);
+    } catch {
+      return [];
+    }
+  })();
+  const success = list.length > 1 ? `Same price saved for ${list.map((m) => (m === "*" ? "other countries" : m)).join(", ")}.` : "Price saved.";
+  await adminAction(fd, { back: back(), entity: "PackagePrice", action: "save", success }, async () => {
     const packageId = str(fd, "packageId", 60);
-    const market = marketCode(fd, "market");
+    const picked = markets(fd);
     const currency = currencyCode(fd, "currency");
     const min = moneyMinor(fd, "min");
     const max = moneyMinor(fd, "max");
@@ -132,11 +150,12 @@ export async function savePrice(fd: FormData) {
     if (max !== null && max < min) throw new ActionError("The maximum can't be lower than the minimum.");
     if (step !== null && (step <= BigInt(0) || (max !== null && step > max - min)))
       throw new ActionError("The slider step must be above 0 and no bigger than the gap between minimum and maximum.");
-    await prisma.packagePrice.upsert({
-      where: { packageId_market: { packageId, market } },
-      update: { currency, minMinor: min, maxMinor: max, stepMinor: step },
-      create: { packageId, market, currency, minMinor: min, maxMinor: max, stepMinor: step },
-    });
+    const values = { currency, minMinor: min, maxMinor: max, stepMinor: step };
+    await prisma.$transaction(
+      picked.map((market) =>
+        prisma.packagePrice.upsert({ where: { packageId_market: { packageId, market } }, update: values, create: { packageId, market, ...values } }),
+      ),
+    );
     return packageId;
   });
 }

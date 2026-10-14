@@ -289,7 +289,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
               </dl>
             )}
             {roadmaps.length > 0 && (
-              <div className="flex flex-col gap-14 border-t border-line pt-12 md:gap-20 md:pt-16">
+              <div className="flex flex-col gap-10 border-t border-line pt-10 md:gap-14 md:pt-12">
                 <Reveal className="flex flex-col gap-3">
                   <h3 className="text-[clamp(1.6rem,3.5vw,2.6rem)] font-black uppercase leading-none text-mist">{t("arch.roadmap")}</h3>
                   <p className="max-w-2xl text-lg leading-relaxed text-mist/75">{t("arch.roadmapIntro")}</p>

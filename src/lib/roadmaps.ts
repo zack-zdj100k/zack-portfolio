@@ -18,7 +18,7 @@ const L = (en: string, fr: string, ar: string, it: string, tr: string, es: strin
   en, fr, ar, it, tr, es, "pt-BR": pt, ru, uk, nb, nl,
 });
 
-export type NodeKind = "actor" | "case" | "page" | "step" | "admin" | "note";
+export type NodeKind = "actor" | "case" | "page" | "step" | "admin" | "note" | "decision" | "db";
 type FlowNodeData = { id: string; label: Text; x: number; y: number; w: number; h?: number; kind?: NodeKind };
 type FlowEdgeData = {
   from: string;
@@ -34,7 +34,17 @@ type FlowEdgeData = {
   fx?: number;
   tx?: number;
 };
-type FlowData = { type: "flow"; width: number; height: number; group?: { label: Text; x: number; y: number; w: number; h: number }; nodes: FlowNodeData[]; edges: FlowEdgeData[] };
+type FlowData = {
+  type: "flow";
+  width: number;
+  height: number;
+  /** Dashed frames behind the boxes (a system boundary, or layers); `start` puts the name at the top-left. */
+  groups?: { label: Text; x: number; y: number; w: number; h: number; align?: "start" }[];
+  /** Many crossing connectors: draw them faintly so the one being traced stands out. */
+  dense?: boolean;
+  nodes: FlowNodeData[];
+  edges: FlowEdgeData[];
+};
 type SequenceData = {
   type: "sequence";
   participants: { id: string; label: Text; actor?: boolean }[];
@@ -74,7 +84,7 @@ const zodicUseCases: RoadmapData = {
     type: "flow",
     width: 1100,
     height: 690,
-    group: { label: "ZODIC CAR website", x: 330, y: 0, w: 770, h: 690 },
+    groups: [{ label: "ZODIC CAR website", x: 330, y: 0, w: 770, h: 690 }],
     nodes: [
       { id: "customer", kind: "actor", x: 0, y: 73, w: 210, h: 90, label: L("Customer / visitor", "Client / visiteur", "عميل / زائر", "Cliente / visitatore", "Müşteri / ziyaretçi", "Cliente / visitante", "Cliente / visitante", "Клиент / посетитель", "Клієнт / відвідувач", "Kunde / besøkende", "Klant / bezoeker") },
       { id: "browse", kind: "case", x: 370, y: 60, w: 270, label: L("Browse the vehicle catalog", "Parcourir le catalogue", "تصفّح كتالوج السيارات", "Sfogliare il catalogo", "Araç kataloğuna göz atmak", "Explorar el catálogo", "Navegar pelo catálogo", "Смотреть каталог", "Переглядати каталог", "Bla i bilkatalogen", "De catalogus bekijken") },
@@ -263,10 +273,164 @@ const kingOrderFlow: RoadmapData = {
   },
 };
 
-/** Per project slug. Boulboul Art Wall's roadmap is added when its diagram arrives. */
+// Boulboul layers: the four screens, the eight services behind them in one row, the data underneath.
+// Orders sits between Pricing and Email (the two it calls); each connector has its own lane.
+const BX = { custom: 20, cms: 176, products: 332, pricing: 488, orders: 684, email: 880, returns: 1036, auth: 1192 };
+const boulboulLayers: RoadmapData = {
+  key: "layers",
+  title: L("Three layers", "Trois couches", "ثلاث طبقات", "Tre livelli", "Üç katman", "Tres capas", "Três camadas", "Три слоя", "Три шари", "Tre lag", "Drie lagen"),
+  intro: L(
+    "The screens visitors and the admin use, the small services behind them, and where everything is stored. Each line is one part calling another.",
+    "Les écrans des visiteurs et de l'admin, les petits services derrière eux, et l'endroit où tout est stocké. Chaque ligne est un appel d'une partie à une autre.",
+    "الشاشات التي يستخدمها الزوار والمسؤول، والخدمات الصغيرة خلفها، ومكان تخزين كل شيء. كل خط هو جزء يستدعي جزءًا آخر.",
+    "Le schermate di visitatori e admin, i piccoli servizi dietro di esse e dove viene salvato tutto. Ogni linea è una parte che ne chiama un'altra.",
+    "Ziyaretçilerin ve yöneticinin kullandığı ekranlar, arkalarındaki küçük servisler ve her şeyin saklandığı yer. Her çizgi bir parçanın diğerini çağırmasıdır.",
+    "Las pantallas de visitantes y admin, los pequeños servicios detrás y dónde se guarda todo. Cada línea es una parte que llama a otra.",
+    "As telas de visitantes e admin, os pequenos serviços por trás delas e onde tudo é guardado. Cada linha é uma parte chamando outra.",
+    "Экраны посетителей и админа, небольшие сервисы за ними и место, где всё хранится. Каждая линия — вызов одной части другой.",
+    "Екрани відвідувачів і адміна, невеликі сервіси за ними та місце, де все зберігається. Кожна лінія — виклик однієї частини іншою.",
+    "Skjermene besøkende og admin bruker, de små tjenestene bak dem, og hvor alt lagres. Hver linje er én del som kaller en annen.",
+    "De schermen voor bezoekers en beheerder, de kleine services erachter en waar alles wordt opgeslagen. Elke lijn is een deel dat een ander aanroept.",
+  ),
+  diagram: {
+    type: "flow",
+    width: 1352,
+    height: 488,
+    dense: true,
+    groups: [
+      { align: "start", x: 0, y: 0, w: 1352, h: 116, label: L("Presentation · Next.js, React, Tailwind", "Présentation · Next.js, React, Tailwind", "العرض · Next.js, React, Tailwind", "Presentazione · Next.js, React, Tailwind", "Sunum · Next.js, React, Tailwind", "Presentación · Next.js, React, Tailwind", "Apresentação · Next.js, React, Tailwind", "Интерфейс · Next.js, React, Tailwind", "Інтерфейс · Next.js, React, Tailwind", "Presentasjon · Next.js, React, Tailwind", "Presentatie · Next.js, React, Tailwind") },
+      { align: "start", x: 0, y: 208, w: 1352, h: 120, label: L("Backend · Next.js route handlers", "Backend · route handlers Next.js", "الخادم · Next.js route handlers", "Backend · route handler Next.js", "Sunucu · Next.js route handlers", "Backend · route handlers de Next.js", "Backend · route handlers do Next.js", "Сервер · Next.js route handlers", "Сервер · Next.js route handlers", "Backend · Next.js route handlers", "Backend · Next.js route handlers") },
+      { align: "start", x: 0, y: 376, w: 1352, h: 112, label: L("Data", "Données", "البيانات", "Dati", "Veri", "Datos", "Dados", "Данные", "Дані", "Data", "Data") },
+    ],
+    nodes: [
+      { id: "store", kind: "page", x: 43, y: 44, w: 250, label: L("Public storefront", "Boutique publique", "واجهة المتجر", "Vetrina pubblica", "Mağaza vitrini", "Tienda pública", "Loja pública", "Витрина магазина", "Вітрина магазину", "Nettbutikk", "Openbare winkel") },
+      { id: "product", kind: "page", x: 355, y: 44, w: 250, label: L("Product page + pricing", "Fiche produit + prix", "صفحة المنتج + السعر", "Scheda prodotto + prezzo", "Ürün sayfası + fiyat", "Ficha de producto + precio", "Página do produto + preço", "Карточка товара + цена", "Картка товару + ціна", "Produktside + pris", "Productpagina + prijs") },
+      { id: "account", kind: "page", x: 735, y: 44, w: 250, label: L("Customer account", "Compte client", "حساب العميل", "Account cliente", "Müşteri hesabı", "Cuenta de cliente", "Conta do cliente", "Личный кабинет", "Особистий кабінет", "Kundekonto", "Klantaccount") },
+      { id: "admin", kind: "admin", x: 1059, y: 44, w: 250, label: L("Admin dashboard", "Tableau de bord admin", "لوحة الإدارة", "Dashboard admin", "Yönetim paneli", "Panel de administración", "Painel admin", "Админ-панель", "Адмін-панель", "Adminpanel", "Beheerdashboard") },
+      { id: "custom", kind: "step", x: BX.custom, y: 248, w: 140, h: 64, label: L("Custom design", "Sur mesure", "التصميم حسب الطلب", "Design su misura", "Özel tasarım", "Diseño a medida", "Design sob medida", "Свой дизайн", "Свій дизайн", "Spesialdesign", "Ontwerp op maat") },
+      { id: "cms", kind: "step", x: BX.cms, y: 248, w: 140, h: 64, label: L("CMS & media", "CMS et médias", "المحتوى والوسائط", "CMS e media", "CMS ve medya", "CMS y medios", "CMS e mídia", "CMS и медиа", "CMS і медіа", "CMS og medier", "CMS en media") },
+      { id: "products", kind: "step", x: BX.products, y: 248, w: 140, h: 64, label: L("Products & categories", "Produits et catégories", "المنتجات والأصناف", "Prodotti e categorie", "Ürün ve kategoriler", "Productos y categorías", "Produtos e categorias", "Товары и категории", "Товари й категорії", "Produkter og kategorier", "Producten en categorieën") },
+      { id: "pricing", kind: "step", x: BX.pricing, y: 248, w: 140, h: 64, label: L("Pricing", "Tarification", "التسعير", "Prezzi", "Fiyatlandırma", "Precios", "Preços", "Цены", "Ціни", "Prising", "Prijzen") },
+      { id: "orders", kind: "step", x: BX.orders, y: 248, w: 140, h: 64, label: L("Orders", "Commandes", "الطلبات", "Ordini", "Siparişler", "Pedidos", "Pedidos", "Заказы", "Замовлення", "Ordrer", "Bestellingen") },
+      { id: "email", kind: "step", x: BX.email, y: 248, w: 140, h: 64, label: L("Email", "E-mails", "البريد", "Email", "E-posta", "Email", "E-mail", "Почта", "Пошта", "E-post", "E-mail") },
+      { id: "returns", kind: "step", x: BX.returns, y: 248, w: 140, h: 64, label: L("Returns & exchanges", "Retours et échanges", "الإرجاع والاستبدال", "Resi e cambi", "İade ve değişim", "Devoluciones y cambios", "Devoluções e trocas", "Возвраты и обмены", "Повернення й обмін", "Retur og bytte", "Retour en ruil") },
+      { id: "auth", kind: "step", x: BX.auth, y: 248, w: 140, h: 64, label: L("Sign-in & roles", "Connexion et rôles", "الدخول والصلاحيات", "Accesso e ruoli", "Giriş ve roller", "Acceso y roles", "Login e permissões", "Вход и роли", "Вхід і ролі", "Innlogging og roller", "Inloggen en rollen") },
+      { id: "images", kind: "db", x: 43, y: 416, w: 250, label: L("Image & design storage", "Stockage images et designs", "تخزين الصور والتصاميم", "Archivio immagini e design", "Görsel ve tasarım deposu", "Imágenes y diseños", "Imagens e designs", "Хранилище изображений", "Сховище зображень", "Bilde- og designlager", "Beelden en ontwerpen") },
+      { id: "prisma", kind: "step", x: 574, y: 416, w: 360, label: "Prisma ORM" },
+      { id: "db", kind: "db", x: 1059, y: 416, w: 250, label: "PostgreSQL" },
+    ],
+    edges: [
+      { from: "store", to: "custom", at: 160 },
+      { from: "store", to: "cms", at: 160 },
+      { from: "store", to: "products", at: 140 },
+      { from: "product", to: "products", fx: 0.188 },
+      { from: "product", to: "pricing", at: 168 },
+      { from: "product", to: "orders", at: 152 },
+      { from: "account", to: "orders", at: 192 },
+      { from: "account", to: "returns", at: 176 },
+      { from: "account", to: "auth", at: 160 },
+      { from: "admin", to: "cms", at: 124 },
+      { from: "admin", to: "products", at: 136 },
+      { from: "admin", to: "orders", at: 148 },
+      { from: "admin", to: "auth", at: 192 },
+      { from: "orders", to: "pricing" },
+      { from: "orders", to: "email" },
+      { from: "custom", to: "images" },
+      { from: "cms", to: "images" },
+      { from: "products", to: "prisma", at: 352 },
+      { from: "pricing", to: "prisma", at: 336 },
+      { from: "orders", to: "prisma" },
+      { from: "returns", to: "prisma", at: 336 },
+      { from: "auth", to: "prisma", at: 352 },
+      { from: "email", to: "db", at: 324 },
+      { from: "prisma", to: "db" },
+    ],
+  },
+};
+
+// Boulboul sitemap: five sections under the home page. The order path turns at the price check
+// and runs along the bottom, so the graph stays wide rather than tall.
+const BC = [0, 254, 508, 762, 1016];
+const BR = [0, 116, 212, 324, 420, 540, 636];
+const boulboulSitemap: RoadmapData = {
+  key: "sitemap",
+  title: L("Sitemap and ordering", "Plan du site et commande", "خريطة الموقع والطلب", "Mappa del sito e ordine", "Site haritası ve sipariş", "Mapa del sitio y pedido", "Mapa do site e pedido", "Карта сайта и заказ", "Карта сайту й замовлення", "Nettstedskart og bestilling", "Sitemap en bestellen"),
+  intro: L(
+    "Every page of the shop, and what happens once a size is chosen: a priced size goes straight to checkout, any other size becomes a made-to-measure request.",
+    "Chaque page de la boutique, et ce qui se passe une fois la taille choisie : une taille avec prix va directement à la commande, toute autre devient une demande sur mesure.",
+    "كل صفحات المتجر، وما يحدث بعد اختيار المقاس: المقاس المسعّر يذهب مباشرة إلى الطلب، وأي مقاس آخر يصبح طلبًا حسب المقاس.",
+    "Ogni pagina del negozio e cosa succede dopo la scelta della misura: una misura con prezzo va dritta all'ordine, ogni altra diventa una richiesta su misura.",
+    "Mağazanın her sayfası ve ölçü seçildikten sonra olanlar: fiyatı olan ölçü doğrudan siparişe gider, diğerleri özel ölçü talebine dönüşür.",
+    "Cada página de la tienda y qué pasa al elegir una medida: una medida con precio va directa al pedido, cualquier otra se convierte en una solicitud a medida.",
+    "Cada página da loja e o que acontece depois de escolher a medida: uma medida com preço vai direto ao pedido, qualquer outra vira um pedido sob medida.",
+    "Все страницы магазина и что происходит после выбора размера: размер с ценой сразу ведёт к заказу, любой другой становится заявкой на заказ.",
+    "Усі сторінки магазину й що відбувається після вибору розміру: розмір із ціною веде одразу до замовлення, будь-який інший стає заявкою.",
+    "Alle sidene i butikken, og hva som skjer når en størrelse er valgt: en størrelse med pris går rett til bestilling, alle andre blir en forespørsel på mål.",
+    "Elke pagina van de winkel en wat er gebeurt na het kiezen van een maat: een maat met prijs gaat direct naar bestellen, elke andere wordt een aanvraag op maat.",
+  ),
+  diagram: {
+    type: "flow",
+    width: 1206,
+    height: 692,
+    nodes: [
+      { id: "home", kind: "page", x: BC[2], y: BR[0], w: 190, label: L("Home", "Accueil", "الرئيسية", "Home", "Ana sayfa", "Inicio", "Início", "Главная", "Головна", "Forside", "Home") },
+      { id: "catalog", kind: "page", x: BC[0], y: BR[1], w: 190, label: L("Wall art catalog", "Catalogue wall art", "كتالوج اللوحات", "Catalogo wall art", "Duvar sanatı kataloğu", "Catálogo wall art", "Catálogo wall art", "Каталог панно", "Каталог панно", "Veggkunstkatalog", "Wall-art-catalogus") },
+      { id: "custom", kind: "page", x: BC[1], y: BR[1], w: 190, label: L("Made to measure", "Sur mesure", "حسب الطلب", "Su misura", "Ölçüye özel", "A medida", "Sob medida", "На заказ", "На замовлення", "Skreddersydd", "Op maat") },
+      { id: "about", kind: "page", x: BC[2], y: BR[1], w: 190, label: L("About us", "Qui sommes-nous ?", "من نحن", "Chi siamo", "Hakkımızda", "Quiénes somos", "Quem somos", "О нас", "Про нас", "Om oss", "Over ons") },
+      { id: "why", kind: "page", x: BC[3], y: BR[1], w: 190, label: L("Why Boulboul", "Pourquoi Boulboul ?", "لماذا Boulboul", "Perché Boulboul", "Neden Boulboul", "Por qué Boulboul", "Por que Boulboul", "Почему Boulboul", "Чому Boulboul", "Hvorfor Boulboul", "Waarom Boulboul") },
+      { id: "account", kind: "page", x: BC[4], y: BR[1], w: 190, label: L("Customer account", "Compte client", "حساب العميل", "Account cliente", "Müşteri hesabı", "Cuenta de cliente", "Conta do cliente", "Личный кабинет", "Особистий кабінет", "Kundekonto", "Klantaccount") },
+      { id: "product", kind: "page", x: BC[0], y: BR[2], w: 190, label: L("Product page", "Fiche produit", "صفحة المنتج", "Scheda prodotto", "Ürün sayfası", "Ficha de producto", "Página do produto", "Карточка товара", "Картка товару", "Produktside", "Productpagina") },
+      { id: "upload", kind: "step", x: BC[1], y: BR[2], w: 190, h: 72, label: L("Upload design, size and description", "Upload design + dimensions + description", "رفع التصميم والمقاسات والوصف", "Carica design, misure e descrizione", "Tasarım, ölçü ve açıklama yükle", "Subir diseño, medidas y descripción", "Enviar design, medidas e descrição", "Дизайн, размеры и описание", "Дизайн, розміри й опис", "Last opp design, mål og beskrivelse", "Ontwerp, maten en beschrijving") },
+      { id: "story", kind: "page", x: BC[2], y: BR[2], w: 190, h: 72, label: L("Partners, story and socials", "Partenaires, histoire et réseaux", "الشركاء والقصة والشبكات", "Partner, storia e social", "Ortaklar, hikâye ve sosyal medya", "Socios, historia y redes", "Parceiros, história e redes", "Партнёры, история и соцсети", "Партнери, історія й соцмережі", "Partnere, historie og sosiale medier", "Partners, verhaal en socials") },
+      { id: "quality", kind: "page", x: BC[3], y: BR[2], w: 190, h: 72, label: L("Quality, materials and real guarantees", "Qualité, matériaux et garanties réelles", "الجودة والمواد وضمانات حقيقية", "Qualità, materiali e garanzie reali", "Kalite, malzeme ve gerçek garanti", "Calidad, materiales y garantías reales", "Qualidade, materiais e garantias reais", "Качество, материалы и гарантии", "Якість, матеріали й гарантії", "Kvalitet, materialer og ekte garantier", "Kwaliteit, materialen en echte garanties") },
+      { id: "login", kind: "page", x: BC[4], y: BR[2], w: 190, label: L("Log in / Register", "Connexion / Inscription", "الدخول / التسجيل", "Accedi / Registrati", "Giriş / Kayıt", "Entrar / Registrarse", "Entrar / Cadastrar", "Вход / Регистрация", "Вхід / Реєстрація", "Logg inn / Registrer", "Inloggen / Registreren") },
+      { id: "size", kind: "step", x: BC[0], y: BR[3], w: 190, label: L("Choose width and height", "Choisir longueur et hauteur", "اختيار الطول والارتفاع", "Scegli larghezza e altezza", "En ve boy seç", "Elegir largo y alto", "Escolher largura e altura", "Выбрать длину и высоту", "Обрати довжину й висоту", "Velg lengde og høyde", "Lengte en hoogte kiezen") },
+      { id: "request", kind: "step", x: BC[1], y: BR[3], w: 190, label: L("Custom request", "Demande personnalisée", "طلب مخصص", "Richiesta personalizzata", "Özel talep", "Solicitud personalizada", "Pedido personalizado", "Индивидуальная заявка", "Індивідуальна заявка", "Egen forespørsel", "Aanvraag op maat") },
+      { id: "study", kind: "admin", x: BC[2], y: BR[3], w: 190, label: L("Admin reviews it", "L'admin étudie la demande", "يدرسه المسؤول", "L'admin la valuta", "Yönetici inceler", "El admin la estudia", "O admin analisa", "Админ изучает", "Адмін вивчає", "Admin vurderer den", "Beheerder bekijkt het") },
+      { id: "profile", kind: "page", x: BC[4], y: BR[3], w: 190, label: L("Profile and orders", "Profil et commandes", "الملف والطلبات", "Profilo e ordini", "Profil ve siparişler", "Perfil y pedidos", "Perfil e pedidos", "Профиль и заказы", "Профіль і замовлення", "Profil og ordrer", "Profiel en bestellingen") },
+      { id: "priced", kind: "decision", x: BC[0], y: BR[4], w: 190, label: L("Is this size priced?", "Prix configuré ?", "هل للمقاس سعر؟", "Prezzo configurato?", "Fiyatı var mı?", "¿Tiene precio?", "Tem preço?", "Цена задана?", "Ціну задано?", "Har den pris?", "Heeft die een prijs?") },
+      { id: "quote", kind: "step", x: BC[1], y: BR[4], w: 190, label: L("Made-to-measure price request", "Demande de prix sur mesure", "طلب سعر حسب المقاس", "Richiesta di prezzo su misura", "Özel fiyat talebi", "Pedir precio a medida", "Pedir preço sob medida", "Запрос цены на заказ", "Запит ціни на замовлення", "Be om pris på mål", "Prijs op maat aanvragen") },
+      { id: "price", kind: "step", x: BC[0], y: BR[5], w: 190, label: L("Price calculated", "Calcul du prix", "حساب السعر", "Calcolo del prezzo", "Fiyat hesaplanır", "Cálculo del precio", "Cálculo do preço", "Расчёт цены", "Розрахунок ціни", "Prisen beregnes", "Prijs berekend") },
+      { id: "buy", kind: "step", x: BC[1], y: BR[5], w: 190, label: L("Buy now", "Acheter maintenant", "اشترِ الآن", "Compra ora", "Hemen al", "Comprar ahora", "Comprar agora", "Купить сейчас", "Купити зараз", "Kjøp nå", "Nu kopen") },
+      { id: "details", kind: "step", x: BC[2], y: BR[5], w: 190, label: L("Customer details", "Informations client", "بيانات العميل", "Dati del cliente", "Müşteri bilgileri", "Datos del cliente", "Dados do cliente", "Данные клиента", "Дані клієнта", "Kundeopplysninger", "Klantgegevens") },
+      { id: "summary", kind: "step", x: BC[3], y: BR[5], w: 190, label: L("Order summary", "Récapitulatif commande", "ملخص الطلب", "Riepilogo ordine", "Sipariş özeti", "Resumen del pedido", "Resumo do pedido", "Сводка заказа", "Підсумок замовлення", "Ordresammendrag", "Besteloverzicht") },
+      { id: "confirm", kind: "step", x: BC[4], y: BR[5], w: 190, label: L("Confirm the order", "Confirmer la commande", "تأكيد الطلب", "Conferma l'ordine", "Siparişi onayla", "Confirmar el pedido", "Confirmar o pedido", "Подтвердить заказ", "Підтвердити замовлення", "Bekreft ordren", "Bestelling bevestigen") },
+      { id: "pending", kind: "step", x: BC[4], y: BR[6], w: 190, label: L("Order pending", "Commande en attente", "الطلب قيد الانتظار", "Ordine in attesa", "Sipariş beklemede", "Pedido pendiente", "Pedido pendente", "Заказ ожидает", "Замовлення очікує", "Ordren venter", "Bestelling in afwachting") },
+      { id: "notify", kind: "admin", x: BC[3], y: BR[6], w: 190, label: L("Email to the admin", "E-mail à l'administrateur", "بريد إلى المسؤول", "Email all'admin", "Yöneticiye e-posta", "Email al admin", "E-mail ao admin", "Письмо админу", "Лист адміну", "E-post til admin", "Mail naar beheerder") },
+    ],
+    edges: [
+      { from: "home", to: "catalog", at: 80 },
+      { from: "home", to: "custom", at: 96 },
+      { from: "home", to: "about" },
+      { from: "home", to: "why", at: 96 },
+      { from: "home", to: "account", at: 80 },
+      { from: "catalog", to: "product" },
+      { from: "product", to: "size" },
+      { from: "size", to: "priced" },
+      { from: "priced", to: "price", label: L("Yes", "Oui", "نعم", "Sì", "Evet", "Sí", "Sim", "Да", "Так", "Ja", "Ja") },
+      { from: "priced", to: "quote", label: L("No", "Non", "لا", "No", "Hayır", "No", "Não", "Нет", "Ні", "Nei", "Nee") },
+      { from: "price", to: "buy" },
+      { from: "buy", to: "details" },
+      { from: "details", to: "summary" },
+      { from: "summary", to: "confirm" },
+      { from: "confirm", to: "pending" },
+      { from: "pending", to: "notify" },
+      { from: "custom", to: "upload" },
+      { from: "upload", to: "request" },
+      { from: "request", to: "study" },
+      { from: "about", to: "story" },
+      { from: "why", to: "quality" },
+      { from: "account", to: "login" },
+      { from: "login", to: "profile" },
+    ],
+  },
+};
+
+/** Per project slug. */
 const ROADMAPS: Record<string, RoadmapData[]> = {
   "zodic-car": [zodicUseCases, zodicSequence],
   "king-253": [kingSitemap, kingOrderFlow],
+  "boulboul-art-wall": [boulboulLayers, boulboulSitemap],
 };
 
 function pick(text: Text, locale: Locale): string {

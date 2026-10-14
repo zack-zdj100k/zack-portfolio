@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
-import { ArrowRight, Shield, User } from "lucide-react";
+import { ArrowRight, Database, Shield, User } from "lucide-react";
 import { useReduceMotion } from "@/components/ui/motion";
 import { NODE_HEIGHT, type FlowDiagram } from "@/lib/roadmaps";
 
@@ -42,7 +42,7 @@ function Graph({ diagram, title }: { diagram: FlowDiagram; title: string }) {
   const revealed = useInView(ref, { once: true, amount: 0.25 });
   const inView = useInView(ref, { amount: 0.15 });
   const routes = route(diagram);
-  const { width: W, height: Hc, nodes, edges, group } = diagram;
+  const { width: W, height: Hc, nodes, edges, groups = [], dense } = diagram;
   const order = new Map(nodes.map((n, i) => [n.id, i]));
   const nodeDelay = (id: string) => (order.get(id) ?? 0) * 0.07;
   const revealEnd = nodes.length * 0.07 + 0.7;
@@ -99,21 +99,22 @@ function Graph({ diagram, title }: { diagram: FlowDiagram; title: string }) {
               <path d="M0,1 L9,5 L0,9" fill="none" stroke="var(--color-ice)" strokeWidth="1.6" />
             </marker>
           </defs>
-          {group && (
+          {groups.map((g, k) => (
             <motion.rect
-              x={group.x}
-              y={group.y}
-              width={group.w}
-              height={group.h}
+              key={k}
+              x={g.x}
+              y={g.y}
+              width={g.w}
+              height={g.h}
               rx={18}
               fill="rgb(187 204 215 / 0.025)"
               stroke="var(--color-line)"
               strokeDasharray="6 6"
               initial={reduce ? false : { opacity: 0 }}
               animate={shown ? { opacity: 1 } : undefined}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.6, delay: reduce ? 0 : k * 0.12 }}
             />
-          )}
+          ))}
           {routes.map((r, i) => {
             const e = edges[i];
             const on = lit === e;
@@ -128,6 +129,7 @@ function Graph({ diagram, title }: { diagram: FlowDiagram; title: string }) {
                 fill="none"
                 stroke={on ? "var(--color-ice)" : "var(--color-steel)"}
                 strokeWidth={on ? 2 : 1.4}
+                strokeOpacity={on || !dense ? 1 : 0.4}
                 strokeDasharray={e.dashed ? "5 6" : undefined}
                 markerEnd={on ? "url(#fg-arrow-on)" : "url(#fg-arrow)"}
                 className="transition-[stroke] duration-300"
@@ -138,11 +140,24 @@ function Graph({ diagram, title }: { diagram: FlowDiagram; title: string }) {
             );
           })}
           <circle ref={dot} r={5} cx={-20} cy={-20} opacity={0} fill="var(--color-ice)" style={{ filter: "drop-shadow(0 0 6px rgb(187 204 215 / 0.9))" }} />
-          {group && (
-            <text x={group.x + group.w / 2} y={group.y + 26} textAnchor="middle" fill="var(--color-mist)" opacity={0.7} fontSize={14} letterSpacing="0.12em">
-              {group.label.toUpperCase()}
+          {groups.map((g, k) => (
+            // The ink outline cuts the connectors that pass behind the name.
+            <text
+              key={`g${k}`}
+              x={g.align === "start" ? g.x + 18 : g.x + g.w / 2}
+              y={g.y + 26}
+              textAnchor={g.align === "start" ? "start" : "middle"}
+              fill="var(--color-mist)"
+              fillOpacity={0.7}
+              stroke="var(--color-ink)"
+              strokeWidth={6}
+              paintOrder="stroke"
+              fontSize={14}
+              letterSpacing="0.12em"
+            >
+              {g.label.toUpperCase()}
             </text>
-          )}
+          ))}
         </svg>
 
         {nodes.map((n) => {
@@ -171,7 +186,10 @@ function Graph({ diagram, title }: { diagram: FlowDiagram; title: string }) {
               >
                 {n.kind === "actor" && <User aria-hidden className="size-[1.2em] shrink-0 text-ice" />}
                 {n.kind === "admin" && <Shield aria-hidden className="size-[1em] shrink-0 text-ice/80" />}
-                <span dir="auto">{n.label}</span>
+                {n.kind === "db" && <Database aria-hidden className="size-[1.05em] shrink-0 text-ice" />}
+                <span dir="auto" className="min-w-0 hyphens-auto [overflow-wrap:anywhere]">
+                  {n.label}
+                </span>
               </div>
             </motion.div>
           );
@@ -202,7 +220,7 @@ function Graph({ diagram, title }: { diagram: FlowDiagram; title: string }) {
 function shape(kind: Node["kind"]) {
   if (kind === "case") return "rounded-full";
   if (kind === "actor") return "rounded-[1.1em]";
-  if (kind === "admin") return "rounded-[0.8em] border-dashed";
+  if (kind === "admin" || kind === "decision") return "rounded-[0.8em] border-dashed";
   return "rounded-[0.8em]";
 }
 
@@ -393,6 +411,46 @@ function FlowList({ diagram, leadsTo, title }: { diagram: FlowDiagram; leadsTo: 
     );
   }
 
+  // Layered diagrams: one compact block per layer, each part with the parts it calls.
+  const layers = diagram.groups ?? [];
+  if (layers.length > 1) {
+    return (
+      <div aria-label={title} className="flex flex-col gap-6">
+        {layers.map((g, k) => (
+          <motion.section key={k} {...appear(0)} className="flex flex-col gap-2.5">
+            <p className="text-xs uppercase tracking-widest text-mist/55">{g.label}</p>
+            <ul className="grid grid-cols-2 gap-2">
+              {diagram.nodes
+                .filter((n) => n.y >= g.y && n.y < g.y + g.h)
+                .map((n, i) => (
+                  <motion.li
+                    key={n.id}
+                    {...appear(i)}
+                    className={`rounded-xl border bg-ink-3 px-3 py-2.5 ${n.kind === "admin" ? "border-dashed border-ice/40" : "border-line"}`}
+                  >
+                    <span className="flex items-center gap-1.5 text-sm font-medium leading-tight text-mist">
+                      {n.kind === "admin" && <Shield aria-hidden className="size-3.5 shrink-0 text-ice/80" />}
+                      {n.kind === "db" && <Database aria-hidden className="size-3.5 shrink-0 text-ice" />}
+                      {n.label}
+                    </span>
+                    {out(n.id).length > 0 && (
+                      <span className="mt-1.5 flex items-start gap-1 text-xs leading-snug text-mist/60">
+                        <ArrowRight aria-hidden className="mt-0.5 size-3 shrink-0 text-ice rtl:rotate-180" />
+                        <span className="sr-only">{leadsTo}: </span>
+                        {out(n.id)
+                          .map((e) => byId.get(e.to)?.label)
+                          .join(" · ")}
+                      </span>
+                    )}
+                  </motion.li>
+                ))}
+            </ul>
+          </motion.section>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <ol aria-label={title} className="flex flex-col">
       {diagram.nodes.map((n, i) => {
@@ -401,7 +459,7 @@ function FlowList({ diagram, leadsTo, title }: { diagram: FlowDiagram; leadsTo: 
         const others = out(n.id).filter((e) => e !== toNext);
         return (
           <motion.li key={n.id} {...appear(i)} className="flex flex-col items-start">
-            <div className={`w-full rounded-2xl border bg-ink-3 px-4 py-3 ${n.kind === "admin" ? "border-dashed border-ice/40" : "border-line"}`}>
+            <div className={`w-full rounded-2xl border bg-ink-3 px-4 py-2.5 ${n.kind === "admin" ? "border-dashed border-ice/40" : "border-line"}`}>
               <span className="flex items-center gap-2 font-medium text-mist">
                 {n.kind === "admin" && <Shield aria-hidden className="size-4 shrink-0 text-ice/80" />}
                 {n.label}
@@ -409,7 +467,7 @@ function FlowList({ diagram, leadsTo, title }: { diagram: FlowDiagram; leadsTo: 
               {chips(others)}
             </div>
             {next && (
-              <span aria-hidden className={`ms-6 flex h-7 items-center gap-2 border-s ${toNext ? "border-steel" : "border-transparent"}`}>
+              <span aria-hidden className={`ms-6 flex h-5 items-center gap-2 border-s ${toNext ? "border-steel" : "border-transparent"}`}>
                 {toNext?.label && <span className="ms-2 text-xs font-medium text-ice">{toNext.label}</span>}
               </span>
             )}

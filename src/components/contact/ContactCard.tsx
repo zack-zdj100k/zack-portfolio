@@ -59,7 +59,7 @@ export async function ContactCard({
   const hasLinks = channels.length > 0 || socials.length > 0;
 
   return (
-    <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
+    <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
       <figure className="relative isolate overflow-hidden rounded-[32px] bg-ink-2 sm:max-w-md md:rounded-[40px] lg:sticky lg:top-28 lg:max-w-none">
         <div className={`relative aspect-[4/5] max-h-[72svh] w-full ${photo.artwork ? "bg-[radial-gradient(circle_at_50%_30%,rgb(187_204_215/0.18),transparent_65%)]" : ""}`}>
           <Image

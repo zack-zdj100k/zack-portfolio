@@ -13,12 +13,14 @@ import { getLocaleSettings, getOffers, getProfile, getSettings, isPreview } from
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { whatsappHref } from "@/components/ui/social";
 import { fontVariables } from "../fonts";
+import { ZoomLock } from "@/components/layout/ZoomLock";
 import "../globals.css";
 
 // Content comes from the database and can change from the admin at any time.
 export const dynamic = "force-dynamic";
 
-export const viewport: Viewport = { themeColor: "#0c0c0c", colorScheme: "dark" };
+// Zoom is locked on purpose (owner request); see ZoomLock for the cases the meta tag misses.
+export const viewport: Viewport = { themeColor: "#0c0c0c", colorScheme: "dark", width: "device-width", initialScale: 1, maximumScale: 1, userScalable: false };
 
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
@@ -60,6 +62,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       className={fontVariables}
     >
       <body className="min-h-dvh flex flex-col">
+        <ZoomLock />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:start-3 focus:z-[100] focus:rounded-full focus:bg-mist focus:px-5 focus:py-3 focus:text-ink"

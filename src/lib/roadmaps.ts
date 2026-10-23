@@ -426,11 +426,248 @@ const boulboulSitemap: RoadmapData = {
   },
 };
 
+/* ------------------------------------------------------------------------------------------ */
+/* Woman Cares                                                                                 */
+/* ------------------------------------------------------------------------------------------ */
+
+/** English, French and Arabic; the other languages show the English wording until they are translated. */
+const T3 = (en: string, fr: string, ar: string): Text => ({ en, fr, ar });
+const YES = L("Yes", "Oui", "نعم", "Sì", "Evet", "Sí", "Sim", "Да", "Так", "Ja", "Ja");
+const NO = L("No", "Non", "لا", "No", "Hayır", "No", "Não", "Нет", "Ні", "Nei", "Nee");
+
+// Finding a professional: home → category → search → profile → appointment request, then the
+// "signed in?" check decides between booking at once and signing in first.
+const WR = [0, 90, 180, 270, 360, 450, 540, 630, 720, 825];
+const WC = (c: number) => c * 190;
+const womanCaresFind: RoadmapData = {
+  key: "find-and-request",
+  title: T3("From the home page to an appointment request", "De l'accueil à la demande de rendez-vous", "من الصفحة الرئيسية إلى طلب الموعد"),
+  intro: T3(
+    "A visitor picks one of six beauty categories, filters the professionals, opens a profile and asks for an appointment. If she is already signed in the booking is created at once; if not, she signs in or creates an account first.",
+    "La visiteuse choisit l'une des six catégories beauté, filtre les professionnelles, ouvre un profil et demande un rendez-vous. Si elle est déjà connectée, la réservation est créée tout de suite ; sinon, elle se connecte ou crée d'abord un compte.",
+    "تختار الزائرة إحدى فئات التجميل الست، وتصفّي المحترفات، وتفتح ملفًا وتطلب موعدًا. إذا كانت مسجّلة الدخول يُنشأ الحجز فورًا، وإلا فإنها تسجّل الدخول أو تنشئ حسابًا أولًا.",
+  ),
+  diagram: {
+    type: "flow",
+    width: 1120,
+    height: 881,
+    nodes: [
+      { id: "home", kind: "page", x: 475, y: WR[0], w: 170, label: T3("Home page", "Page d'accueil", "الصفحة الرئيسية") },
+      { id: "about", kind: "page", x: 0, y: WR[1], w: 170, label: T3("About Woman Cares", "À propos de Woman Cares", "عن Woman Cares") },
+      { id: "cats", kind: "page", x: 475, y: WR[1], w: 170, label: T3("Beauty categories", "Catégories beauté", "فئات التجميل") },
+      { id: "services", kind: "page", x: 950, y: WR[1], w: 170, label: T3("About our services", "À propos de nos services", "عن خدماتنا") },
+      { id: "hair", kind: "page", x: WC(0), y: WR[2], w: 170, label: T3("Hairdressers", "Coiffeuses", "مصففات الشعر") },
+      { id: "aesthetics", kind: "page", x: WC(1), y: WR[2], w: 170, label: T3("Aesthetics", "Esthétique", "التجميل") },
+      { id: "massage", kind: "page", x: WC(2), y: WR[2], w: 170, label: T3("Massage", "Massage", "المساج") },
+      { id: "nails", kind: "page", x: WC(3), y: WR[2], w: 170, label: T3("Nails", "Ongles", "الأظافر") },
+      { id: "lashes", kind: "page", x: WC(4), y: WR[2], w: 170, label: T3("Lash extensions", "Extensions de cils", "تمديد الرموش") },
+      { id: "botox", kind: "page", x: WC(5), y: WR[2], w: 170, label: T3("Botox", "Botox", "البوتوكس") },
+      { id: "search", kind: "step", x: 475, y: WR[3], w: 170, label: T3("Search & filters", "Recherche et filtres", "البحث والفلاتر") },
+      { id: "cards", kind: "step", x: 475, y: WR[4], w: 170, label: T3("Provider cards", "Cartes des professionnelles", "بطاقات المحترفات") },
+      { id: "profile", kind: "page", x: 475, y: WR[5], w: 170, label: T3("Category profile details", "Profil par catégorie", "تفاصيل ملف الفئة") },
+      { id: "prices", kind: "step", x: 190, y: WR[6], w: 170, label: T3("Services & prices", "Prestations et tarifs", "الخدمات والأسعار") },
+      { id: "photos", kind: "step", x: 380, y: WR[6], w: 170, label: T3("Photos & videos", "Photos et vidéos", "الصور والفيديو") },
+      { id: "location", kind: "step", x: 570, y: WR[6], w: 170, label: T3("Location & distance", "Lieu et distance", "الموقع والمسافة") },
+      { id: "calendar", kind: "step", x: 760, y: WR[6], w: 170, label: T3("Calendar & availability", "Calendrier et disponibilités", "التقويم والتوفر") },
+      { id: "request", kind: "step", x: 760, y: WR[7], w: 170, label: T3("Appointment request", "Demande de rendez-vous", "طلب موعد") },
+      { id: "signed", kind: "decision", x: 760, y: WR[8], w: 170, label: T3("Client signed in?", "Cliente connectée ?", "هل العميلة مسجّلة؟") },
+      { id: "booking", kind: "step", x: 570, y: WR[9], w: 170, label: T3("Create booking", "Créer la réservation", "إنشاء الحجز") },
+      { id: "signin", kind: "page", x: 950, y: WR[9], w: 170, label: T3("Sign in / sign up", "Connexion / inscription", "الدخول / التسجيل") },
+    ],
+    edges: [
+      { from: "home", to: "about" },
+      { from: "home", to: "cats" },
+      { from: "home", to: "services" },
+      { from: "cats", to: "hair" },
+      { from: "cats", to: "aesthetics" },
+      { from: "cats", to: "massage" },
+      { from: "cats", to: "nails" },
+      { from: "cats", to: "lashes" },
+      { from: "cats", to: "botox" },
+      { from: "hair", to: "search" },
+      { from: "aesthetics", to: "search" },
+      { from: "massage", to: "search" },
+      { from: "nails", to: "search" },
+      { from: "lashes", to: "search" },
+      { from: "botox", to: "search" },
+      { from: "search", to: "cards" },
+      { from: "cards", to: "profile" },
+      { from: "profile", to: "prices" },
+      { from: "profile", to: "photos" },
+      { from: "profile", to: "location" },
+      { from: "profile", to: "calendar" },
+      { from: "calendar", to: "request" },
+      { from: "request", to: "signed" },
+      { from: "signed", to: "booking", label: YES },
+      { from: "signed", to: "signin", label: NO },
+    ],
+  },
+};
+
+// The booking itself: the professional answers a pending request in one of three ways. A new time
+// goes back to the client, who confirms it by booking again.
+const womanCaresBooking: RoadmapData = {
+  key: "booking-flow",
+  title: T3("From request to confirmed appointment", "De la demande au rendez-vous confirmé", "من الطلب إلى الموعد المؤكَّد"),
+  intro: T3(
+    "A booking starts as a pending request in the professional's dashboard. She accepts it, declines it or proposes another time. The client is told by email and in the app, and a proposed time sends her back to book again.",
+    "Une réservation commence comme demande en attente dans le tableau de bord de la professionnelle. Elle l'accepte, la refuse ou propose un autre horaire. La cliente est prévenue par e-mail et dans l'application, et un nouvel horaire la ramène à la réservation.",
+    "يبدأ الحجز طلبًا معلّقًا في لوحة المحترفة. تقبله أو ترفضه أو تقترح وقتًا آخر. تُبلَّغ العميلة بالبريد وفي التطبيق، ويعيدها الوقت المقترح إلى الحجز من جديد.",
+  ),
+  diagram: {
+    type: "flow",
+    width: 640,
+    height: 516,
+    nodes: [
+      { id: "create", kind: "step", x: 200, y: 0, w: 190, label: T3("Create booking", "Créer la réservation", "إنشاء الحجز") },
+      { id: "pending", kind: "step", x: 200, y: 92, w: 190, label: T3("Pending request", "Demande en attente", "طلب معلّق") },
+      { id: "dash", kind: "page", x: 200, y: 184, w: 190, label: T3("Provider dashboard", "Tableau de bord de la professionnelle", "لوحة المحترفة") },
+      { id: "notify", kind: "admin", x: 440, y: 184, w: 190, label: T3("Email & in-app notifications", "Notifications e-mail et dans l'app", "إشعارات البريد والتطبيق") },
+      { id: "decision", kind: "decision", x: 200, y: 276, w: 190, h: 64, label: T3("Accept / reject / reschedule", "Accepter / refuser / reporter", "قبول / رفض / إعادة جدولة") },
+      { id: "confirmed", kind: "step", x: 0, y: 368, w: 190, label: T3("Confirmed appointment", "Rendez-vous confirmé", "موعد مؤكَّد") },
+      { id: "rejected", kind: "step", x: 200, y: 368, w: 190, label: T3("Rejected request", "Demande refusée", "طلب مرفوض") },
+      { id: "newtime", kind: "step", x: 400, y: 368, w: 190, label: T3("New time proposed", "Nouvel horaire proposé", "وقت جديد مقترح") },
+      { id: "client", kind: "page", x: 100, y: 460, w: 190, label: T3("Client dashboard", "Tableau de bord cliente", "لوحة العميلة") },
+    ],
+    edges: [
+      { from: "create", to: "pending" },
+      { from: "pending", to: "dash" },
+      { from: "dash", to: "notify", side: true },
+      { from: "dash", to: "decision" },
+      { from: "decision", to: "confirmed" },
+      { from: "decision", to: "rejected" },
+      { from: "decision", to: "newtime" },
+      { from: "confirmed", to: "client" },
+      { from: "rejected", to: "client" },
+      { from: "newtime", to: "create", dashed: true, around: "right" },
+    ],
+  },
+};
+
+// Accounts: one sign-in page, three roles. A professional can hold several categories and still sees
+// one dashboard; the admin's seven areas run along the bottom.
+const womanCaresAccounts: RoadmapData = {
+  key: "accounts",
+  title: T3("Accounts and dashboards", "Comptes et tableaux de bord", "الحسابات ولوحات التحكم"),
+  intro: T3(
+    "One sign-in page leads to three kinds of account. A professional chooses one or more categories and manages them all from a single dashboard; the admin dashboard covers users, categories, pricing, content, verification, moderation and analytics.",
+    "Une seule page de connexion mène à trois types de compte. Une professionnelle choisit une ou plusieurs catégories et les gère toutes depuis un seul tableau de bord ; celui de l'administrateur couvre utilisateurs, catégories, tarifs, contenu, vérification, modération et statistiques.",
+    "صفحة دخول واحدة تقود إلى ثلاثة أنواع من الحسابات. تختار المحترفة فئة أو أكثر وتديرها كلها من لوحة واحدة، وتغطّي لوحة المسؤول المستخدمين والفئات والأسعار والمحتوى والتحقق والإشراف والإحصاءات.",
+  ),
+  diagram: {
+    type: "flow",
+    width: 1110,
+    height: 584,
+    nodes: [
+      { id: "signin", kind: "page", x: 380, y: 0, w: 190, label: T3("Sign in / sign up", "Connexion / inscription", "الدخول / التسجيل") },
+      { id: "client", kind: "page", x: 0, y: 100, w: 190, label: T3("Client dashboard", "Tableau de bord cliente", "لوحة العميلة") },
+      { id: "onboarding", kind: "step", x: 380, y: 100, w: 190, label: T3("Professional onboarding", "Accueil des professionnelles", "تسجيل المحترفة") },
+      { id: "multi", kind: "step", x: 380, y: 200, w: 190, label: T3("Select multiple categories", "Choisir plusieurs catégories", "اختيار عدة فئات") },
+      { id: "unified", kind: "page", x: 380, y: 300, w: 190, h: 64, label: T3("One unified provider dashboard", "Un seul tableau de bord", "لوحة واحدة موحّدة") },
+      { id: "p1", kind: "step", x: 0, y: 410, w: 150, h: 64, label: T3("Manage category profiles", "Gérer les profils", "إدارة ملفات الفئات") },
+      { id: "p2", kind: "step", x: 160, y: 410, w: 150, h: 64, label: T3("Manage all bookings", "Gérer les réservations", "إدارة كل الحجوزات") },
+      { id: "p3", kind: "step", x: 320, y: 410, w: 150, h: 64, label: T3("Manage schedules", "Gérer les plannings", "إدارة الجداول") },
+      { id: "p4", kind: "step", x: 480, y: 410, w: 150, h: 64, label: T3("Earnings & payment records", "Revenus et paiements", "الأرباح والمدفوعات") },
+      { id: "p5", kind: "step", x: 640, y: 410, w: 150, h: 64, label: T3("Visitor analytics", "Statistiques de visites", "إحصاءات الزيارات") },
+      { id: "p6", kind: "step", x: 800, y: 410, w: 150, h: 64, label: T3("Subscriptions & billing", "Abonnements et facturation", "الاشتراكات والفوترة") },
+      { id: "admin", kind: "admin", x: 920, y: 100, w: 190, label: T3("Admin dashboard", "Tableau de bord admin", "لوحة المسؤول") },
+      { id: "a1", kind: "admin", x: 0, y: 520, w: 150, h: 64, label: T3("User management", "Gestion des utilisateurs", "إدارة المستخدمين") },
+      { id: "a2", kind: "admin", x: 160, y: 520, w: 150, h: 64, label: T3("Category management", "Gestion des catégories", "إدارة الفئات") },
+      { id: "a3", kind: "admin", x: 320, y: 520, w: 150, h: 64, label: T3("Pricing & subscriptions", "Tarifs et abonnements", "الأسعار والاشتراكات") },
+      { id: "a4", kind: "admin", x: 480, y: 520, w: 150, h: 64, label: T3("Website content", "Contenu du site", "محتوى الموقع") },
+      { id: "a5", kind: "admin", x: 640, y: 520, w: 150, h: 64, label: T3("Provider verification", "Vérification des professionnelles", "التحقق من المحترفات") },
+      { id: "a6", kind: "admin", x: 800, y: 520, w: 150, h: 64, label: T3("Moderation", "Modération", "الإشراف") },
+      { id: "a7", kind: "admin", x: 960, y: 520, w: 150, h: 64, label: T3("Platform analytics", "Statistiques de la plateforme", "إحصاءات المنصة") },
+    ],
+    edges: [
+      { from: "signin", to: "client", label: T3("Client", "Cliente", "عميلة") },
+      { from: "signin", to: "onboarding", label: T3("Professional", "Professionnelle", "محترفة") },
+      { from: "signin", to: "admin", label: T3("Admin", "Admin", "مسؤول") },
+      { from: "onboarding", to: "multi" },
+      { from: "multi", to: "unified" },
+      { from: "unified", to: "p1" },
+      { from: "unified", to: "p2" },
+      { from: "unified", to: "p3" },
+      { from: "unified", to: "p4" },
+      { from: "unified", to: "p5" },
+      { from: "unified", to: "p6" },
+      { from: "admin", to: "a1", at: 497 },
+      { from: "admin", to: "a2", at: 497 },
+      { from: "admin", to: "a3", at: 497 },
+      { from: "admin", to: "a4", at: 497 },
+      { from: "admin", to: "a5", at: 497 },
+      { from: "admin", to: "a6", at: 497 },
+      { from: "admin", to: "a7", at: 497 },
+    ],
+  },
+};
+
+// Who can do what: clients, beauty professionals and the Super Admin, with the two outside services
+// (email, and the payment provider behind subscriptions).
+const womanCaresRoles: RoadmapData = {
+  key: "roles",
+  title: T3("Who does what", "Qui fait quoi", "من يفعل ماذا"),
+  intro: T3(
+    "Clients search and request appointments; beauty professionals run their listings, availability and bookings; the Super Admin looks after accounts, approvals, subscription plans, content and analytics. Email notifications and the payment provider sit outside the platform.",
+    "Les clientes cherchent et demandent des rendez-vous ; les professionnelles gèrent leurs annonces, leurs disponibilités et leurs réservations ; le Super Admin s'occupe des comptes, des validations, des abonnements, du contenu et des statistiques. Les e-mails et le prestataire de paiement restent en dehors de la plateforme.",
+    "تبحث العميلات وتطلب المواعيد، وتدير المحترفات إعلاناتهن وتوفرهن وحجوزاتهن، ويتولى المسؤول الأعلى الحسابات والموافقات وخطط الاشتراك والمحتوى والإحصاءات. أما البريد ومزوّد الدفع فهما خارج المنصة.",
+  ),
+  diagram: {
+    type: "flow",
+    width: 1070,
+    height: 706,
+    nodes: [
+      { id: "client", kind: "actor", x: 440, y: 0, w: 190, label: T3("Client", "Cliente", "العميلة") },
+      { id: "c1", kind: "case", x: 0, y: 90, w: 170, h: 64, label: T3("Search and filter providers", "Chercher et filtrer", "البحث وتصفية المحترفات") },
+      { id: "c2", kind: "case", x: 180, y: 90, w: 170, h: 64, label: T3("View profiles and portfolios", "Voir profils et réalisations", "عرض الملفات والأعمال") },
+      { id: "c3", kind: "case", x: 360, y: 90, w: 170, h: 64, label: T3("Request an appointment", "Demander un rendez-vous", "طلب موعد") },
+      { id: "c4", kind: "case", x: 540, y: 90, w: 170, h: 64, label: T3("Manage favorites", "Gérer les favoris", "إدارة المفضلة") },
+      { id: "c5", kind: "case", x: 720, y: 90, w: 170, h: 64, label: T3("Submit a review", "Laisser un avis", "كتابة تقييم") },
+      { id: "c6", kind: "case", x: 900, y: 90, w: 170, h: 64, label: T3("Manage client dashboard", "Gérer son tableau de bord", "إدارة لوحة العميلة") },
+      { id: "pro", kind: "actor", x: 440, y: 190, w: 190, label: T3("Beauty professional", "Professionnelle beauté", "المحترفة") },
+      { id: "p1", kind: "case", x: 0, y: 280, w: 190, h: 64, label: T3("Manage listings and services", "Gérer annonces et prestations", "إدارة الإعلانات والخدمات") },
+      { id: "p2", kind: "case", x: 220, y: 280, w: 190, h: 64, label: T3("Manage appointment requests", "Gérer les demandes de rendez-vous", "إدارة طلبات المواعيد") },
+      { id: "p3", kind: "case", x: 440, y: 280, w: 190, h: 64, label: T3("View earnings and payments", "Voir revenus et paiements", "عرض الأرباح والمدفوعات") },
+      { id: "p4", kind: "case", x: 660, y: 280, w: 190, h: 64, label: T3("Manage availability", "Gérer les disponibilités", "إدارة التوفر") },
+      { id: "p5", kind: "case", x: 880, y: 280, w: 190, h: 64, label: T3("View visitor analytics", "Voir les statistiques de visites", "عرض إحصاءات الزيارات") },
+      { id: "email", kind: "note", x: 220, y: 370, w: 190, h: 64, label: T3("Email notification service", "Service de notifications e-mail", "خدمة إشعارات البريد") },
+      { id: "admin", kind: "actor", x: 440, y: 470, w: 190, label: T3("Super Admin", "Super Admin", "المسؤول الأعلى") },
+      { id: "a1", kind: "case", x: 0, y: 560, w: 190, h: 64, label: T3("Manage accounts and roles", "Gérer comptes et rôles", "إدارة الحسابات والأدوار") },
+      { id: "a2", kind: "case", x: 220, y: 560, w: 190, h: 64, label: T3("Approve and moderate providers", "Valider et modérer les professionnelles", "الموافقة على المحترفات والإشراف") },
+      { id: "a3", kind: "case", x: 440, y: 560, w: 190, h: 64, label: T3("Manage subscription plans", "Gérer les abonnements", "إدارة خطط الاشتراك") },
+      { id: "a4", kind: "case", x: 660, y: 560, w: 190, h: 64, label: T3("Manage website content", "Gérer le contenu du site", "إدارة محتوى الموقع") },
+      { id: "a5", kind: "case", x: 880, y: 560, w: 190, h: 64, label: T3("View platform analytics", "Voir les statistiques de la plateforme", "عرض إحصاءات المنصة") },
+      { id: "payment", kind: "note", x: 440, y: 650, w: 190, label: T3("Payment provider", "Prestataire de paiement", "مزوّد الدفع") },
+    ],
+    edges: [
+      { from: "client", to: "c1" },
+      { from: "client", to: "c2" },
+      { from: "client", to: "c3" },
+      { from: "client", to: "c4" },
+      { from: "client", to: "c5" },
+      { from: "client", to: "c6" },
+      { from: "pro", to: "p1" },
+      { from: "pro", to: "p2" },
+      { from: "pro", to: "p3" },
+      { from: "pro", to: "p4" },
+      { from: "pro", to: "p5" },
+      { from: "p2", to: "email", dashed: true },
+      { from: "admin", to: "a1" },
+      { from: "admin", to: "a2" },
+      { from: "admin", to: "a3" },
+      { from: "admin", to: "a4" },
+      { from: "admin", to: "a5" },
+      { from: "a3", to: "payment", dashed: true },
+    ],
+  },
+};
+
 /** Per project slug. */
 const ROADMAPS: Record<string, RoadmapData[]> = {
   "zodic-car": [zodicUseCases, zodicSequence],
   "king-253": [kingSitemap, kingOrderFlow],
   "boulboul-art-wall": [boulboulLayers, boulboulSitemap],
+  "woman-cares": [womanCaresFind, womanCaresBooking, womanCaresAccounts, womanCaresRoles],
 };
 
 function pick(text: Text, locale: Locale): string {

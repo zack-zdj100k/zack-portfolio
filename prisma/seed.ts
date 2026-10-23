@@ -18,6 +18,15 @@ import { staticCloudKey } from "../src/lib/static-media";
 import { translations } from "./seed-i18n";
 import manifest from "../public/hero/manifest.json";
 import { DASHBOARD_TOURS, FEATURE_SHOTS } from "./data/dashboard-tours";
+import {
+  WOMAN_CARES_ARCHITECTURE_NODES,
+  WOMAN_CARES_COPY,
+  WOMAN_CARES_IMAGES,
+  WOMAN_CARES_LIVE_URL,
+  WOMAN_CARES_SLUG,
+  WOMAN_CARES_TECHNOLOGIES,
+  WOMAN_CARES_TITLE,
+} from "./data/woman-cares";
 import { defaultAddOns } from "./data/package-add-ons";
 import { AI_SERVICES, ARCHITECTURE, EARLIER_SKILL_GROUPS, PROCESS_STEPS, REFERRAL_TEXT, SKILL_GROUPS } from "./data/round6";
 
@@ -387,6 +396,7 @@ async function main() {
     }
   }
 
+  await seedWomanCares();
   await backfillTranslations();
   await seedDashboardTours();
   await backfillAddOns();
@@ -396,6 +406,50 @@ async function main() {
   await seedArchitecture();
   await upgradeProfileTitles();
   console.log("Seed complete.");
+}
+
+/** Woman Cares (prisma/data/woman-cares.ts): added once; the same rows are inserted by a data migration on existing databases. */
+async function seedWomanCares() {
+  if (await prisma.project.findUnique({ where: { slug: WOMAN_CARES_SLUG } })) return;
+  const last = await prisma.project.aggregate({ _max: { sortOrder: true } });
+  const project = await prisma.project.create({
+    data: {
+      slug: WOMAN_CARES_SLUG,
+      category: "WEBSITE",
+      origin: null,
+      stage: "IN_PROGRESS",
+      status: "PUBLISHED",
+      featured: true,
+      sortOrder: (last._max.sortOrder ?? -1) + 1,
+      technologies: WOMAN_CARES_TECHNOLOGIES,
+      architectureStatus: "PROPOSED",
+      links: { create: [{ type: "LIVE", url: WOMAN_CARES_LIVE_URL, sortOrder: 0 }] },
+    },
+  });
+  for (const [locale, t] of Object.entries(WOMAN_CARES_COPY)) {
+    await prisma.projectTranslation.create({
+      data: {
+        projectId: project.id,
+        locale,
+        title: WOMAN_CARES_TITLE,
+        summary: t.summary,
+        features: [...t.features],
+        frontendText: t.frontend,
+        backendText: t.backend,
+        databaseText: t.database,
+        flowText: t.flow,
+        reviewed: locale === "en",
+      },
+    });
+  }
+  for (const [j, img] of WOMAN_CARES_IMAGES.entries()) {
+    const alt = Object.fromEntries(Object.entries(WOMAN_CARES_COPY).map(([locale, t]) => [locale, t.alts[j]]));
+    const media = await staticMedia(`/projects/${WOMAN_CARES_SLUG}/${img.file}.webp`, img.width, img.height, alt, `${WOMAN_CARES_TITLE} ${img.file}`);
+    await prisma.projectImage.create({ data: { projectId: project.id, mediaId: media.id, kind: img.kind as ImageKind, sortOrder: j } });
+  }
+  for (const [i, n] of WOMAN_CARES_ARCHITECTURE_NODES.entries()) {
+    await prisma.architectureNode.create({ data: { projectId: project.id, kind: n.kind, technology: n.technology, sortOrder: i } });
+  }
 }
 
 /**

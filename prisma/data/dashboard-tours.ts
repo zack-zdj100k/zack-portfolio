@@ -1017,10 +1017,79 @@ const zodic: TourScreenData[] = [
   },
 ];
 
+// Woman Cares: the three dashboards (client, professional, Super Admin), captured from a local copy
+// with demo data and test accounts. Markers carry English, French and Arabic; other languages fall
+// back to English until translated.
+const T3 = (en: string, fr: string, ar: string): Text => ({ en, fr, ar });
+
+const womanCares: TourScreenData[] = [
+  {
+    file: "/projects/woman-cares/dashboard-client.webp",
+    width: 1600,
+    height: 1000,
+    kind: "DEMO",
+    title: T3("Client dashboard", "Espace cliente", "لوحة العميلة"),
+    alt: T3("Woman Cares client dashboard with demo appointments", "Espace cliente Woman Cares avec des rendez-vous de démonstration", "لوحة العميلة في Woman Cares بمواعيد تجريبية"),
+    hotspots: [
+      { x: SIDE, y: 15.7, icon: "calendar", label: T3("My appointments", "Mes rendez-vous", "مواعيدي"), body: T3("Every appointment with filters. Open one to cancel it, answer a new time proposed by the professional, or leave a review once it is done.", "Tous les rendez-vous avec filtres. On en ouvre un pour l'annuler, répondre à un nouvel horaire proposé par la professionnelle ou laisser un avis une fois terminé.", "كل المواعيد مع الفلاتر. افتحي موعدًا لإلغائه أو للرد على وقت جديد تقترحه المحترفة أو لكتابة تقييم بعد انتهائه.") },
+      { x: SIDE, y: 24, icon: "bell", label: T3("Notifications", "Notifications", "الإشعارات"), body: T3("In-app notices when a professional accepts, declines or proposes another time. The same events also arrive by email.", "Avis dans l'application quand une professionnelle accepte, refuse ou propose un autre horaire. Les mêmes événements arrivent aussi par e-mail.", "إشعارات داخل التطبيق عندما تقبل المحترفة أو ترفض أو تقترح وقتًا آخر، وتصل الأحداث نفسها بالبريد أيضًا.") },
+      { x: SIDE, y: 28.2, icon: "user-cog", label: T3("Profile and settings", "Profil et réglages", "الملف والإعدادات"), body: T3("Name, phone, language and which notifications to receive.", "Nom, téléphone, langue et notifications à recevoir.", "الاسم والهاتف واللغة والإشعارات التي ترغبين في تلقيها.") },
+      { x: 56.5, y: 37.5, icon: "clock", label: T3("Next appointments", "Prochains rendez-vous", "المواعيد القادمة"), body: T3("Confirmed appointments with the professional, the service and the time.", "Les rendez-vous confirmés, avec la professionnelle, la prestation et l'heure.", "المواعيد المؤكَّدة مع المحترفة والخدمة والوقت.") },
+      { x: 97, y: 37.5, icon: "clipboard-list", label: T3("Awaiting an answer", "En attente de réponse", "بانتظار الرد"), body: T3("Requests the professional has not answered yet. They expire if nobody replies.", "Demandes auxquelles la professionnelle n'a pas encore répondu. Elles expirent sans réponse.", "طلبات لم ترد عليها المحترفة بعد، وتنتهي صلاحيتها إن لم يُرد عليها.") },
+    ],
+  },
+  {
+    file: "/projects/woman-cares/dashboard-provider.webp",
+    width: 1600,
+    height: 1000,
+    kind: "DEMO",
+    title: T3("Professional dashboard", "Espace professionnelle", "لوحة المحترفة"),
+    alt: T3("Woman Cares professional dashboard with demo bookings and revenue", "Espace professionnelle Woman Cares avec réservations et revenus de démonstration", "لوحة المحترفة في Woman Cares بحجوزات وأرباح تجريبية"),
+    hotspots: [
+      { x: SIDE, y: 15.7, icon: "clipboard-list", label: T3("Bookings", "Rendez-vous", "الحجوزات"), body: T3("The bookings table: to handle, today, upcoming, past, cancelled. Accept, decline, propose a new time, complete or mark a no-show. The badge counts requests waiting.", "Le tableau des réservations : à traiter, aujourd'hui, à venir, passées, annulées. Accepter, refuser, proposer un autre horaire, terminer ou noter une absence. Le badge compte les demandes en attente.", "جدول الحجوزات: للمعالجة واليوم والقادمة والسابقة والملغاة. قبول أو رفض أو اقتراح وقت جديد أو إنهاء أو تسجيل غياب. تعرض الشارة عدد الطلبات المنتظرة.") },
+      { x: SIDE, y: 19.9, icon: "calendar", label: T3("Calendar", "Calendrier", "التقويم"), body: T3("A week grid with opening hours, closures and overlapping appointments side by side. She can add an appointment by hand, for a walk-in or a phone call.", "Une grille de la semaine avec horaires, fermetures et rendez-vous qui se chevauchent côte à côte. Elle peut ajouter un rendez-vous à la main, pour une cliente de passage ou un appel.", "شبكة أسبوعية فيها أوقات العمل وأيام الإغلاق والمواعيد المتداخلة جنبًا إلى جنب. يمكنها إضافة موعد يدويًا لعميلة حضرت أو اتصلت.") },
+      { x: SIDE, y: 28.2, icon: "store", label: T3("My profiles", "Mes profils", "ملفاتي"), body: T3("One profile per category: presentation, specialties, hygiene notes, photos and videos. A profile is sent to the admin for review before it goes live.", "Un profil par catégorie : présentation, spécialités, hygiène, photos et vidéos. Un profil est envoyé à l'administrateur pour validation avant publication.", "ملف لكل فئة: التعريف والتخصصات وملاحظات النظافة والصور والفيديو. يُرسل الملف إلى المسؤول للمراجعة قبل النشر.") },
+      { x: SIDE, y: 32.4, icon: "tags", label: T3("Services", "Prestations", "الخدمات"), body: T3("Services with duration, price range and buffer time. The starting price shown to clients is worked out automatically.", "Les prestations avec durée, fourchette de prix et marge. Le prix de départ affiché aux clientes est calculé automatiquement.", "الخدمات بمدتها ونطاق سعرها وفترة الراحة. يُحسب تلقائيًا السعر الابتدائي الذي تراه العميلات.") },
+      { x: SIDE, y: 36.6, icon: "clock", label: T3("Opening hours", "Horaires", "أوقات العمل"), body: T3("Weekly hours with split shifts, capacity per slot and session length, plus closures. Booked times are checked against them.", "Horaires hebdomadaires avec plages coupées, capacité par créneau et durée de séance, plus fermetures. Les réservations sont vérifiées par rapport à eux.", "أوقات أسبوعية بفترات منقسمة وسعة لكل موعد ومدة الجلسة، مع أيام الإغلاق. تُفحص الحجوزات وفقها.") },
+      { x: SIDE, y: 44.8, icon: "wallet", label: T3("Earnings", "Revenus", "الأرباح"), body: T3("Earnings from recorded payments, net of refunds: a 12-month chart, by category and by method, plus visits not yet paid.", "Revenus issus des paiements enregistrés, nets des remboursements : graphique sur 12 mois, par catégorie et par méthode, avec les visites impayées.", "الأرباح من المدفوعات المسجَّلة بعد خصم المرتجعات: مخطط 12 شهرًا حسب الفئة والطريقة، مع الزيارات غير المدفوعة.") },
+      { x: SIDE, y: 49, icon: "chart-column", label: T3("Statistics", "Statistiques", "الإحصاءات"), body: T3("From profile visits to requests to confirmed visits, with the busiest days and hours and the top services. Rates show only when there is data.", "Des visites du profil aux demandes puis aux rendez-vous confirmés, avec jours et heures chargés et prestations phares. Les taux n'apparaissent que s'il y a des données.", "من زيارات الملف إلى الطلبات فالمواعيد المؤكَّدة، مع أكثر الأيام والساعات ازدحامًا وأبرز الخدمات. لا تظهر النسب إلا عند وجود بيانات.") },
+      { x: SIDE, y: 53.2, icon: "credit-card", label: T3("Subscription", "Abonnement", "الاشتراك"), body: T3("The free trial, then a monthly price per category. Shows the current status and what is due.", "L'essai gratuit, puis un prix mensuel par catégorie. Affiche le statut actuel et ce qui est dû.", "الفترة التجريبية المجانية ثم سعر شهري لكل فئة، مع الحالة الحالية وما هو مستحق.") },
+      { x: SIDE, y: 57.4, icon: "receipt", label: T3("Invoices", "Factures", "الفواتير"), body: T3("Invoices for each period, and the payments she declares for the admin to verify.", "Les factures de chaque période et les paiements qu'elle déclare pour vérification par l'administrateur.", "فواتير كل فترة والمدفوعات التي تصرّح بها ليتحقق منها المسؤول.") },
+      { x: SIDE, y: 69.9, icon: "settings", label: T3("Business settings", "Établissement", "المؤسسة"), body: T3("Public phone, private address, who sees the location, WhatsApp, Google Maps link and profile picture.", "Téléphone public, adresse privée, visibilité du lieu, WhatsApp, lien Google Maps et photo de profil.", "الهاتف العام والعنوان الخاص ومن يرى الموقع وواتساب ورابط خرائط جوجل وصورة الملف.") },
+      { x: 46, y: 21.2, icon: "layers", label: T3("Category switcher", "Choix de catégorie", "اختيار الفئة"), body: T3("One account can hold several categories. Switch between all of them or one, and the figures follow.", "Un compte peut avoir plusieurs catégories. On passe de toutes à une seule, et les chiffres suivent.", "يمكن للحساب الواحد أن يضم عدة فئات. تنتقلين بين كلها أو واحدة وتتبعها الأرقام.") },
+      { x: 77, y: 26, icon: "wallet", label: T3("Recorded revenue", "Revenus enregistrés", "الأرباح المسجَّلة"), body: T3("Revenue from completed visits whose payment she recorded. Woman Cares takes no payment from clients.", "Revenus des rendez-vous terminés dont elle a enregistré le paiement. Woman Cares ne prélève aucun paiement auprès des clientes.", "أرباح المواعيد المنتهية التي سجّلت دفعها. لا تتقاضى Woman Cares أي مبلغ من العميلات.") },
+      { x: 97, y: 45.8, icon: "trending-up", label: T3("Requests and visits", "Demandes et visites", "الطلبات والزيارات"), body: T3("Booking requests and profile visits for the last 8 weeks, week by week.", "Demandes de rendez-vous et visites de profil sur 8 semaines, semaine par semaine.", "طلبات الحجز وزيارات الملف في آخر 8 أسابيع أسبوعًا بأسبوع.") },
+    ],
+  },
+  {
+    file: "/projects/woman-cares/dashboard-admin.webp",
+    width: 1600,
+    height: 1000,
+    kind: "DEMO",
+    title: T3("Super Admin dashboard", "Espace Super Admin", "لوحة المسؤول الأعلى"),
+    alt: T3("Woman Cares Super Admin dashboard with demo figures", "Espace Super Admin Woman Cares avec des chiffres de démonstration", "لوحة المسؤول الأعلى في Woman Cares بأرقام تجريبية"),
+    hotspots: [
+      { x: SIDE, y: 15.7, icon: "list-checks", label: T3("Professionals", "Professionnelles", "المحترفات"), body: T3("The review queue. Publish a profile, ask for changes, suspend, approve an account, grant the verified badge, check Botox credentials. Every decision is saved in the log and emailed.", "La file de validation. Publier un profil, demander des changements, suspendre, approuver un compte, accorder le badge vérifié, contrôler les diplômes Botox. Chaque décision est journalisée et envoyée par e-mail.", "قائمة المراجعة. نشر ملف أو طلب تعديلات أو تعليق أو الموافقة على حساب أو منح شارة التحقق أو فحص شهادات البوتوكس. يُسجَّل كل قرار ويُرسل بالبريد.") },
+      { x: SIDE, y: 19.9, icon: "users", label: T3("Users", "Utilisateurs", "المستخدمون"), body: T3("Search accounts, change roles, suspend or restore, within what each role is allowed. A suspended professional disappears from the site.", "Recherche des comptes, changement de rôle, suspension ou rétablissement, dans les limites de chaque rôle. Une professionnelle suspendue disparaît du site.", "البحث في الحسابات وتغيير الأدوار والتعليق أو الاستعادة ضمن صلاحيات كل دور. تختفي المحترفة المعلّقة من الموقع.") },
+      { x: SIDE, y: 28.2, icon: "layers", label: T3("Categories", "Catégories", "الفئات"), body: T3("Reorder, switch on or off, and require credentials (Botox). Turning a category off hides all its profiles.", "Réordonner, activer ou désactiver, et exiger des justificatifs (Botox). Désactiver une catégorie masque tous ses profils.", "إعادة الترتيب والتفعيل أو الإيقاف واشتراط الوثائق (البوتوكس). إيقاف فئة يخفي كل ملفاتها.") },
+      { x: SIDE, y: 32.4, icon: "tags", label: T3("Pricing", "Tarifs", "الأسعار"), body: T3("The subscription price per category, with its full dated history. A new price starts on the day chosen, never in the past.", "Le prix de l'abonnement par catégorie, avec tout son historique daté. Un nouveau prix commence le jour choisi, jamais dans le passé.", "سعر الاشتراك لكل فئة مع سجل تواريخه كاملًا. يبدأ السعر الجديد في اليوم المحدد وليس في الماضي.") },
+      { x: SIDE, y: 40.6, icon: "credit-card", label: T3("Subscriptions", "Abonnements", "الاشتراكات"), body: T3("Free trial per professional, an agreed monthly price or an exemption. Applies from the next invoice.", "Essai gratuit par professionnelle, prix mensuel convenu ou exonération. S'applique dès la prochaine facture.", "تجربة مجانية لكل محترفة أو سعر شهري متفق عليه أو إعفاء. يسري من الفاتورة التالية.") },
+      { x: SIDE, y: 44.8, icon: "receipt", label: T3("Invoices", "Factures", "الفواتير"), body: T3("One invoice per period, open or overdue. A professional who does not pay after the grace period is hidden.", "Une facture par période, ouverte ou en retard. Une professionnelle qui ne paie pas après le délai de grâce est masquée.", "فاتورة لكل فترة مفتوحة أو متأخرة. تُخفى المحترفة التي لا تدفع بعد مهلة السماح.") },
+      { x: SIDE, y: 49, icon: "wallet", label: T3("Payments", "Paiements", "المدفوعات"), body: T3("Confirm the payments professionals declare, with a receipt and the period paid.", "Confirmer les paiements déclarés par les professionnelles, avec reçu et période payée.", "تأكيد المدفوعات التي تصرّح بها المحترفات مع الإيصال وفترة الدفع.") },
+      { x: SIDE, y: 57.3, icon: "message-square", label: T3("Messages", "Messages", "الرسائل"), body: T3("Contact messages and support requests sent from the site.", "Messages de contact et demandes d'assistance envoyés depuis le site.", "رسائل التواصل وطلبات الدعم المرسلة من الموقع.") },
+      { x: SIDE, y: 69.8, icon: "file-text", label: T3("Log", "Journal", "السجل"), body: T3("Every admin action, filterable by action, author, type and date. Only admins can open it.", "Chaque action d'administration, filtrable par action, auteur, type et date. Réservé aux administrateurs.", "كل إجراء إداري قابل للتصفية بالإجراء والفاعل والنوع والتاريخ. لا يفتحه إلا المسؤولون.") },
+      { x: SIDE, y: 74, icon: "settings", label: T3("Settings", "Réglages", "الإعدادات"), body: T3("Platform settings, including the target rates used in the statistics (Super Admin only).", "Réglages de la plateforme, dont les taux cibles des statistiques (Super Admin uniquement).", "إعدادات المنصة ومنها النسب المستهدفة في الإحصاءات (للمسؤول الأعلى فقط).") },
+      { x: 97, y: 19, icon: "gauge", label: T3("Platform figures", "Chiffres de la plateforme", "أرقام المنصة"), body: T3("Registered clients, professional accounts, published profiles and this month's appointments, all counted from real data.", "Clientes inscrites, comptes professionnels, profils publiés et rendez-vous du mois, tous comptés à partir des données réelles.", "العميلات المسجَّلات والحسابات المهنية والملفات المنشورة ومواعيد الشهر، كلها محسوبة من بيانات حقيقية.") },
+      { x: 97, y: 55.6, icon: "trending-up", label: T3("Platform revenue", "Revenus de la plateforme", "إيرادات المنصة"), body: T3("Subscriptions paid by professionals and verified by the team, by month, compared with what was billed.", "Abonnements payés par les professionnelles et vérifiés par l'équipe, par mois, comparés aux montants facturés.", "الاشتراكات التي دفعتها المحترفات وتحقق منها الفريق شهريًا مقارنة بالمبالغ المفوترة.") },
+    ],
+  },
+];
+
 export const DASHBOARD_TOURS: Record<string, TourScreenData[]> = {
   "king-253": king,
   "boulboul-art-wall": boulboul,
   "zodic-car": zodic,
+  "woman-cares": womanCares,
 };
 
 /**
